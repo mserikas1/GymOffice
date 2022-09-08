@@ -1,0 +1,12 @@
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\bin\Debug\net6.0\GymOffice.Business.deps.json
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\bin\Debug\net6.0\GymOffice.Business.dll
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\bin\Debug\net6.0\GymOffice.Business.pdb
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\obj\Debug\net6.0\GymOffice.Business.csproj.AssemblyReference.cache
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\obj\Debug\net6.0\GymOffice.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\obj\Debug\net6.0\GymOffice.Business.AssemblyInfoInputs.cache
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\obj\Debug\net6.0\GymOffice.Business.AssemblyInfo.cs
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\obj\Debug\net6.0\GymOffice.Business.csproj.CoreCompileInputs.cache
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\obj\Debug\net6.0\GymOffice.Business.dll
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\obj\Debug\net6.0\refint\GymOffice.Business.dll
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\obj\Debug\net6.0\GymOffice.Business.pdb
+C:\Users\boba7\source\repos\GymOffice\GymOffice.Business\obj\Debug\net6.0\ref\GymOffice.Business.dll

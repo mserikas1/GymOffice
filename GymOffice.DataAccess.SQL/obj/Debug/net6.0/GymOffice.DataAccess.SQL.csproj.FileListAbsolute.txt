@@ -1,0 +1,12 @@
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\bin\Debug\net6.0\GymOffice.DataAccess.SQL.deps.json
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\bin\Debug\net6.0\GymOffice.DataAccess.SQL.dll
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\bin\Debug\net6.0\GymOffice.DataAccess.SQL.pdb
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\obj\Debug\net6.0\GymOffice.DataAccess.SQL.csproj.AssemblyReference.cache
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\obj\Debug\net6.0\GymOffice.DataAccess.SQL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\obj\Debug\net6.0\GymOffice.DataAccess.SQL.AssemblyInfoInputs.cache
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\obj\Debug\net6.0\GymOffice.DataAccess.SQL.AssemblyInfo.cs
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\obj\Debug\net6.0\GymOffice.DataAccess.SQL.csproj.CoreCompileInputs.cache
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\obj\Debug\net6.0\GymOffice.DataAccess.SQL.dll
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\obj\Debug\net6.0\refint\GymOffice.DataAccess.SQL.dll
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\obj\Debug\net6.0\GymOffice.DataAccess.SQL.pdb
+C:\Users\boba7\source\repos\GymOffice\GymOffice.DataAccess.SQL\obj\Debug\net6.0\ref\GymOffice.DataAccess.SQL.dll
