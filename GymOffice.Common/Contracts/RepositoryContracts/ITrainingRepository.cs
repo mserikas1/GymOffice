@@ -1,10 +1,10 @@
 ﻿namespace GymOffice.Common.Contracts.RepositoryContracts;
 public interface ITrainingRepository
 {
-    Task<IEnumerable<Training>?> GetAllTrainingAsync();
-    Task<IEnumerable<Training>?> GetTrainingByCustomerAsync(Guid id);
-    Task<IEnumerable<Training>?> GetTrainingByCoachAsync(Guid id);
-    Task<Guid> AddTrainingAsync(Training training);
-    Task<Training?> DeleteTrainingAsync(Guid id);
-    Task<Training?> UpdateTrainingAsync(Training training);
+    Task<IEnumerable<PersonalTraining>?> GetAllTrainingAsync();
+    Task<IEnumerable<PersonalTraining>?> GetTrainingByCustomerAsync(Guid id);
+    Task<IEnumerable<PersonalTraining>?> GetTrainingByCoachAsync(Guid id);
+    Task<Guid> AddTrainingAsync(PersonalTraining training);
+    Task<PersonalTraining?> DeleteTrainingAsync(Guid id);
+    Task<PersonalTraining?> UpdateTrainingAsync(PersonalTraining training);
 }

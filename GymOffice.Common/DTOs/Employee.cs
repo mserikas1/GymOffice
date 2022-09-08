@@ -8,5 +8,5 @@ public abstract class Employee
     public string? Email { get; set; }
     public string? PhotoPath { get; set; }
     public string PassportNumber { get; set; } = null!;
-    public virtual Role Role { get; set; }
+    //public virtual Role Role { get; set; }
 }
