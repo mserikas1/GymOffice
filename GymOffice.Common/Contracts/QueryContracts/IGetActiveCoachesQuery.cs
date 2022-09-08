@@ -1,5 +1,5 @@
 ﻿namespace GymOffice.Common.Contracts.QueryContracts;
-public interface IGetAllCoachesQuery
+public interface IGetActiveCoachesQuery
 {
     Task<IEnumerable<Coach>?> Execute();
 }

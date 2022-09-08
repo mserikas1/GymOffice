@@ -1,5 +1,5 @@
 ﻿namespace GymOffice.Common.Contracts.QueryContracts;
-public interface IGetAllCustomersQuery
+public interface IGetActiveCastomersQuery
 {
     Task<IEnumerable<Customer>?> Execute();
 }
