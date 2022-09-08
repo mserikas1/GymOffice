@@ -6,4 +6,6 @@ public interface IEmployeeRepository
     Task<Guid> AddEmployeeAsync(Employee employee);
     Task<Employee> UpdateEmployeeAsync(Employee employee);
     Task<Employee> DeleteEmployeeAsync(Guid id);
+    Task<IEnumerable<Receptionist>?> GetReceptionistsAsync();
+    Task<IEnumerable<Administrator>?> GetAdministratorsAsync();
 }
