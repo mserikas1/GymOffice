@@ -7,6 +7,7 @@ public abstract class Employee
     public string Phone { get; set; } = null!;
     public string? Email { get; set; }
     public string? PhotoPath { get; set; }
+    public bool IsActive { get; set; }
     public string PassportNumber { get; set; } = null!;
     //public virtual Role Role { get; set; }
 }
