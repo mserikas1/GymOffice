@@ -8,4 +8,9 @@ public interface IEmployeeRepository
     Task<Employee> DeleteEmployeeAsync(Guid id);
     Task<IEnumerable<Receptionist>?> GetReceptionistsAsync();
     Task<IEnumerable<Administrator>?> GetAdministratorsAsync();
+    Task<IEnumerable<Receptionist>?> GetActiveReceptionistsAsync();
+    Task<Administrator?> GetAdministratorByIdAsync(Guid id);
+    Task<Receptionist?> GetReceptionistByIdAsync(Guid id);
+    Task<IEnumerable<Employee>?> GetActiveEmployeesAsync();
+    Task<IEnumerable<Receptionist>?> SearchReceptionistsAsync(ReceptionistSearchOptions options);
 }

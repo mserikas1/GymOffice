@@ -1,4 +1,6 @@
-﻿namespace GymOffice.Common.DTOs;
+﻿using GymOffice.Common.Utilities.Enums;
+
+namespace GymOffice.Common.DTOs;
 public abstract class Employee
 {
     public Guid Id { get; set; }

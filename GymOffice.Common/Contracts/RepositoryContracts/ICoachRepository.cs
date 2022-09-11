@@ -7,4 +7,5 @@ public interface ICoachRepository
     Task<Guid> AddCoachAsync(Coach coach);
     Task<Coach> UpdateCoachAsync(Coach coach);
     Task<Coach> DeleteCoachAsync(Guid id);
+    Task<IEnumerable<Coach>?> SearchCoachesAsync(CoachSearchOptions options);
 }

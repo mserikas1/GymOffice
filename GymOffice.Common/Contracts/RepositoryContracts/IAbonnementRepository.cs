@@ -1,7 +1,11 @@
-﻿namespace GymOffice.Common.Contracts.RepositoryContracts;
+﻿using GymOffice.Common.Utilities.Enums;
+
+namespace GymOffice.Common.Contracts.RepositoryContracts;
 public interface IAbonnementRepository
 {
     Task<Abonnement?> GetByIdAsync(Guid id);
     Task<IEnumerable<Abonnement>?> GetAllAsync();
-
+    Task<IEnumerable<Abonnement>?> GetByCustomerIdAsync(Guid customerId);
+    Task<IEnumerable<Abonnement>?> GetByDurationAsync(AbonnementDuration duration);
+    Task<IEnumerable<Abonnement>?> GetByTypeAsync(AbonnementType type);
 }
