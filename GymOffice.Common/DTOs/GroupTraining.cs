@@ -10,4 +10,5 @@ public class GroupTraining
     public DayOfWeek DayOfWeek { get; set; }
     public string? Description { get; set; }
     public Guid CoachId { get; set; }
+    public List<Customer>? Customers { get; set; }
 }

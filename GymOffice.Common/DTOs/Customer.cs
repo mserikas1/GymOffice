@@ -8,5 +8,5 @@ public class Customer
     public string? Email { get; set; }
     public string? PhotoPath { get; set; }
     public List<Abonnement>? Abonnements { get; set; }
-    public List<Training>? PersonalTrainings { get; set; }
+    public List<PersonalTraining>? PersonalTrainings { get; set; }
 }

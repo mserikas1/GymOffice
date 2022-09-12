@@ -1,6 +1,6 @@
 ﻿namespace GymOffice.Common.DTOs;
 
-public class Training
+public class PersonalTraining
 {
     public Guid Id { get; set; }
     public DateTime ScheduledStartDate { get; set; }

@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\CommandContracts\" />
+    <Folder Include="Contracts\CommandContracts\AbonnementCommands\" />
+    <Folder Include="Contracts\CommandContracts\AdministratorCommands\Edit\" />
+    <Folder Include="Contracts\CommandContracts\CoachCommands\" />
+    <Folder Include="Contracts\CommandContracts\CustomerCommands\" />
+    <Folder Include="Contracts\CommandContracts\ReceptionistCommands\" />
   </ItemGroup>
 
 </Project>

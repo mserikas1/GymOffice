@@ -11,7 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
+    <Folder Include="Commands\AbonnementCommands\" />
+    <Folder Include="Commands\AdministratorCommands\Edit\" />
+    <Folder Include="Commands\CoachCommands\" />
+    <Folder Include="Commands\CustomerCommands\" />
+    <Folder Include="Commands\ReceptionistCommands\" />
   </ItemGroup>
 
 </Project>

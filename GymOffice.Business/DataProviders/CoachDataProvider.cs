@@ -20,7 +20,7 @@ public class CoachDataProvider : ICoachDataProvider
 
     public async Task<Coach?> GetCoachByIdAsync(Guid id)
     {        
-        Coach? entity = await _coachRepository.GetCoachByIdAsync(id);
+        Coach? entity = await _coachRepository.GetByIdAsync(id);
 
         if (entity == null || entity.Id != id)
         {

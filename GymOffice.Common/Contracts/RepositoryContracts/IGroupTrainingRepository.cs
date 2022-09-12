@@ -1,11 +1,13 @@
 ﻿namespace GymOffice.Common.Contracts.RepositoryContracts;
 public interface IGroupTrainingRepository
 {
-    Task<IEnumerable<Training>?> GetAllAsync();
-    Task<Training?> GetByIdAsync(Guid id);
-    Task<IEnumerable<Training>?> GetTrainingsByCoachAsync(Guid coachId);
-    Task<IEnumerable<Training>?> GetTrainingsByDateAsync(DateOnly date);
-    Task<IEnumerable<Training>?> GetTrainingsByDateIntervalAsync(DateOnly startDate, DateOnly endDate);
-    Task<IEnumerable<Training>?> GetTrainingsByNameAsync(string name);
-    Task<IEnumerable<Training>?> GetTrainingsByTimeIntervalAsync(TimeOnly startTime, TimeOnly endTime);
+    Task<Guid> AddTrainingAsync(GroupTraining groupTraining);
+    Task<GroupTraining> DeleteAsync(Guid id);
+    Task<IEnumerable<GroupTraining>?> GetAllAsync();
+    Task<GroupTraining?> GetByIdAsync(Guid id);
+    Task<IEnumerable<GroupTraining>?> GetTrainingsByCoachAsync(Guid coachId);
+    Task<IEnumerable<GroupTraining>?> GetTrainingsByDateAsync(DateOnly date);
+    Task<IEnumerable<GroupTraining>?> GetTrainingsByDateIntervalAsync(DateOnly startDate, DateOnly endDate);
+    Task<IEnumerable<GroupTraining>?> GetTrainingsByNameAsync(string name);
+    Task<IEnumerable<GroupTraining>?> GetTrainingsByTimeIntervalAsync(TimeOnly startTime, TimeOnly endTime);
 }

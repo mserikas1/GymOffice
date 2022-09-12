@@ -1,6 +1,4 @@
-﻿using GymOffice.Common.Utilities.Enums;
-
-namespace GymOffice.Common.DTOs;
+﻿namespace GymOffice.Common.DTOs;
 public class Administrator : Employee
 {
     public override Role Role { get; set; } = Role.Administrator;

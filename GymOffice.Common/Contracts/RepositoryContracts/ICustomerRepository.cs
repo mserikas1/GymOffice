@@ -13,4 +13,6 @@ public interface ICustomerRepository
     Task<IEnumerable<Customer>?> GetCustomersByLastNameAsync(string lastName);
     Task<IEnumerable<Customer>?> GetCustomersByRegistrationDateAsync(DateTime? startDate, DateTime? endDate);
     Task<IEnumerable<Customer>?> SearchCustomersAsync(CustomerSearchOptions options);
+    Task AddAbonnementToCustomerAsync(Abonnement abonnement, Guid customerId);
+    Task DeleteGroupTrainingFromCustomerAsync(Guid trainingId, Guid customerId);
 }
