@@ -7,8 +7,8 @@ public class JobSchedule
     public Guid? EmployeeId { get; set; }
     public Employee? Employee { get; set; }
     public DayOfWeek? DayOfWeek { get; set; }
-    public TimeOnly StartTime { get; set; }
-    public TimeOnly EndTime { get; set; }
+    public string StartTime { get; set; }
+    public string EndTime { get; set; }
     public int? DayOfMonth { get; set; }
-    public DateOnly? SpecificDate { get; set; }
+    public DateTime? SpecificDate { get; set; }
 }
