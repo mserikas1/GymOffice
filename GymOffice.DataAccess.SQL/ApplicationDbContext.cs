@@ -51,7 +51,7 @@ namespace GymOffice.DataAccess.SQL
             builder.Property(a => a.Name).HasMaxLength(50).IsRequired();
             builder.Property(a => a.StartVisitTime).HasColumnType("time");
             builder.Property(a => a.EndVisitTime).HasColumnType("time");
-            builder.Property(a => a.EndVisitTime).HasColumnType("decimal").HasPrecision(2).IsRequired();
+            builder.Property(a => a.PriceForMonth).HasColumnType("decimal").HasPrecision(2).IsRequired();
             builder.Property(a => a.Description).HasColumnName("nvarchar").IsRequired();
         }
         public void PersonalTrainingConfigure(EntityTypeBuilder<PersonalTraining> builder)
