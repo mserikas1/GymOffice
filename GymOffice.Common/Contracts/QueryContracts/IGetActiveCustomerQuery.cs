@@ -1,4 +1,4 @@
 ﻿namespace GymOffice.Common.Contracts.QueryContracts;
-public interface IGetActiveCustomerQuery
+public interface IGetActiveVisitorQuery
 {
 }
