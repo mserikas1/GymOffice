@@ -7,4 +7,6 @@ public interface IAbonnementRepository
     Task<IEnumerable<Abonnement>?> GetByDurationAsync(AbonnementDuration duration);
     Task<IEnumerable<Abonnement>?> GetByTypeAsync(AbonnementType type);
     Task<Guid> AddAbonnementAsync(Abonnement abonnement);
+    Task DeleteAsync(Abonnement abonnement);
+    Task UpdateAsync(Abonnement abonnement);
 }

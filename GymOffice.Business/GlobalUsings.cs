@@ -7,3 +7,4 @@ global using GymOffice.Common.Utilities.SerchParams;
 global using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.Add;
 global using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.Delete;
 global using GymOffice.Common.Contracts.CommandContracts.EmployeeCommands.Add;
+global using GymOffice.Common.Contracts.CommandContracts.AbonnementCommands;

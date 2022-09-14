@@ -1,6 +1,7 @@
 ﻿namespace GymOffice.Common.Contracts.RepositoryContracts;
 public interface IGroupTrainingRepository
 {
+    Task AddCustomerToTrainingAsync(GroupTraining training, Customer customer);
     Task<Guid> AddTrainingAsync(GroupTraining groupTraining);
     Task<GroupTraining> DeleteAsync(Guid id);
     Task<IEnumerable<GroupTraining>?> GetAllAsync();

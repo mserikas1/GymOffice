@@ -15,4 +15,5 @@ public interface ICustomerRepository
     Task<IEnumerable<Customer>?> SearchCustomersAsync(CustomerSearchOptions options);
     Task AddAbonnementToCustomerAsync(Abonnement abonnement, Guid customerId);
     Task DeleteGroupTrainingFromCustomerAsync(Guid trainingId, Guid customerId);
+    Task DeleteAbonnementFromCustomerAsync(Guid customerId, Abonnement abonnement);
 }
