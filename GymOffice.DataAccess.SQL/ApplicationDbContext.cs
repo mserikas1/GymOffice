@@ -49,46 +49,58 @@ namespace GymOffice.DataAccess.SQL
         public void AbonnementConfigure(EntityTypeBuilder<Abonnement> builder)
         {
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.IssueTime).HasColumnType("datetime");
+            builder.Property(a => a.IssueTime).HasColumnType("datetime").IsRequired();
             builder.Property(a => a.ActivationTime).HasColumnType("datetime");
             builder.HasOne(a=>a.Visitor).WithMany(c => c.Abonnements).OnDelete(DeleteBehavior.Cascade); 
             builder.HasOne(a=>a.AbonnementType).WithMany().OnDelete(DeleteBehavior.Cascade).HasForeignKey("TypeId");
-            builder.Property(a => a.SoldPice).HasColumnType("decimal").HasPrecision(2);
+            builder.Property(a => a.SoldPrice).HasColumnType("decimal").HasPrecision(2);
         }
         public void VisitorCardConfigure(EntityTypeBuilder<VisitorCard> builder)
         {
             builder.HasKey(a => a.Id);
             builder.Property(a => a.RegistrationDate).HasColumnType("datetime");
+            builder.Property(a => a.Visitor).IsRequired();
         }
         public void VisitorConfigure(EntityTypeBuilder<Visitor> builder)
         {
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.FirstName).HasColumnType("nvarchar");
-            builder.Property(a => a.LastName).HasColumnType("nvarchar");
-            builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar");
+            builder.Property(a => a.FirstName).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.LastName).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar").IsRequired();
+            builder.HasAlternateKey(a => a.PhoneNumber);
             builder.HasOne(a => a.VisitorCard).WithOne(c => c.Visitor).HasForeignKey<VisitorCard>(c=>c.VisitorId);
         }
         public void EmployeeConfigure(EntityTypeBuilder<Employee> builder)
         {
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar");
-            builder.Property(a => a.FirstName).HasColumnType("nvarchar");
-            builder.Property(a => a.LastName).HasColumnType("nvarchar");
-            builder.Property(a => a.PassportNumber).HasColumnType("nvarchar");
+            builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.FirstName).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.LastName).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.PassportNumber).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.Email).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.PhotoUrl).HasColumnType("nvarchar");
+            builder.HasAlternateKey(a => a.PhoneNumber);
+            builder.HasAlternateKey(a => a.Email);
+            builder.HasAlternateKey(a => a.PassportNumber);
         }
         public void CoachConfigure(EntityTypeBuilder<Coach> builder)
         {
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar");
-            builder.Property(a => a.FirstName).HasColumnType("nvarchar");
-            builder.Property(a => a.LastName).HasColumnType("nvarchar");
-            builder.Property(a => a.PassportNumber).HasColumnType("nvarchar");
-            builder.ToTable("Coach");
+            builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.FirstName).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.LastName).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.PhotoUrl).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.Email).HasColumnType("nvarchar").IsRequired();
+            builder.Property(a => a.PassportNumber).HasColumnType("nvarchar").IsRequired();
+            builder.HasAlternateKey(a => a.PhoneNumber);
+            builder.HasAlternateKey(a => a.Email);
+            builder.HasAlternateKey(a => a.PassportNumber);
         }
         public void AbonnementTypeConfigure(EntityTypeBuilder<AbonnementType> builder)
         {
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Name).HasMaxLength(50).IsRequired();
+            builder.HasAlternateKey(a=>a.Name);
             builder.Property(a => a.StartVisitTime).HasColumnType("nvarchar");
             builder.Property(a => a.EndVisitTime).HasColumnType("nvarchar");
             builder.Property(a => a.Price).HasColumnType("decimal").HasPrecision(2);
@@ -131,6 +143,7 @@ namespace GymOffice.DataAccess.SQL
             builder.Property(a => a.EndDate).HasColumnType("datetime");
             builder.HasOne(a => a.PersonalTraining).WithMany().OnDelete(DeleteBehavior.Cascade);//not cascade
             builder.HasOne(a => a.GroupTraining).WithMany().OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(a => a.Abonnement).WithMany();
         }
     }
 }

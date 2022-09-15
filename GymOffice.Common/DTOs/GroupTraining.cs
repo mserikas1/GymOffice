@@ -3,7 +3,7 @@
 public class GroupTraining
 {
     public Guid Id { get; set; }
-    public string Name { get; set; } = null!;
+    public string? Name { get; set; }
     public int MaxVisitorsNumber { get; set; }
     public TimeOnly? StartTime { get; set; }//save in datetime?
     public string? EndTime { get; set; }

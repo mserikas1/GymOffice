@@ -11,7 +11,7 @@ namespace GymOffice.Common.DTOs
         public Guid Id { get; set; }
         public DateTime RegistrationDate { get; set; }
         public Guid VisitorId { get; set; }
-        public Visitor Visitor { get; set; } = null!;
+        public Visitor? Visitor { get; set; }
         public bool IsActive { get; set; }
     }
 }

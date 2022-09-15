@@ -2,13 +2,14 @@
 public class Coach
 {
     public Guid Id { get; set; }
-    public string FirstName { get; set; } = null!;
-    public string LastName { get; set; } = null!;
-    public string PhoneNumber { get; set; } = null!;
-    public string? PhotoPath { get; set; }
-    public bool IsOnWork { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? PhoneNumber { get; set; }
+    public string? PhotoUrl { get; set; }
+    public bool IsAtWork { get; set; }
     public bool IsActive { get; set; }
-    public string PassportNumber { get; set; } = null!;
+    public string? Email { get; set; }
+    public string? PassportNumber { get; set; }
     public string? Education { get; set; }
     public string? Description { get; set; }
     public List<PersonalTraining>? PersonalTrainings { get; set; }

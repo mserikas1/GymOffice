@@ -7,7 +7,7 @@ public class PersonalTraining
     public DateTime ScheduledEndDate { get; set; }
     public string? Description { get; set; }
     public Guid VisitorId { get; set; }
-    public Visitor Visitor { get; set; } = null!;
+    public Visitor? Visitor { get; set; }
     public Guid CoachId { get; set; }
-    public Coach Coach { get; set; } = null!;
+    public Coach? Coach { get; set; }
 }

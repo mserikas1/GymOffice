@@ -8,5 +8,6 @@ namespace GymOffice.Common.DTOs
 {
     public class Receptionist:Employee
     {
+        public bool IsAtWork { get; set; }
     }
 }

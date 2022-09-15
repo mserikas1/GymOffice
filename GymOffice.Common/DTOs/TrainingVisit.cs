@@ -11,8 +11,8 @@ namespace GymOffice.Common.DTOs
         public Guid Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Guid AbonnementGuid { get; set; }
-        public Abonnement Abonnement { get; set; } = null!
+        public Guid AbonnementId { get; set; }
+        public Abonnement? Abonnement { get; set; }
         public Guid? PersonalTrainingId { get; set; }
         public PersonalTraining? PersonalTraining { get; set; }
         public Guid? GroupTrainingId { get; set; }
