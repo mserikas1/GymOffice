@@ -10,8 +10,11 @@ namespace GymOffice.Common.DTOs
     {
         public Guid Id { get; set; }
         public DateTime RegistrationDate { get; set; }
-        public Guid VisitorId { get; set; }
-        public Visitor? Visitor { get; set; }
+        public Visitor Visitor { get; set; } = null!;
+        public string BarCode { get; set; } = null!;
         public bool IsActive { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public Admin CreatedBy { get; set; } = null!;
+        public ICollection<Abonnement> Abonnements { get; set; } = new List<Abonnement>();
     }
 }

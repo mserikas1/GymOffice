@@ -4,11 +4,11 @@ public class Abonnement
 {
     public Guid Id { get; set; }
     public DateTime IssueTime { get; set; }
-    public DateTime? ActivationTime { get; set; }
-    public Guid? TypeId { get; set; }
-    public AbonnementType? AbonnementType { get; set; }
-    public Guid VisitorId { get; set; }
-    public Visitor? Visitor { get; set; }
+    public DateTime ActivationTime { get; set; }
+    public AbonnementType AbonnementType { get; set; } = null!;
+    public VisitorCard VisitorCard { get; set; } = null!;
     public decimal SoldPrice { get; set; }
     public bool IsActive { get; set; }
+    public Employee CreatedBy { get; set; } = null!;
+    public ICollection<TrainingVisit> TrainingVisits { get; set; } = new List<TrainingVisit>();
 }

@@ -36,114 +36,124 @@ namespace GymOffice.DataAccess.SQL
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Abonnement>(AbonnementConfigure);
+            builder.Entity<Visitor>(VisitorConfigure);
+            builder.Entity<Receptionist>(ReceptionistConfigure);
+            builder.Entity<Admin>(AdminConfigure);
             builder.Entity<AbonnementType>(AbonnementTypeConfigure);
             builder.Entity<JobSchedule>(JobScheduleConfigure);
             builder.Entity<PersonalTraining>(PersonalTrainingConfigure);
-            builder.Entity<Visitor>(VisitorConfigure);
             builder.Entity<GroupTraining>(GroupTrainingConfigure);
             builder.Entity<Employee>(EmployeeConfigure);
             builder.Entity<Coach>(CoachConfigure);
             builder.Entity<TrainingVisit>(TrainingVisitConfigure);
             builder.Entity<VisitorCard>(VisitorCardConfigure);
+
         }
         public void AbonnementConfigure(EntityTypeBuilder<Abonnement> builder)
         {
-            builder.HasKey(a => a.Id);
-            builder.Property(a => a.IssueTime).HasColumnType("datetime").IsRequired();
-            builder.Property(a => a.ActivationTime).HasColumnType("datetime");
-            builder.HasOne(a=>a.Visitor).WithMany(c => c.Abonnements).OnDelete(DeleteBehavior.Cascade); 
-            builder.HasOne(a=>a.AbonnementType).WithMany().OnDelete(DeleteBehavior.Cascade).HasForeignKey("TypeId");
-            builder.Property(a => a.SoldPrice).HasColumnType("decimal").HasPrecision(2);
+            //builder.HasKey(a => a.Id);
+            //builder.Property(a => a.IssueTime).HasColumnType("datetime").IsRequired();
+            //builder.Property(a => a.ActivationTime).HasColumnType("datetime");
+            builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.AbonnementType).WithMany(a=>a.Abonnements).OnDelete(DeleteBehavior.NoAction).HasForeignKey("TypeId");
+            builder.HasMany(a => a.TrainingVisits).WithOne(a => a.Abonnement).OnDelete(DeleteBehavior.NoAction);
+            //builder.Property(a => a.SoldPrice).HasColumnType("decimal").HasPrecision(2);
         }
         public void VisitorCardConfigure(EntityTypeBuilder<VisitorCard> builder)
         {
-            builder.HasKey(a => a.Id);
-            builder.Property(a => a.RegistrationDate).HasColumnType("datetime");
-            builder.Property(a => a.Visitor).IsRequired();
+            //builder.HasKey(a => a.Id);
+            //builder.Property(a => a.RegistrationDate).HasColumnType("datetime");
+            //builder.Property(a => a.Visitor).IsRequired();
+            builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(a => a.Abonnements).WithOne(a => a.VisitorCard).OnDelete(DeleteBehavior.NoAction);
         }
         public void VisitorConfigure(EntityTypeBuilder<Visitor> builder)
         {
-            builder.HasKey(a => a.Id);
-            builder.Property(a => a.FirstName).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.LastName).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar").IsRequired();
-            builder.HasAlternateKey(a => a.PhoneNumber);
-            builder.HasOne(a => a.VisitorCard).WithOne(c => c.Visitor).HasForeignKey<VisitorCard>(c=>c.VisitorId);
+            builder.HasOne(a => a.VisitorCard).WithOne(c => c.Visitor).HasForeignKey<Visitor>(c => c.VisitorCardId);
+            builder.HasMany(a => a.PersonalTrainings).WithOne(t => t.Visitor);
+            builder.HasMany(a => a.TrainingVisits).WithOne();
+            
         }
         public void EmployeeConfigure(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasKey(a => a.Id);
-            builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.FirstName).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.LastName).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.PassportNumber).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.Email).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.PhotoUrl).HasColumnType("nvarchar");
-            builder.HasAlternateKey(a => a.PhoneNumber);
-            builder.HasAlternateKey(a => a.Email);
-            builder.HasAlternateKey(a => a.PassportNumber);
+            //builder.HasKey(a => a.Id);
+            //builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar").IsRequired();
+            //builder.Property(a => a.FirstName).HasColumnType("nvarchar").IsRequired();
+            //builder.Property(a => a.LastName).HasColumnType("nvarchar").IsRequired();
+            //builder.Property(a => a.PassportNumber).HasColumnType("nvarchar").IsRequired();
+            //builder.Property(a => a.Email).HasColumnType("nvarchar").IsRequired();
+            //builder.Property(a => a.PhotoUrl).HasColumnType("nvarchar");
+            //builder.HasAlternateKey(a => a.PhoneNumber);
+            //builder.HasAlternateKey(a => a.Email);
+            //builder.HasAlternateKey(a => a.PassportNumber);
         }
         public void CoachConfigure(EntityTypeBuilder<Coach> builder)
         {
-            builder.HasKey(a => a.Id);
-            builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.FirstName).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.LastName).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.PhotoUrl).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.Email).HasColumnType("nvarchar").IsRequired();
-            builder.Property(a => a.PassportNumber).HasColumnType("nvarchar").IsRequired();
-            builder.HasAlternateKey(a => a.PhoneNumber);
-            builder.HasAlternateKey(a => a.Email);
-            builder.HasAlternateKey(a => a.PassportNumber);
+            builder.HasMany(a => a.PersonalTrainings).WithOne(t => t.Coach);
+            builder.HasMany(a => a.JobScheduleItems).WithOne(i => i.Coach);
+            builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            //builder.HasKey(a => a.Id);
+            //builder.Property(a => a.PhoneNumber).HasColumnType("nvarchar").IsRequired();
+            //builder.Property(a => a.FirstName).HasColumnType("nvarchar").IsRequired();
+            //builder.Property(a => a.LastName).HasColumnType("nvarchar").IsRequired();
+            //builder.Property(a => a.PhotoUrl).HasColumnType("nvarchar").IsRequired();
+            //builder.Property(a => a.Email).HasColumnType("nvarchar").IsRequired();
+            //builder.Property(a => a.PassportNumber).HasColumnType("nvarchar").IsRequired();
+            //builder.HasAlternateKey(a => a.PhoneNumber);
+            //builder.HasAlternateKey(a => a.Email);
+            //builder.HasAlternateKey(a => a.PassportNumber);
+        }
+        public void ReceptionistConfigure(EntityTypeBuilder<Receptionist> builder)
+        {
+            builder.ToTable("Receptionist");
+            builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(a => a.JobScheduleItems).WithOne(i => i.Receptionist).OnDelete(DeleteBehavior.NoAction);
+        }
+        public void AdminConfigure(EntityTypeBuilder<Admin> builder)
+        {
+            builder.ToTable("Admin");
         }
         public void AbonnementTypeConfigure(EntityTypeBuilder<AbonnementType> builder)
         {
-            builder.HasKey(a => a.Id);
-            builder.Property(a => a.Name).HasMaxLength(50).IsRequired();
-            builder.HasAlternateKey(a=>a.Name);
-            builder.Property(a => a.StartVisitTime).HasColumnType("nvarchar");
-            builder.Property(a => a.EndVisitTime).HasColumnType("nvarchar");
             builder.Property(a => a.Price).HasColumnType("decimal").HasPrecision(2);
-            builder.Property(a => a.Description).HasColumnName("nvarchar");
             builder.Property(a => a.Duration).HasConversion<string>().HasColumnType("nvarchar");
+            //builder.Property(a => a.CreatedBy).IsRequired();
+            //builder.Property(a => a.ModifiedBy).IsRequired();
+            builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
         public void PersonalTrainingConfigure(EntityTypeBuilder<PersonalTraining> builder)
         {
-            builder.HasKey(a => a.Id);
-            builder.Property(a => a.ScheduledStartDate).HasColumnType("datetime");
-            builder.Property(a => a.ScheduledEndDate).HasColumnType("datetime");
-            builder.Property(a => a.Description).HasColumnName("nvarchar");
-            builder.HasOne(a=>a.Visitor).WithMany(c=>c.PersonalTrainings).OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(a => a.Coach).WithMany(c => c.PersonalTrainings).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(a => a.CreatedByCoach).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.ModifiedByCoach).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.CreatedByReceptionist).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.ModifiedByReceptionist).WithMany().OnDelete(DeleteBehavior.NoAction);
+            //builder.HasOne(a => a.Visitor).WithMany(c => c.PersonalTrainings).OnDelete(DeleteBehavior.NoAction);
+            //builder.HasOne(a => a.Coach).WithMany(c => c.PersonalTrainings).OnDelete(DeleteBehavior.NoAction);
         }
         public void JobScheduleConfigure(EntityTypeBuilder<JobSchedule> builder)
         {
-            builder.HasKey(a => a.Id);
             builder.Property(a => a.DayOfWeek).HasConversion<string>().HasColumnType("nvarchar");
-            builder.Property(a => a.StartTime).HasColumnType("nvarchar");
-            builder.Property(a => a.EndTime).HasColumnType("nvarchar");
-            builder.Property(a => a.SpecificDate).HasColumnType("date");
-            builder.HasOne(a=>a.Coach).WithMany().OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(a => a.Employee).WithMany().OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            //builder.HasOne(a => a.Coach).WithMany().OnDelete(DeleteBehavior.NoAction);
+            //builder.HasOne(a => a.Receptionist).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
         public void GroupTrainingConfigure(EntityTypeBuilder<GroupTraining> builder)
         {
-            builder.HasKey(a => a.Id);
             builder.Property(a => a.DayOfWeek).HasConversion<string>().HasColumnType("nvarchar");
-            builder.Property(a => a.Name).HasMaxLength(50);
-            builder.Property(a => a.StartTime).HasConversion(t=>t.ToString(), t=>TimeOnly.Parse(t));
-            builder.Property(a => a.EndTime).HasColumnType("nvarchar");
             builder.HasOne(a => a.Coach).WithMany(c => c.GroupTrainings).OnDelete(DeleteBehavior.SetNull);
             builder.HasMany(a => a.Visitors).WithMany(c => c.GroupTrainings).UsingEntity("GroupTrainingRecord");
+            builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
         public void TrainingVisitConfigure(EntityTypeBuilder<TrainingVisit> builder)
         {
-            builder.HasKey(a => a.Id);
-            builder.Property(a => a.StartDate).HasColumnType("datetime");
-            builder.Property(a => a.EndDate).HasColumnType("datetime");
-            builder.HasOne(a => a.PersonalTraining).WithMany().OnDelete(DeleteBehavior.Cascade);//not cascade
-            builder.HasOne(a => a.GroupTraining).WithMany().OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(a => a.Abonnement).WithMany();
+            builder.HasOne(a => a.PersonalTraining).WithMany().OnDelete(DeleteBehavior.NoAction);//not cascade
+            builder.HasOne(a => a.GroupTraining).WithMany().OnDelete(DeleteBehavior.NoAction);
+            //builder.HasOne(a => a.Abonnement).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
