@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymOffice.Common", "GymOffice.Common\GymOffice.Common.csproj", "{2EDAAAC0-79D2-47F7-B2BD-26B3AA6185F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymOffice.Common", "GymOffice.Common\GymOffice.Common.csproj", "{2EDAAAC0-79D2-47F7-B2BD-26B3AA6185F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymOffice.Business", "GymOffice.Business\GymOffice.Business.csproj", "{8E89C69D-A743-4A82-95B1-F5FF161589E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymOffice.Business", "GymOffice.Business\GymOffice.Business.csproj", "{8E89C69D-A743-4A82-95B1-F5FF161589E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymOffice.DataAccess.SQL", "GymOffice.DataAccess.SQL\GymOffice.DataAccess.SQL.csproj", "{EFA6293B-155F-4A54-8B41-7D24AE5B1181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymOffice.DataAccess.SQL", "GymOffice.DataAccess.SQL\GymOffice.DataAccess.SQL.csproj", "{EFA6293B-155F-4A54-8B41-7D24AE5B1181}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B774267C-D8DE-4508-873F-DA341E995B78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymOffice.WebAdmin", "GymOffice.WebAdmin\GymOffice.WebAdmin.csproj", "{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{EFA6293B-155F-4A54-8B41-7D24AE5B1181}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFA6293B-155F-4A54-8B41-7D24AE5B1181}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFA6293B-155F-4A54-8B41-7D24AE5B1181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,308 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.WebAdmin\\GymOffice.WebAdmin.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Business\\GymOffice.Business.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Business\\GymOffice.Business.csproj",
+        "projectName": "GymOffice.Business",
+        "projectPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Business\\GymOffice.Business.csproj",
+        "packagesPath": "C:\\Users\\boba7\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Business\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\boba7\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.8, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Common\\GymOffice.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Common\\GymOffice.Common.csproj",
+        "projectName": "GymOffice.Common",
+        "projectPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Common\\GymOffice.Common.csproj",
+        "packagesPath": "C:\\Users\\boba7\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\boba7\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.8, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.DataAccess.SQL\\GymOffice.DataAccess.SQL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.DataAccess.SQL\\GymOffice.DataAccess.SQL.csproj",
+        "projectName": "GymOffice.DataAccess.SQL",
+        "projectPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.DataAccess.SQL\\GymOffice.DataAccess.SQL.csproj",
+        "packagesPath": "C:\\Users\\boba7\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.DataAccess.SQL\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\boba7\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Business\\GymOffice.Business.csproj": {
+                "projectPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Business\\GymOffice.Business.csproj"
+              },
+              "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Common\\GymOffice.Common.csproj": {
+                "projectPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Common\\GymOffice.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.8, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.WebAdmin\\GymOffice.WebAdmin.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.WebAdmin\\GymOffice.WebAdmin.csproj",
+        "projectName": "GymOffice.WebAdmin",
+        "projectPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.WebAdmin\\GymOffice.WebAdmin.csproj",
+        "packagesPath": "C:\\Users\\boba7\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.WebAdmin\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\boba7\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Business\\GymOffice.Business.csproj": {
+                "projectPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Business\\GymOffice.Business.csproj"
+              },
+              "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Common\\GymOffice.Common.csproj": {
+                "projectPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.Common\\GymOffice.Common.csproj"
+              },
+              "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.DataAccess.SQL\\GymOffice.DataAccess.SQL.csproj": {
+                "projectPath": "C:\\Users\\boba7\\source\\repos\\mserikas1\\GymOffice\\GymOffice.DataAccess.SQL\\GymOffice.DataAccess.SQL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "MudBlazor": {
+              "target": "Package",
+              "version": "[6.0.15, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
