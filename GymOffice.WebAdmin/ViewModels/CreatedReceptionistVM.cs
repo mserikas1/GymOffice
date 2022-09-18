@@ -16,7 +16,7 @@ public class CreatedReceptionistVM
     [Required]
     [Phone]
     [Display(Name = "Phone Number")]
-    [StringLength(10)]
+    [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone Number must be a string with length of 10 digits")]
     public string PhoneNumber { get; set; } = String.Empty;
 
     [Required]
@@ -39,6 +39,14 @@ public class CreatedReceptionistVM
     [StringLength(8)]
     [RegularExpression(@"^[А-ГҐДЕЄЖЗИІЇЙК-Я]{2}\d{6}", ErrorMessage = "Passport must be like \"AB123456\"")]
     public string PassportNumber { get; set; } = String.Empty;
-    
+
+    public DateTime CreatedAt { get; set; }
+
+    public DateTime ModifiedAt { get; set; }
+
+    public Admin CreatedBy { get; set; } = null!;
+
+    public Admin ModifiedBy { get; set; } = null!;
+
     public string? PhotoUrl { get; set; }
 }

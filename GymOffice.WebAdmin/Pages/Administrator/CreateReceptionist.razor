@@ -1,0 +1,68 @@
+﻿@page "/admin/create-receptionist"
+
+@if (receptionistModel == null && errorMessage == null)
+{
+    <MudText Typo="Typo.subtitle2" Class="pa-5">Loading data...</MudText>
+}
+else if (errorMessage != null)
+{
+    <ErrorDisplay ErrorMessage="@errorMessage" ResetError="HandleResetError" />
+}
+else
+{
+    <InputFile id="photoFile" OnChange="UploadPhoto" accept=".jpg, .jpeg, .png" hidden />
+    <EditForm Model="@receptionistModel" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator />
+        <MudGrid>
+            <MudItem xs="12" sm="7">
+                <MudCard Class="pa-5">
+                    <MudCardContent>
+                        <MudText Typo="Typo.subtitle2" Class="pa-5">Add New Receptionist</MudText>
+                        <MudTextField Label="First name" HelperText="Length from 2 to 20 characters"
+                                  @bind-Value="receptionistModel.FirstName" For="@(() => receptionistModel.FirstName)" />
+                        <MudTextField Label="First name" HelperText="Length from 2 to 20 characters"
+                                  @bind-Value="receptionistModel.LastName" For="@(() => receptionistModel.LastName)" />
+                        <MudTextField Label="Phone Number" Class="mt-3"
+                                  @bind-Value="receptionistModel.PhoneNumber" For="@(() => receptionistModel.PhoneNumber)" />
+                        <MudTextField Label="Email" Class="mt-3"
+                                  @bind-Value="receptionistModel.Email" For="@(() => receptionistModel.Email)" />
+                        <MudTextField Label="Passport" Class="mt-3"
+                                  @bind-Value="receptionistModel.PassportNumber" For="@(() => receptionistModel.PassportNumber)" />
+                        <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                                  @bind-Value="receptionistModel.Password" For="@(() => receptionistModel.Password)" InputType="InputType.Password" />
+                        <MudTextField Label="Confirm Password" HelperText="Repeat the password" Class="mt-3"
+                                  @bind-Value="receptionistModel.PasswordConfirm" For="@(() => receptionistModel.PasswordConfirm)" InputType="InputType.Password" />
+                        <MudCardActions Class="mt-4">
+                            <MudButton HtmlTag="label" Color="Color.Success" StartIcon="@Icons.Filled.PersonAdd"
+                                   Variant="Variant.Filled" for="photoFile">Add Photo</MudButton>
+                            <MudText Class="ms-3">(Optional. Up to 5 Mb .jpg, .jpeg or .png)</MudText>
+                        </MudCardActions>
+                        <MudDivider DividerType="DividerType.Middle" Class="mt-4" />
+                    </MudCardContent>
+                    <MudCardActions Class="d-flex justify-end">
+                        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="5">
+                <MudPaper Class="pa-5 mud-height-full">
+                    <MudText Typo="Typo.subtitle2" Class="pa-5">Profile Photo:</MudText>
+                    @if (isLoading == true)
+                    {
+                        <MudText Class="m-4">Uploading...</MudText>
+                    }
+                    else if (photoUploadError != null)
+                    {
+                        <MudText Class="m-4">@photoUploadError</MudText>
+                    }
+                    else if (relativeImagePath != null)
+                    {
+                        <MudImage Fluid="true" Src="@relativeImagePath" Alt="Photo" Elevation="25" Class="rounded-lg" />
+                    }
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+}
+
