@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace GymOffice.WebAdmin.ViewModels;
+﻿namespace GymOffice.WebAdmin.ViewModels;
 public class CreatedReceptionistVM
 {    
     [Required]
@@ -37,12 +35,8 @@ public class CreatedReceptionistVM
     [Required]
     [Display(Name = "Passport")]
     [StringLength(8)]
-    [RegularExpression(@"^[А-ГҐДЕЄЖЗИІЇЙК-Я]{2}\d{6}", ErrorMessage = "Passport must be like \"AB123456\"")]
+    [RegularExpression(@"^[А-ГҐДЕЄЖЗИІЇЙК-Я]{2}\d{6}", ErrorMessage = "Passport must be like \"AЯ123456\"")]
     public string PassportNumber { get; set; } = String.Empty;
-
-    public DateTime CreatedAt { get; set; }
-
-    public DateTime ModifiedAt { get; set; }
 
     public Admin CreatedBy { get; set; } = null!;
 

@@ -12,12 +12,14 @@ public class AddReceptionistCommand : IAddReceptionistCommand
     {
         if (receptionist == null)
         {
-            throw new ArgumentNullException(nameof(receptionist));
+            return;
         }
-        if (receptionist.FirstName == null ||
-            receptionist.LastName == null ||
-            receptionist.Email == null ||
-            receptionist.PhoneNumber == null)
+        if (string.IsNullOrWhiteSpace(receptionist.FirstName) ||
+            string.IsNullOrWhiteSpace(receptionist.LastName) ||
+            string.IsNullOrWhiteSpace(receptionist.Email) ||
+            string.IsNullOrWhiteSpace(receptionist.PhoneNumber) ||
+            receptionist.CreatedBy == null ||
+            receptionist.ModifiedBy == null)
         {
             throw new RequiredPropertiesNotFilledException();
         }

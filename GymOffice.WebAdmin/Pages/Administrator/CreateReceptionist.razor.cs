@@ -20,12 +20,16 @@ public partial class CreateReceptionist : ComponentBase
     [Inject]
     public IAddReceptionistCommand AddReceptionistCommand { get; set; } = null!;
 
-    protected override void OnInitialized()
+    protected override void OnAfterRender(bool firstRender)
     {
         try
         {
-            admin = EmployeeDataProvider.GetAdministrators()?.FirstOrDefault();
-            InitialReceptionistModel();
+            if (firstRender)
+            {
+                GetAdmin();
+                InitialReceptionistModel();
+                StateHasChanged();
+            }
         }
         catch (Exception ex)
         {
@@ -79,6 +83,11 @@ public partial class CreateReceptionist : ComponentBase
         // TODO upload on server
     }
 
+    private void GetAdmin()
+    {
+        admin = EmployeeDataProvider.GetAdministrators()?.FirstOrDefault();
+    }
+
     private void InitialReceptionistModel()
     {
         receptionistModel = new CreatedReceptionistVM();
@@ -92,6 +101,7 @@ public partial class CreateReceptionist : ComponentBase
     private void HandleResetError()
     {
         errorMessage = null;
+        GetAdmin();
         InitialReceptionistModel();
         StateHasChanged();
     }

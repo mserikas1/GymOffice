@@ -13,3 +13,4 @@ global using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.A
 global using GymOffice.Common.Contracts.RepositoryContracts;
 global using GymOffice.DataAccess.SQL.Repositories;
 global using GymOffice.WebAdmin.Extensions;
+global using System.ComponentModel;

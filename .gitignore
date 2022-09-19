@@ -7,3 +7,5 @@ GymOffice.Common/obj/
 .vs/
 GymOffice.WebAdmin/obj/
 GymOffice.WebAdmin/bin/
+GymOffice.UnitTests/bin/
+GymOffice.UnitTests/obj/

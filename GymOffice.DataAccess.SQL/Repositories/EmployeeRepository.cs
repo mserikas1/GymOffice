@@ -15,7 +15,7 @@ public class EmployeeRepository : IEmployeeRepository
     public async Task AddReceptionistAsync(Receptionist receptionist)
     {
         await _dbContext.Receptionists.AddAsync(receptionist);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<Admin?> GetAdministratorByIdAsync(Guid id)
