@@ -1,6 +1,6 @@
 import Carousel from "react-bootstrap/Carousel";
 
-function UncontrolledExample() {
+export default function PhotoCarousel() {
   return (
     <div className="my-5 w-50 mx-auto">
       <Carousel>
@@ -29,5 +29,3 @@ function UncontrolledExample() {
     </div>
   );
 }
-
-export default UncontrolledExample;
