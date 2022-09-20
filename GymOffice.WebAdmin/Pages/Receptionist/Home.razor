@@ -1,0 +1,377 @@
+﻿@page "/Receptionist/Home"
+@using GymOffice.Common.DTOs;
+@using FluentValidation
+
+<style>
+    .selected {
+        background-color: #1E88E5 !important;
+    }
+
+        .selected > td {
+            color: white !important;
+        }
+
+            .selected > td .mud-input {
+                color: white !important;
+            }
+</style>
+
+<MudContainer Class="mt-16">
+    <MudText Align="Align.Center">Receptionist's Work Place shows active visitors and coaches lists and allows to register visitors and visits.</MudText>
+    <MudGrid Class="mt-8">
+        <!-- Visitors list -->
+        <MudItem xs="4" sm="4" md="6">
+            <MudCard Elevation="25" Class="rounded-lg pb-4">
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Class="md-3 mr-3" Color="Color.Primary" Size="Size.Large" Style="width:50%;"
+                        OnClick="CheckVisitorInClick">Check Visitor In</MudButton>
+                    <MudPopover Open="@_isVisitorCheckInOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomCenter">
+                        <div class="d-flex flex-column">
+                            <MudText Typo="Typo.h5" Align="Align.Center">Checking visitor in</MudText>
+                            <MudText>Insert form here</MudText>
+                            <MudButton OnClick="@CloseVisitorCheckIn" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Cancel</MudButton>
+                        </div>
+                    </MudPopover>
+                    <MudButton Variant="Variant.Filled" Class="md-3" Color="Color.Primary" Size="Size.Large" Style="width:50%;" 
+                        OnClick="RegisterNewVisitorClick">New Visitor...</MudButton>
+                    <MudPopover Open="@_isNewVisitorFormOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomCenter">
+                        <div class="d-flex flex-column">
+                            <MudText Typo="Typo.h5" Align="Align.Center">New visitor registration</MudText>
+                            <MudText>Insert form here</MudText>
+                            <MudButton OnClick="@CloseNewVisitorForm" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Cancel</MudButton>
+                        </div>
+                    </MudPopover>
+                    <MudPopover Open="@_isVisitorViewOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomCenter">
+                        <MudText Typo="Typo.h5" Align="Align.Center">Visitor details</MudText>
+                        <MudText>Insert form here</MudText>
+                        <MudButton OnClick="@CloseVisitorView" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+                    </MudPopover>
+                </MudCardActions>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h5" Align="Align.Center">Active Visitors</MudText>
+                        <MudTextField T="string" ValueChanged="@(str=>OnVisitorSearch(str))" Placeholder="Search a visitor" Adornment="Adornment.Start"
+                            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" Height="250px" RowsPerPage="6"
+                            RowClassFunc="@SelectedVisitorRowClassFunc" OnRowClick="VisitorRowClickEvent" T="Visitor">
+                        <HeaderContent>
+                            <MudTh><MudTableSortLabel Enabled="false" 
+                                SortBy="new Func<Coach, object>(x=>x.FirstName)">First Name</MudTableSortLabel></MudTh>
+                            <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Coach" InitialDirection="SortDirection.Ascending" 
+                                SortBy="new Func<Coach, object>(x=>x.LastName)">Last Name</MudTableSortLabel></MudTh>
+                            <MudTh><MudTableSortLabel SortLabel="em_sort" T="Coach" 
+                                SortBy="new Func<Coach, object>(x=>x.Email)">Email</MudTableSortLabel></MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+                            <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+                            <MudTd DataLabel="Email" HideSmall="true">@context.Email</MudTd>
+                        </RowTemplate>
+                        <NoRecordsContent>
+                            <MudText>No matching records found</MudText>
+                        </NoRecordsContent>
+                        <PagerContent>
+                            <MudTablePager PageSizeOptions="new int[]{6, 10, 20}" InfoFormat="@infoFormat" HorizontalAlignment="HorizontalAlignment.Center" />
+                        </PagerContent>
+                    </MudTable>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        
+        <!-- Coaches list -->
+        <MudItem xs="4" sm="4" md="6">
+            <MudCard Elevation="25" Class="rounded-lg pb-4">
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;" 
+                        OnClick="CheckCoachInClick">Check Coach In</MudButton>
+                    <MudPopover Open="@_isCoachCheckInOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomCenter">
+                        <MudText Typo="Typo.h5" Align="Align.Center">Checking coach in</MudText>
+                        <MudText>Insert form here</MudText>
+                        <MudButton OnClick="@CloseCoachCheckIn" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+                    </MudPopover>
+                    <MudPopover Open="@_isCoachViewOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomCenter">
+                        <MudText Typo="Typo.h5" Align="Align.Center">Coach details</MudText>
+                        <MudText>Insert form here</MudText>
+                        <MudButton OnClick="@CloseCoachView" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+                    </MudPopover>
+                </MudCardActions>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h5" Align="Align.Center">Active Coaches</MudText>
+                        <MudTextField T="string" ValueChanged="@(str=>OnCoachSearch(str))" Placeholder="Search a coach" Adornment="Adornment.Start"
+                            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" Height="250px" RowsPerPage="6"
+                            RowClassFunc="@SelectedCoachRowClassFunc" OnRowClick="CoachRowClickEvent" T="Coach">
+                        <HeaderContent>
+                            <MudTh><MudTableSortLabel Enabled="false" 
+                                SortBy="new Func<Coach, object>(x=>x.FirstName)">First Name</MudTableSortLabel></MudTh>
+                            <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Coach" InitialDirection="SortDirection.Ascending" 
+                                SortBy="new Func<Coach, object>(x=>x.LastName)">Last Name</MudTableSortLabel></MudTh>
+                            <MudTh><MudTableSortLabel SortLabel="em_sort" T="Coach" 
+                                SortBy="new Func<Coach, object>(x=>x.Email)">Email</MudTableSortLabel></MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+                            <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+                            <MudTd DataLabel="Email" HideSmall="true">@context.Email</MudTd>
+                        </RowTemplate>
+                        <NoRecordsContent>
+                            <MudText>No matching records found</MudText>
+                        </NoRecordsContent>
+                        <PagerContent>
+                            <MudTablePager PageSizeOptions="new int[]{6, 10, 20}" InfoFormat="@infoFormat" HorizontalAlignment="HorizontalAlignment.Center" />
+                        </PagerContent>
+                    </MudTable>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@code {
+    private MudTable<Visitor>? visitorsTable;
+    private MudTable<Coach>? coachesTable;
+    private int selectedCoachNumber = -1;
+    private int selectedVisitorNumber = -1;
+    private string? visitorSearchString = null;
+    private string? coachSearchString = null;
+    private string infoFormat = "Items {first_item}-{last_item} of {all_items}";
+    private List<Visitor>? Visitors;
+    private List<Coach>? Coaches;
+    private bool _isNewVisitorFormOpen = false;
+    private bool _isCoachCheckInOpen = false;
+    private bool _isVisitorViewOpen = false;
+    private bool _isCoachViewOpen = false;
+    private bool _isVisitorCheckInOpen = false;
+    private Coach? newCoach;
+    private Visitor? newVisitor;
+    private Coach? viewedCoach;
+    private Visitor? viewedVisitor;
+
+    private void OpenVisitorCheckIn() => _isVisitorCheckInOpen = true;
+    private void CloseVisitorCheckIn() => _isVisitorCheckInOpen = false;
+    private void OpenNewVisitorForm() => _isNewVisitorFormOpen = true;
+    private void CloseNewVisitorForm() => _isNewVisitorFormOpen = false;
+    private void OpenCoachCheckIn() => _isCoachCheckInOpen = true;
+    private void CloseCoachCheckIn() => _isCoachCheckInOpen = false;
+    private void OpenCoachView() => _isCoachViewOpen = true;
+    private void CloseCoachView() => _isCoachViewOpen = false;
+    private void OpenVisitorView() => _isVisitorViewOpen = true;
+    private void CloseVisitorView() => _isVisitorViewOpen = false;
+
+    private void GetVisitors()
+    {
+        using (ApplicationDbContext db = new())
+        {
+            Visitors = db.Visitors.Where(v => v.IsInGym).ToList();
+        }
+    }
+
+    /// <summary>Temporary method, call it once to fill the empty DB with coaches and add one admin (Oleg M)</summary>
+    private async Task AddAdminAndCoachesToDB()
+    {
+        Random r = new Random();
+        Admin admin = new Admin()
+            {
+                Id = new Guid(),
+                FirstName = "Oleg",
+                LastName = "Melnykov",
+                Email = "olegm72@gmail.com",
+                IsActive = true,
+                PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(1, 999999).ToString(),
+                PhoneNumber = "+38067" + r.Next(1, 9999999).ToString(),
+                PhotoUrl = "/Photos/OlegMelnykov"
+            };
+        using (ApplicationDbContext db = new())
+        {
+            await db.Admins.AddAsync(admin);
+
+            Coaches = new List<Coach>() {
+                new Coach() { FirstName = "Nick", LastName = "Kirgios", Email = "Nick@australia.open.com", IsActive = true },
+                new Coach() { FirstName = "Rafael", LastName = "Nadal", Email = "Rafa@tennis.es", IsActive = true },
+                new Coach() { FirstName = "Roger", LastName = "Federer", Email = "Roger@Federer.com", IsActive = false },
+                new Coach() { FirstName = "Olexander", LastName = "Dolgopolov", Email = "dolgo@ukraine.tennis.ua", IsActive = false },
+                new Coach() { FirstName = "Elina", LastName = "Svitolina", Email = "svito@ukr.net", IsActive = true },
+                new Coach() { FirstName = "Marta", LastName = "Kostyuk", Email = "marta@16years.btu.ua", IsActive = false },
+                new Coach() { FirstName = "Novak", LastName = "Djokovich", Email = "antivaxer@serbia.net", IsActive = true },
+                new Coach() { FirstName = "Yaroslava", LastName = "Maguchikh", Email = "jumping@heroes.com", IsActive = true },
+                new Coach() { FirstName = "Serena", LastName = "Williams", Email = "serena@loudvoice.us", IsActive = false },
+                new Coach() { FirstName = "Olexander", LastName = "Usyk", Email = "usyk@boxing.ua", IsActive = true },
+                new Coach() { FirstName = "Vitaly", LastName = "Klichko", Email = "KO@boxing.ua", IsActive = true }
+                };
+            foreach (Coach c in Coaches)
+            {
+                c.Id = new Guid(); c.CreatedAt = DateTime.Now; c.ModifiedAt = DateTime.Now;
+                c.CreatedBy = admin; c.ModifiedBy = admin; c.PhotoUrl = "/Photos/" + c.FirstName + c.LastName;
+                c.PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(1, 999999).ToString();
+                c.PhoneNumber = "+" + r.Next(1, 499999).ToString() + r.Next(1, 999999).ToString(); c.IsAtWork = c.IsActive;
+            }
+            await db.Coaches.AddRangeAsync(Coaches);
+            await db.SaveChangesAsync();
+        }
+    }
+
+    private void GetCoaches()
+    {
+        // AddAdminAndCoachesToDB();
+
+        using (ApplicationDbContext db = new())
+        {
+            Coaches = db.Coaches.Where(c => c.IsAtWork).ToList();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // here we can load data from DB, apply filtering and sorting
+        GetCoaches();
+        GetVisitors();
+        coachesTable = new();
+        visitorsTable = new();
+    }
+
+    private string SelectedVisitorRowClassFunc(Visitor visitor, int rowNumber)  // RowStyleFunc can be used instead
+    {
+        if (selectedVisitorNumber == rowNumber)
+        {
+            selectedVisitorNumber = -1;
+            return string.Empty;
+        }
+        else if (coachesTable != null && coachesTable.SelectedItem != null && coachesTable.SelectedItem.Equals(visitor))
+        {
+            selectedVisitorNumber = rowNumber;
+            return ".selected"; // change style to ".selected"
+        }
+        else
+        {
+            return string.Empty;
+        }
+    }
+
+    private string SelectedCoachRowClassFunc(Coach coach, int rowNumber)  // RowStyleFunc can be used instead
+    {
+        if (selectedCoachNumber == rowNumber)
+        {
+            selectedCoachNumber = -1;
+            return string.Empty;
+        }
+        else if (coachesTable != null && coachesTable.SelectedItem != null && coachesTable.SelectedItem.Equals(coach))
+        {
+            selectedCoachNumber = rowNumber;
+            return ".selected"; // change style to ".selected"
+        }
+        else
+        {
+            return string.Empty;
+        }
+    }
+
+    private void CoachesReload(string? sortLabel)
+    {
+        GetCoaches();
+        if (!string.IsNullOrWhiteSpace(coachSearchString))
+            Coaches = Coaches?
+                .Where(c => $"{c.FirstName} {c.LastName} {c.Email}".Contains(coachSearchString, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        switch (sortLabel)
+        {
+            case "ln_sort":
+                Coaches = Coaches.OrderByDirection(SortDirection.Ascending, o => o.LastName).ToList();
+                break;
+            case "em_sort":
+                Coaches = Coaches.OrderByDirection(SortDirection.Ascending, o => o.Email).ToList();
+                break;
+        }
+        // Coaches = Coaches.Skip(state.Page * state.PageSize).Take(state.PageSize).ToList();
+        // return Coaches;
+    }
+
+    private void VisitorsReload(string? sortLabel)
+    {
+        GetVisitors();
+        if (!string.IsNullOrWhiteSpace(visitorSearchString))
+            Visitors = Visitors?
+                .Where(v => $"{v.FirstName} {v.LastName} {v.Email}".Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        switch (sortLabel)
+        {
+            case "ln_sort":
+                Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.LastName).ToList();
+                break;
+            case "em_sort":
+                Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.Email).ToList();
+                break;
+        }
+        // Visitors = Visitors.Skip(state.Page * state.PageSize).Take(state.PageSize).ToList();
+        // return Visitors;
+    }
+
+    private void OnVisitorSearch(string text)
+    {
+        visitorSearchString = text;
+        VisitorsReload(visitorsTable?.SortLabel);
+        StateHasChanged();
+    }
+
+    private void OnCoachSearch(string text)
+    {
+        coachSearchString = text;
+        CoachesReload(coachesTable?.SortLabel);
+        StateHasChanged();
+    }
+
+    private void RegisterNewVisitorClick(MouseEventArgs args)
+    {
+        // here we defign what we do when click "Register new visitor" button
+        newVisitor = new Visitor()
+        {
+                Id = new Guid(),
+                RegistrationDate = DateTime.Now,
+                IsActive = true,
+                IsInGym = true
+        };
+        OpenNewVisitorForm();
+        /*
+        // move this to the method called after the form "Submit" button
+        using (ApplicationDbContext db = new())
+        {
+            db.Visitors.Add(newVisitor);
+            db.SaveChanges();
+        }
+        VisitorsReload(visitorsTable?.SortLabel); 
+        StateHasChanged(); 
+        */
+    }
+
+    private void CheckVisitorInClick(MouseEventArgs args)
+    {
+        OpenVisitorCheckIn(); // TODO all (not IsInGym) visitors list should be opened with checkboxes for IsInGym
+    }
+
+    private void CheckCoachInClick(MouseEventArgs args)
+    {
+        OpenCoachCheckIn(); // TODO all (not IsAtWork) coaches list should be opened with checkboxes for IsAtWork
+    }
+
+    private void VisitorRowClickEvent(TableRowClickEventArgs<Visitor> tableRowClickEventArgs)
+    {
+        // here we can define what to do when a row has been clicked
+        // tableRowClickEventArgs.Item contains the Element in the selected row
+        viewedVisitor = tableRowClickEventArgs.Item;
+        OpenVisitorView(); // TODO Visior View form should be opened with details of the given visitor
+    }
+
+    private void CoachRowClickEvent(TableRowClickEventArgs<Coach> tableRowClickEventArgs)
+    {
+        // here we can define what to do when a row has been clicked
+        // tableRowClickEventArgs.Item contains the Element in the selected row
+        viewedCoach = tableRowClickEventArgs.Item;
+        OpenCoachView(); // TODO Coach View form should be opened with details of the given coach
+    }
+}
