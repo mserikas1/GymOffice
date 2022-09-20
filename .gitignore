@@ -5,3 +5,8 @@ GymOffice.DataAccess.SQL/obj/
 GymOffice.Common/bin/
 GymOffice.Common/obj/
 .vs/
+/customer-cabinet-react/node_modules
+/GymOffice.CustomerApi/bin/Debug/net6.0
+/GymOffice.CustomerApi/obj
+/GymOffice.WebAdmin/bin/Debug/net6.0
+/GymOffice.WebAdmin/obj
