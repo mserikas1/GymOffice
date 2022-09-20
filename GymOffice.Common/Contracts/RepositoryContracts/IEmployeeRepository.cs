@@ -1,9 +1,9 @@
 ﻿namespace GymOffice.Common.Contracts.RepositoryContracts;
 public interface IEmployeeRepository
 {
-    Task<IEnumerable<Employee>?> GetEmployeesAsync();
-    Task<Employee?> GetEmployeeByIdAsync(Guid id);
-    Task<Guid> AddEmployeeAsync(Employee employee);
-    Task<Employee> UpdateEmployeeAsync(Employee employee);
-    Task<Employee> DeleteEmployeeAsync(Guid id);
+    Task<ICollection<Admin>?> GetAdministratorsAsync();
+    ICollection<Admin>? GetAdministrators();
+    Task<Admin?> GetAdministratorByIdAsync(Guid id);
+    Task<Receptionist?> GetReceptionistByIdAsync(Guid id);
+    Task AddReceptionistAsync(Receptionist receptionist);
 }

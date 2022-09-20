@@ -6,6 +6,15 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<ApplicationDbContext>();
 
+// DI for Repositories
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+// DI for DataProviders
+builder.Services.AddTransient<IEmployeeDataProvider, EmployeeDataProvider>();
+
+// DI for Commands
+builder.Services.AddTransient<IAddReceptionistCommand, AddReceptionistCommand>();
+
 builder.Services.AddMudServices();
 
 var app = builder.Build();

@@ -13,18 +13,18 @@ namespace GymOffice.DataAccess.SQL
 {
     public class ApplicationDbContext:DbContext
     {
-        public DbSet<Abonnement> Abonnements { get; set; }
-        public DbSet<AbonnementType> AbonnementTypes { get; set; }
-        public DbSet<JobSchedule> JobSchedules { get; set; }
-        public DbSet<PersonalTraining> PersonalTrainings { get; set; }
-        public DbSet<TrainingVisit> TrainingVisits { get; set; }
-        public DbSet<GroupTraining> GroupTrainings { get; set; }
-        public DbSet<Visitor> Visitors { get; set; }
-        public DbSet<Coach> Coaches { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<VisitorCard> VisitorCards { get; set; }
-        public DbSet<Receptionist> Receptionists { get; set; }
-        public DbSet<Admin> Admins { get; set; }
+        public DbSet<Abonnement> Abonnements { get; set; } = null!;
+        public DbSet<AbonnementType> AbonnementTypes { get; set; } = null!;
+        public DbSet<JobSchedule> JobSchedules { get; set; } = null!;
+        public DbSet<PersonalTraining> PersonalTrainings { get; set; } = null!;
+        public DbSet<TrainingVisit> TrainingVisits { get; set; } = null!;
+        public DbSet<GroupTraining> GroupTrainings { get; set; } = null!;
+        public DbSet<Visitor> Visitors { get; set; } = null!;
+        public DbSet<Coach> Coaches { get; set; } = null!;
+        public DbSet<Employee> Employees { get; set; } = null!;
+        public DbSet<VisitorCard> VisitorCards { get; set; } = null!;
+        public DbSet<Receptionist> Receptionists { get; set; } = null!;
+        public DbSet<Admin> Admins { get; set; } = null!;
         public ApplicationDbContext()
         {
 

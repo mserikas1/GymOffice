@@ -7,5 +7,10 @@ GymOffice.Common/obj/
 .vs/
 GymOffice.WebAdmin/obj/
 GymOffice.WebAdmin/bin/
+<<<<<<< HEAD
 /GymOffice.CustomerApi/obj
 /GymOffice.CustomerApi/bin/Debug/net6.0
+=======
+GymOffice.UnitTests/bin/
+GymOffice.UnitTests/obj/
+>>>>>>> develop

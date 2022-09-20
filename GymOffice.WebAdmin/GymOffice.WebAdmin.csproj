@@ -16,4 +16,8 @@
     <ProjectReference Include="..\GymOffice.DataAccess.SQL\GymOffice.DataAccess.SQL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Data\Photos\" />
+  </ItemGroup>
+
 </Project>
