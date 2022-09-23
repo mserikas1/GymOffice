@@ -1,6 +1,8 @@
 ﻿namespace GymOffice.WebAdmin.ViewModels;
-public class CreatedReceptionistVM
-{    
+public class ReceptionistVM
+{
+    public Guid Id { get; set; }
+
     [Required]
     [Display(Name = "First Name")]
     [StringLength(20, MinimumLength = 2, ErrorMessage = "Name length must be between 2 and 20 characters")]
@@ -40,7 +42,17 @@ public class CreatedReceptionistVM
 
     public Admin CreatedBy { get; set; } = null!;
 
+    public DateTime CreatedAt { get; set; }
+
     public Admin ModifiedBy { get; set; } = null!;
 
+    public DateTime ModifiedAt { get; set; }
+
+    public bool IsAtWork { get; set; }
+
+    public bool IsActive { get; set; }
+
     public string? PhotoUrl { get; set; }
+
+    public ICollection<JobSchedule> JobScheduleItems { get; set; } = new List<JobSchedule>();
 }

@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B774267C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymOffice.WebAdmin", "GymOffice.WebAdmin\GymOffice.WebAdmin.csproj", "{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymOffice.UnitTests", "GymOffice.UnitTests\GymOffice.UnitTests.csproj", "{7053EB4B-5315-442F-B987-3C362B4347C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymOffice.UnitTests", "GymOffice.UnitTests\GymOffice.UnitTests.csproj", "{7053EB4B-5315-442F-B987-3C362B4347C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

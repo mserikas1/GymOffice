@@ -1,15 +1,4 @@
-﻿using GymOffice.Common.DTOs;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GymOffice.DataAccess.SQL
+﻿namespace GymOffice.DataAccess.SQL
 {
     public class ApplicationDbContext:DbContext
     {

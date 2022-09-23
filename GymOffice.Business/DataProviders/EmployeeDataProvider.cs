@@ -23,4 +23,9 @@ public class EmployeeDataProvider : IEmployeeDataProvider
         var admins = await _employeeRepository.GetAdministratorsAsync();
         return admins;
     }
+
+    public async Task<ICollection<Receptionist>?> GetReceptionistsAsync()
+    {
+        return await _employeeRepository.GetReceptionistsAsync();
+    }
 }

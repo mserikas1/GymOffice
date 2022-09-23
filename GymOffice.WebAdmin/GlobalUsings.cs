@@ -14,3 +14,7 @@ global using GymOffice.Common.Contracts.RepositoryContracts;
 global using GymOffice.DataAccess.SQL.Repositories;
 global using GymOffice.WebAdmin.Extensions;
 global using System.ComponentModel;
+global using GymOffice.WebAdmin.PageComponents.Dialogs;
+global using MudBlazor;
+global using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.Edit;
+global using GymOffice.Business.Commands.AdministratorCommands.Edit;

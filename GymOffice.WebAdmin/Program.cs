@@ -14,6 +14,7 @@ builder.Services.AddTransient<IEmployeeDataProvider, EmployeeDataProvider>();
 
 // DI for Commands
 builder.Services.AddTransient<IAddReceptionistCommand, AddReceptionistCommand>();
+builder.Services.AddTransient<IEditReceptionistCommand, EditReceptionistCommand>();
 
 builder.Services.AddMudServices();
 

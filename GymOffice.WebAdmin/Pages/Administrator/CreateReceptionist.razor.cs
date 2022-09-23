@@ -1,7 +1,7 @@
 ﻿namespace GymOffice.WebAdmin.Pages.Administrator;
 public partial class CreateReceptionist : ComponentBase
 {
-    private CreatedReceptionistVM? receptionistModel;
+    private ReceptionistVM? receptionistModel;
     private Admin? admin;
     private IBrowserFile? imageFile;
     private string imageFileName = string.Empty;
@@ -26,7 +26,7 @@ public partial class CreateReceptionist : ComponentBase
         {
             if (firstRender)
             {
-                GetAdmin();
+                admin = GetAdmin();
                 InitialReceptionistModel();
                 StateHasChanged();
             }
@@ -83,14 +83,14 @@ public partial class CreateReceptionist : ComponentBase
         // TODO upload on server
     }
 
-    private void GetAdmin()
+    private Admin? GetAdmin()
     {
-        admin = EmployeeDataProvider.GetAdministrators()?.FirstOrDefault();
+        return EmployeeDataProvider.GetAdministrators()?.FirstOrDefault();
     }
 
     private void InitialReceptionistModel()
     {
-        receptionistModel = new CreatedReceptionistVM();
+        receptionistModel = new ReceptionistVM();
         if (admin != null)
         {
             receptionistModel.CreatedBy = admin;
@@ -101,7 +101,7 @@ public partial class CreateReceptionist : ComponentBase
     private void HandleResetError()
     {
         errorMessage = null;
-        GetAdmin();
+        admin = GetAdmin();
         InitialReceptionistModel();
         StateHasChanged();
     }

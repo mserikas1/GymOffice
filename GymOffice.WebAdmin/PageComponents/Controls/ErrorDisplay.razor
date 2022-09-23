@@ -1,8 +1,4 @@
-﻿@*<h5 class="alert alert-danger my-4">@ErrorMessage</h5>
-
-<button class="btn btn-primary mt-3" @onclick="ResetError_Click">Back</button>
-*@
-<MudAlert Severity="Severity.Error" Class="m-5">@ErrorMessage</MudAlert>
+﻿<MudAlert Severity="Severity.Error" Class="my-5">@ErrorMessage</MudAlert>
 
 <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ms-5" OnClick="ResetError_Click">Back</MudButton>
 

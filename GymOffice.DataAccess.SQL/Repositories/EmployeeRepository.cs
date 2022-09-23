@@ -1,8 +1,4 @@
-﻿using GymOffice.Common.Contracts.RepositoryContracts;
-using GymOffice.Common.DTOs;
-using Microsoft.EntityFrameworkCore;
-
-namespace GymOffice.DataAccess.SQL.Repositories;
+﻿namespace GymOffice.DataAccess.SQL.Repositories;
 public class EmployeeRepository : IEmployeeRepository
 {
     private readonly ApplicationDbContext _dbContext;
@@ -36,6 +32,31 @@ public class EmployeeRepository : IEmployeeRepository
 
     public async Task<Receptionist?> GetReceptionistByIdAsync(Guid id)
     {
-        return await _dbContext.Receptionists.SingleOrDefaultAsync(a => a.Id == id);
+        return await _dbContext.Receptionists.SingleOrDefaultAsync(r => r.Id == id);
+    }
+
+    public async Task<ICollection<Receptionist>?> GetReceptionistsAsync()
+    {
+        return await _dbContext.Receptionists
+            .Include(r => r.CreatedBy)
+            .Include(r => r.ModifiedBy)
+            .ToListAsync();
+    }
+
+    public async Task UpdateReceptionistAsync(Receptionist receptionist)
+    {
+        Receptionist? entity = await _dbContext.Receptionists
+            .SingleOrDefaultAsync(r => r.Id == receptionist.Id);
+        if (entity != null)
+        {
+            entity.PhoneNumber = receptionist.PhoneNumber;
+            entity.Email = receptionist.Email;
+            entity.IsActive = receptionist.IsActive;
+            entity.ModifiedBy = receptionist.ModifiedBy;
+            entity.ModifiedAt = receptionist.ModifiedAt;
+            entity.PhotoUrl = receptionist.PhotoUrl;
+            _dbContext.Receptionists.Update(entity);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
