@@ -11,6 +11,11 @@ else if (ErrorMessage != null)
 }
 else
 {
+    <ReceptionistSearchComponent SearchOptions="SearchOptions"
+        HandleSearch_Click="HandleSearch"
+        HandleResetSearch_Click="HandleResetSearch" />
+
+    @*<MudTable Items="@Receptionists" Dense="true" Hover="true" Filter="new Func<Receptionist, bool>(FilterFunc1)">*@
     <MudTable Items="@Receptionists" Dense="true" Hover="true" Filter="new Func<Receptionist, bool>(FilterFunc1)">
         <ToolBarContent>
             <MudText Typo="Typo.h6">Receptionists</MudText>

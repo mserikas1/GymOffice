@@ -1,4 +1,6 @@
-﻿namespace GymOffice.DataAccess.SQL.Repositories;
+﻿using GymOffice.Common.SearchParams;
+
+namespace GymOffice.DataAccess.SQL.Repositories;
 public class EmployeeRepository : IEmployeeRepository
 {
     private readonly ApplicationDbContext _dbContext;
@@ -41,6 +43,32 @@ public class EmployeeRepository : IEmployeeRepository
             .Include(r => r.CreatedBy)
             .Include(r => r.ModifiedBy)
             .ToListAsync();
+    }
+
+    public async Task<ICollection<Receptionist>?> SearchReceptionistsAsync(ReceptionistSearchOptions options)
+    {        
+        var receptionists = _dbContext.Receptionists
+            .Include(r => r.CreatedBy)
+            .Include(r => r.ModifiedBy).AsEnumerable();
+
+        if (!string.IsNullOrEmpty(options.FirstName))
+            receptionists = receptionists.Where(r => r.FirstName.Contains(options.FirstName, StringComparison.InvariantCultureIgnoreCase));
+        if (!string.IsNullOrEmpty(options.LastName))
+            receptionists = receptionists.Where(r => r.LastName.Contains(options.LastName, StringComparison.InvariantCultureIgnoreCase));
+        if (!string.IsNullOrEmpty(options.Email))
+            receptionists = receptionists.Where(r => r.Email.Contains(options.Email, StringComparison.InvariantCultureIgnoreCase));
+        if (!string.IsNullOrEmpty(options.Phone))
+            receptionists = receptionists.Where(r => r.PhoneNumber.Contains(options.Phone, StringComparison.InvariantCultureIgnoreCase));
+        if (options.IsActive == Common.Enums.SelectedIItem.Selected)
+            receptionists = receptionists.Where(r => r.IsActive == true);
+        if (options.IsActive == Common.Enums.SelectedIItem.Unselected)
+            receptionists = receptionists.Where(r => r.IsActive == false);
+        if (options.IsAtWork == Common.Enums.SelectedIItem.Selected)
+            receptionists = receptionists.Where(r => r.IsAtWork == true);
+        if (options.IsAtWork == Common.Enums.SelectedIItem.Unselected)
+            receptionists = receptionists.Where(r => r.IsAtWork == false);
+        
+        return receptionists.ToList();
     }
 
     public async Task UpdateReceptionistAsync(Receptionist receptionist)

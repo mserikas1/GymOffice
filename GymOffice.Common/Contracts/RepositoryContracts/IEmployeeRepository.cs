@@ -8,4 +8,5 @@ public interface IEmployeeRepository
     Task AddReceptionistAsync(Receptionist receptionist);
     Task<ICollection<Receptionist>?> GetReceptionistsAsync();
     Task UpdateReceptionistAsync(Receptionist receptionist);
+    Task<ICollection<Receptionist>?> SearchReceptionistsAsync(ReceptionistSearchOptions options);
 }

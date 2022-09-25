@@ -1,0 +1,50 @@
+﻿<MudPaper Class="mb-5 pa-5 flex-grow-1">   
+    <MudGrid Class="justify-s">
+        <MudItem xs="12" sm="9">
+            <div class="d-flex flex-row gap-4">
+                <MudTextField Label="First Name" Variant="Variant.Outlined" Margin="Margin.Dense"
+                              @bind-Value="SearchOptions.FirstName" For="@(() => SearchOptions.FirstName)" />
+                <MudTextField Label="Last Name" Variant="Variant.Outlined" Margin="Margin.Dense"
+                              @bind-Value="SearchOptions.LastName" For="@(() => SearchOptions.LastName)" />
+                <MudTextField Label="Phone" Variant="Variant.Outlined" Margin="Margin.Dense"
+                              @bind-Value="SearchOptions.Phone" For="@(() => SearchOptions.Phone)" />
+                <MudTextField Label="Email" Variant="Variant.Outlined" Margin="Margin.Dense"
+                              @bind-Value="SearchOptions.Email" For="@(() => SearchOptions.Email)" />
+            </div>
+            <div class="d-flex flex-row gap-4">
+                <MudItem xs="6" Class="d-inline-flex gap-4">
+                    <MudSelect T="SelectedIItem" Label="Active" Margin="Margin.Dense" Dense="true"
+                               Variant="Variant.Outlined" Class="mt-3"
+                               @bind-Value="SearchOptions.IsActive" For="@(() => SearchOptions.IsActive)">
+                        <MudSelectItem Value="@(SelectedIItem.None)">All</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedIItem.Selected)">Yes</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedIItem.Unselected)">No</MudSelectItem>
+                    </MudSelect>
+                    <MudSelect T="SelectedIItem" Label="At Work" Margin="Margin.Dense" Dense="true"
+                               Variant="Variant.Outlined" Class="mt-3"
+                               @bind-Value="SearchOptions.IsAtWork" For="@(() => SearchOptions.IsAtWork)">
+                        <MudSelectItem Value="@(SelectedIItem.None)">All</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedIItem.Selected)">At work</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedIItem.Unselected)">Not at work</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+            </div>
+        </MudItem>
+        <MudItem sm="1"></MudItem>
+        <MudItem xs="12" sm="2" >
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth Class="mb-4"
+                       OnClick="(() => HandleSearch_Click.InvokeAsync(SearchOptions))">Search</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" FullWidth
+                       OnClick="(() => HandleResetSearch_Click.InvokeAsync())">Reset</MudButton>
+        </MudItem>
+    </MudGrid>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public ReceptionistSearchOptions SearchOptions { get; set; } = null!;
+    [Parameter]
+    public EventCallback<ReceptionistSearchOptions> HandleSearch_Click { get; set; }
+    [Parameter]
+    public EventCallback HandleResetSearch_Click { get; set; }    
+}

@@ -1,4 +1,6 @@
-﻿namespace GymOffice.Business.DataProviders;
+﻿using GymOffice.Common.SearchParams;
+
+namespace GymOffice.Business.DataProviders;
 public class EmployeeDataProvider : IEmployeeDataProvider
 {
     private readonly IEmployeeRepository _employeeRepository;
@@ -27,5 +29,18 @@ public class EmployeeDataProvider : IEmployeeDataProvider
     public async Task<ICollection<Receptionist>?> GetReceptionistsAsync()
     {
         return await _employeeRepository.GetReceptionistsAsync();
+    }
+
+    public async Task<ICollection<Receptionist>?> SearchReceptionistsAsync(ReceptionistSearchOptions options)
+    {
+        if (options == null)
+        {
+            return null;
+        }
+        if (options.IsNullOrEmpty())
+        {
+            return await _employeeRepository.GetReceptionistsAsync();
+        }
+        return await _employeeRepository.SearchReceptionistsAsync(options);
     }
 }

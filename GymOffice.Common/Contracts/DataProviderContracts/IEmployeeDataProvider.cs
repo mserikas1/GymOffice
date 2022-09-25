@@ -5,4 +5,5 @@ public interface IEmployeeDataProvider
     Task<ICollection<Admin>?> GetAdministratorsAsync();
     Task<ICollection<Receptionist>?> GetReceptionistsAsync();
     ICollection<Admin>? GetAdministrators();
+    Task<ICollection<Receptionist>?> SearchReceptionistsAsync(ReceptionistSearchOptions options);
 }

@@ -1,12 +1,12 @@
 ﻿namespace GymOffice.WebAdmin.Pages.Administrator;
 public partial class ReceptionistsListPage : ComponentBase
 {
+    private string searchString = "";    
     public Receptionist? Receptionist { get; set; }
     public ReceptionistVM? ReceptionistVM { get; set; } = new();
-    private string searchString = "";
-    
     public string? ErrorMessage { get; set; }
     public List<Receptionist>? Receptionists { get; set; }
+    public ReceptionistSearchOptions SearchOptions { get; set; } = new();
 
     [Inject]
     public IEmployeeDataProvider EmployeeDataProvider { get; set; } = null!;
@@ -81,5 +81,19 @@ public partial class ReceptionistsListPage : ComponentBase
     private void GoToPreview_Click(Receptionist receptionist)
     {
         NavigationManager.NavigateTo($"/admin/receptionists/{receptionist.Id}");
+    }
+
+    private async void HandleSearch(ReceptionistSearchOptions options)
+    {
+        SearchOptions = options;
+        Receptionists = (List<Receptionist>?)await EmployeeDataProvider.SearchReceptionistsAsync(options);
+        StateHasChanged();
+    }
+
+    private async Task HandleResetSearch()
+    {
+        SearchOptions = new();
+        Receptionists = (List<Receptionist>?)await EmployeeDataProvider.GetReceptionistsAsync();
+        StateHasChanged();
     }
 }
