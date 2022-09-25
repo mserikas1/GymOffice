@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymOffice.Business", "GymOf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymOffice.DataAccess.SQL", "GymOffice.DataAccess.SQL\GymOffice.DataAccess.SQL.csproj", "{EFA6293B-155F-4A54-8B41-7D24AE5B1181}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B774267C-D8DE-4508-873F-DA341E995B78}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymOffice.WebAdmin", "GymOffice.WebAdmin\GymOffice.WebAdmin.csproj", "{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}"
 EndProject
 Global

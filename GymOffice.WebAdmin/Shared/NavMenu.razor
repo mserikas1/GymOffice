@@ -1,7 +1,38 @@
-﻿<MudNavMenu >    
-    <ReceptionistNavMenu />
+﻿<MudNavMenu >
+    @if (PagePath == "admin")
+    {
+        <AdminNavMenu />
+    }
+    @if (PagePath == "coach")
+    {
+        <CoachNavMenu />
+    }
+    @if (PagePath == "receptionist")
+    {
+        <ReceptionistNavMenu />
+    }
 </MudNavMenu>
 
 @code {
+    public string PagePath { get; set; } = string.Empty;
+    public string EditedPath { get; set; } = string.Empty;
 
+    [Inject]
+    public NavigationManager NavigationManager { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        PagePath = NavigationManager.Uri.Substring(NavigationManager.BaseUri.Length).Split('/')[0];
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {        
+        EditedPath = NavigationManager.Uri.Substring(NavigationManager.BaseUri.Length).Split('/')[0];
+
+        if (!EditedPath.Equals(PagePath))
+        {
+            PagePath = EditedPath;
+            StateHasChanged();
+        }
+    }
 }
