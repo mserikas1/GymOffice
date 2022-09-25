@@ -37,7 +37,7 @@ namespace GymOffice.DataAccess.SQL.Repositories
 
         public async Task<Visitor?> GetVisitorByIdAsync(Guid id)
         {
-            return await _dbContext.Visitors.FirstOrDefaultAsync(v => v.Id == id);
+            return await _dbContext.Visitors.Include(v => v.VisitorCard).FirstOrDefaultAsync(v => v.Id == id);
         }
 
         public async Task<ICollection<Visitor>?> GetVisitorsAsync()

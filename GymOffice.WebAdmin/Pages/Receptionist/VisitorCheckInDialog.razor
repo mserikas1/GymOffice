@@ -4,11 +4,11 @@
 @inject IUpdateVisitorCommand UpdateVisitorCommand
     
 <!-- Inactive Visitors list with checkin possibility -->
-<MudDialog Style="overflow-x: scroll">
+<MudDialog>
     <DialogContent>
         <MudText Align="Align.Center">Inactive visitors list allows to activate a selected visitor.</MudText>
         <!-- Visitors list -->
-        <MudItem xs="4" sm="4" md="12">
+        <MudItem xs="4" sm="4" md="12" Style="overflow-y: scroll; overflow-x: scroll">
             <MudCard Elevation="25" Class="rounded-lg pb-4">
                 <MudCardHeader>
                     <CardHeaderContent>
@@ -86,11 +86,9 @@
     private async Task GetInactiveVisitorsAsync()
     {
         Visitors = await VisitorDataProvider.GetInactiveVisitorsAsync();
-        await Task.Delay(200); // for db connection stability
+        await Task.Delay(100); // for db connection stability
     }
 
-    // private string GetBarCode(VisitorCard visitorCard) => visitorCard.BarCode;
-    
     // Changing the value in the table should change it in the database
     private async Task IsInGymChanged(Visitor currentVisitor)
     {

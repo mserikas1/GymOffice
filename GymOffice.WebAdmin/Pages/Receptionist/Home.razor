@@ -1,4 +1,4 @@
-﻿@page "/receptionist/home"
+﻿@page "/receptionist/Home"
 @using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.Add
 @using GymOffice.Common.Contracts.DataProviderContracts
 @using GymOffice.Common.Contracts.RepositoryContracts
@@ -176,7 +176,7 @@
         var dialog = DialogService.Show<VisitorCheckInDialog>("Checking a visitor in", options);
         await dialog.Result;
         await VisitorsReloadAsync(visitorsTable?.SortLabel);
-        await Task.Delay(200); // for db connection stability
+        await Task.Delay(100); // for db connection stability
     }
 
     private async Task OpenCoachCheckIn()
@@ -192,7 +192,7 @@
         var dialog = DialogService.Show<CoachCheckInDialog>("Checking a coach in", options);
         await dialog.Result;
         await CoachesReloadAsync(coachesTable?.SortLabel);
-        await Task.Delay(200); // for db connection stability
+        await Task.Delay(100); // for db connection stability
     }
 
     private void OpenCoachView() => _isCoachViewOpen = true;
@@ -214,13 +214,13 @@
     private async Task GetActiveCoachesAsync()
     {
         Coaches = await CoachDataProvider.GetActiveCoachesAsync();
-        await Task.Delay(200); // for db connection stability
+        await Task.Delay(100); // for db connection stability
     }
 
     private async Task GetActiveVisitorsAsync()
     {
         Visitors = await VisitorDataProvider.GetActiveVisitorsAsync();
-        await Task.Delay(200); // for db connection stability
+        await Task.Delay(100); // for db connection stability
     }
 
     /// <summary>Temporary method, call it ONCE to fill the empty DB with coaches and visitors and add one admin (Oleg M)</summary>
