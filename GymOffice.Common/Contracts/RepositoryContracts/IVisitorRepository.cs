@@ -2,8 +2,8 @@
 public interface IVisitorRepository
 {
     Task<ICollection<Visitor>?> GetVisitorsAsync();
-    Task<ICollection<Visitor>?> GetActiveVisitorsAsync();
-    Task<ICollection<Visitor>?> GetInactiveVisitorsAsync();
+    Task<ICollection<Visitor>?> GetVisitorsInGymAsync();
+    Task<ICollection<Visitor>?> GetVisitorsNotInGymAsync();
     Task<Visitor?> GetVisitorByIdAsync(Guid id);
     Task AddVisitorAsync(Visitor visitor);
     Task UpdateVisitorAsync(Visitor visitor);

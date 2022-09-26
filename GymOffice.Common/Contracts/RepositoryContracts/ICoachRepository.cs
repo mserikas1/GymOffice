@@ -3,7 +3,7 @@ public interface ICoachRepository
 {
     Task<ICollection<Coach>?> GetAllCoachesAsync();
     Task<ICollection<Coach>?> GetActiveCoachesAsync();
-    Task<ICollection<Coach>?> GetInactiveCoachesAsync();
+    Task<ICollection<Coach>?> GetCoachesNotAtWorkAsync();
     Task<Coach?> GetCoachByIdAsync(Guid id);
     Task<Guid> AddCoachAsync(Coach coach);
     Task UpdateCoachAsync(Coach coach);

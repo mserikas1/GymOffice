@@ -6,7 +6,7 @@
 <!-- Inactive Visitors list with checkin possibility -->
 <MudDialog>
     <DialogContent>
-        <MudText Align="Align.Center">Inactive visitors list allows to activate a selected visitor.</MudText>
+        <MudText Align="Align.Center">List of visitors not in gym allows to check-in a selected visitor.</MudText>
         <!-- Visitors list -->
         <MudItem xs="4" sm="4" md="12" Style="overflow-y: scroll; overflow-x: scroll">
             <MudCard Elevation="25" Class="rounded-lg pb-4">
@@ -80,12 +80,12 @@
     protected override async Task OnInitializedAsync()
     {
         visitorsTable = new();
-        await GetInactiveVisitorsAsync();
+        await GetVisitorsNotInGymAsync();
     }
 
-    private async Task GetInactiveVisitorsAsync()
+    private async Task GetVisitorsNotInGymAsync()
     {
-        Visitors = await VisitorDataProvider.GetInactiveVisitorsAsync();
+        Visitors = await VisitorDataProvider.GetVisitorsNotInGymAsync();
         await Task.Delay(100); // for db connection stability
     }
 
@@ -103,7 +103,7 @@
 
     private async Task VisitorsReloadAsync(string? sortLabel)
     {
-        await GetInactiveVisitorsAsync();
+        await GetVisitorsNotInGymAsync();
         if (!string.IsNullOrWhiteSpace(visitorSearchString))
             Visitors = Visitors?
                 .Where(c => $"{c.FirstName} {c.LastName} {c.Email} {c.PhoneNumber}".Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))

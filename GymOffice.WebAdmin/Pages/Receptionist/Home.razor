@@ -24,13 +24,13 @@
 </style>
 
 <MudContainer Class="mt-4">
-    <MudText Align="Align.Center">Receptionist's Work Place shows active visitors and coaches lists and allows to register visitors and visits.</MudText>
+    <MudText Align="Align.Center">Receptionist's Work Place shows lists of visitors in gym and coaches at work and allows to check them in and register new visitors.</MudText>
     <MudGrid Class="mt-0">
         <!-- Visitors list -->
         <MudItem xs="4" sm="4" md="6">
             <MudCard Elevation="25" Class="rounded-lg pb-4">
                 <MudCardActions Class="d-flex justify-center">
-                    <!-- Opening Inactive Visitors list with checkin possibility -->
+                    <!-- Opening Visitors Not In Gym list with checkin possibility -->
                     <MudButton Variant="Variant.Filled" Class="md-3 mr-3" Color="Color.Primary" Size="Size.Large" Style="width:50%;"
                         OnClick="CheckVisitorInClick">Check Visitor In</MudButton> 
                         
@@ -53,7 +53,7 @@
                 </MudCardActions>
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h5" Align="Align.Center">Active Visitors</MudText>
+                        <MudText Typo="Typo.h5" Align="Align.Center">Visitors In Gym</MudText>
                         <MudTextField T="string" ValueChanged="@(str=>OnVisitorSearch(str))" Placeholder="Search a visitor" Adornment="Adornment.Start"
                             AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                     </CardHeaderContent>
@@ -89,7 +89,7 @@
         <MudItem xs="4" sm="4" md="6">
             <MudCard Elevation="25" Class="rounded-lg pb-4">
                 <MudCardActions Class="d-flex justify-center">
-                    <!-- Opening Inactive Coaches list with checkin possibility -->
+                    <!-- Opening Coaches Not At Work list with checkin possibility -->
                     <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;" 
                         OnClick="CheckCoachInClick">Check Coach In</MudButton>
 
@@ -102,7 +102,7 @@
                 </MudCardActions>
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h5" Align="Align.Center">Active Coaches</MudText>
+                        <MudText Typo="Typo.h5" Align="Align.Center">Coaches At Work</MudText>
                         <MudTextField T="string" ValueChanged="@(str=>OnCoachSearch(str))" Placeholder="Search a coach" Adornment="Adornment.Start"
                             AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                     </CardHeaderContent>
@@ -205,21 +205,21 @@
     {
         // await AddAdminCoachesVisitorsToDB();
 
-        await GetActiveCoachesAsync();
-        await GetActiveVisitorsAsync();
+        await GetCoachesAtWorkAsync();
+        await GetVisitorsInGymAsync();
         coachesTable = new();
         visitorsTable = new();
     }
 
-    private async Task GetActiveCoachesAsync()
+    private async Task GetCoachesAtWorkAsync()
     {
-        Coaches = await CoachDataProvider.GetActiveCoachesAsync();
+        Coaches = await CoachDataProvider.GetCoachesAtWorkAsync();
         await Task.Delay(100); // for db connection stability
     }
 
-    private async Task GetActiveVisitorsAsync()
+    private async Task GetVisitorsInGymAsync()
     {
-        Visitors = await VisitorDataProvider.GetActiveVisitorsAsync();
+        Visitors = await VisitorDataProvider.GetVisitorsInGymAsync();
         await Task.Delay(100); // for db connection stability
     }
 
@@ -335,7 +335,7 @@
 
     private async Task CoachesReloadAsync(string? sortLabel)
     {
-        await GetActiveCoachesAsync();
+        await GetCoachesAtWorkAsync();
         if (!string.IsNullOrWhiteSpace(coachSearchString))
             Coaches = Coaches?
                 .Where(c => $"{c.FirstName} {c.LastName} {c.Email}".Contains(coachSearchString, StringComparison.OrdinalIgnoreCase))
@@ -355,7 +355,7 @@
 
     private async Task VisitorsReloadAsync(string? sortLabel)
     {
-        await GetActiveVisitorsAsync();
+        await GetVisitorsInGymAsync();
         if (!string.IsNullOrWhiteSpace(visitorSearchString))
             Visitors = Visitors?
                 .Where(v => $"{v.FirstName} {v.LastName} {v.Email}".Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))

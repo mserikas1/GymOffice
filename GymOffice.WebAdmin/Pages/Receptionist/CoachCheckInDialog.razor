@@ -6,7 +6,7 @@
 <!-- Inactive Coaches list with checkin possibility -->
 <MudDialog>
     <DialogContent>
-        <MudText Align="Align.Center">Inactive coaches list allows to activate a selected coach.</MudText>
+        <MudText Align="Align.Center">List of coaches who are not at work allows to check-in a selected coach.</MudText>
         <!-- Coaches list -->
         <MudItem xs="4" sm="4" md="12" Style="overflow-y: scroll; overflow-x: scroll">
             <MudCard Elevation="25" Class="rounded-lg pb-4">
@@ -77,12 +77,12 @@
     protected override async Task OnInitializedAsync()
     {
         coachesTable = new();
-        await GetInactiveCoachesAsync();
+        await GetCoachesNotAtWorkAsync();
     }
 
-    private async Task GetInactiveCoachesAsync()
+    private async Task GetCoachesNotAtWorkAsync()
     {
-        Coaches = await CoachDataProvider.GetInactiveCoachesAsync();
+        Coaches = await CoachDataProvider.GetCoachesNotAtWorkAsync();
         await Task.Delay(100); // for db connection stability
     }
 
@@ -100,7 +100,7 @@
 
     private async Task CoachesReloadAsync(string? sortLabel)
     {
-        await GetInactiveCoachesAsync();
+        await GetCoachesNotAtWorkAsync();
         if (!string.IsNullOrWhiteSpace(coachSearchString))
             Coaches = Coaches?
                 .Where(c => $"{c.FirstName} {c.LastName} {c.Email} {c.PhoneNumber}".Contains(coachSearchString, StringComparison.OrdinalIgnoreCase))

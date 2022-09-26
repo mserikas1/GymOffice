@@ -30,7 +30,7 @@ namespace GymOffice.DataAccess.SQL.Repositories
             return await _dbContext.Coaches.Where(c => c.IsAtWork).ToListAsync();
         }
 
-        public async Task<ICollection<Coach>?> GetInactiveCoachesAsync()
+        public async Task<ICollection<Coach>?> GetCoachesNotAtWorkAsync()
         {
             return await _dbContext.Coaches.Where(c => !c.IsAtWork).ToListAsync();
         }
