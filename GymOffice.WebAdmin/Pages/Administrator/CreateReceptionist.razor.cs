@@ -1,7 +1,18 @@
+<<<<<<< HEAD
 ﻿namespace GymOffice.WebAdmin.Pages.Administrator;
 public partial class CreateReceptionist : ComponentBase
 {
     private ReceptionistVM? receptionistModel;
+=======
+﻿using GymOffice.WebAdmin.Extensions;
+using GymOffice.WebAdmin.ViewModels;
+using Microsoft.AspNetCore.Components.Forms;
+
+namespace GymOffice.WebAdmin.Pages.Administrator;
+public partial class CreateReceptionist : ComponentBase
+{
+    private CreatedReceptionistVM? receptionistModel;
+>>>>>>> oleg-feature-receptionist-pages
     private Admin? admin;
     private IBrowserFile? imageFile;
     private string imageFileName = string.Empty;
@@ -26,7 +37,11 @@ public partial class CreateReceptionist : ComponentBase
         {
             if (firstRender)
             {
+<<<<<<< HEAD
                 admin = GetAdmin();
+=======
+                GetAdmin();
+>>>>>>> oleg-feature-receptionist-pages
                 InitialReceptionistModel();
                 StateHasChanged();
             }
@@ -83,14 +98,24 @@ public partial class CreateReceptionist : ComponentBase
         // TODO upload on server
     }
 
+<<<<<<< HEAD
     private Admin? GetAdmin()
     {
         return EmployeeDataProvider.GetAdministrators()?.FirstOrDefault();
+=======
+    private void GetAdmin()
+    {
+        admin = EmployeeDataProvider.GetAdministrators()?.FirstOrDefault();
+>>>>>>> oleg-feature-receptionist-pages
     }
 
     private void InitialReceptionistModel()
     {
+<<<<<<< HEAD
         receptionistModel = new ReceptionistVM();
+=======
+        receptionistModel = new CreatedReceptionistVM();
+>>>>>>> oleg-feature-receptionist-pages
         if (admin != null)
         {
             receptionistModel.CreatedBy = admin;
@@ -101,7 +126,11 @@ public partial class CreateReceptionist : ComponentBase
     private void HandleResetError()
     {
         errorMessage = null;
+<<<<<<< HEAD
         admin = GetAdmin();
+=======
+        GetAdmin();
+>>>>>>> oleg-feature-receptionist-pages
         InitialReceptionistModel();
         StateHasChanged();
     }

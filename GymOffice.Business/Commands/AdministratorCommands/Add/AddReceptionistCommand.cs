@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 ﻿namespace GymOffice.Business.Commands.AdministratorCommands.Add;
+=======
+﻿using GymOffice.Business.Common.Exceptions;
+using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.Add;
+
+namespace GymOffice.Business.Commands.AdministratorCommands.Add;
+>>>>>>> oleg-feature-receptionist-pages
 public class AddReceptionistCommand : IAddReceptionistCommand
 {
     private readonly IEmployeeRepository _employeeRepository;

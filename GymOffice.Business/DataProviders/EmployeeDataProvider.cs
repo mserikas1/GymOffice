@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 ﻿using GymOffice.Common.SearchParams;
 
 namespace GymOffice.Business.DataProviders;
+=======
+﻿namespace GymOffice.Business.DataProviders;
+>>>>>>> oleg-feature-receptionist-pages
 public class EmployeeDataProvider : IEmployeeDataProvider
 {
     private readonly IEmployeeRepository _employeeRepository;
@@ -25,6 +29,7 @@ public class EmployeeDataProvider : IEmployeeDataProvider
         var admins = await _employeeRepository.GetAdministratorsAsync();
         return admins;
     }
+<<<<<<< HEAD
 
     public async Task<ICollection<Receptionist>?> GetReceptionistsAsync()
     {
@@ -43,4 +48,6 @@ public class EmployeeDataProvider : IEmployeeDataProvider
         }
         return await _employeeRepository.SearchReceptionistsAsync(options);
     }
+=======
+>>>>>>> oleg-feature-receptionist-pages
 }

@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Receptionist\CreateVisitor.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Receptionist\CreateVisitor.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
     <PackageReference Include="MudBlazor" Version="6.0.15" />
   </ItemGroup>
 
@@ -17,6 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
+=======
+    <Folder Include="Pages\Shared\" />
+    <Folder Include="ViewModels\" />
+>>>>>>> oleg-feature-receptionist-pages
     <Folder Include="wwwroot\Data\Photos\" />
   </ItemGroup>
 
