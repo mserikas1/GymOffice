@@ -19,10 +19,20 @@ public class VisitorDataProvider : IVisitorDataProvider
     {
         return await _visitorRepository.GetVisitorsNotInGymAsync();
     }
+    
+    public async Task<ICollection<Visitor>?> GetActiveVisitorsAsync()
+    {
+        return await _visitorRepository.GetActiveVisitorsAsync();
+    }
+
+    public async Task<ICollection<Visitor>?> GetActiveVisitorsNotInGymAsync()
+    {
+        return await _visitorRepository.GetActiveVisitorsNotInGymAsync();
+    }
 
     public async Task<ICollection<Visitor>?> GetAllVisitorsAsync()
     {
-        return await _visitorRepository.GetVisitorsAsync();
+        return await _visitorRepository.GetAllVisitorsAsync();
     }
 
     public async Task<Visitor?> GetVisitorByIdAsync(Guid id)

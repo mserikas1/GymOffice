@@ -27,14 +27,22 @@ namespace GymOffice.DataAccess.SQL.Repositories
 
         public async Task<ICollection<Coach>?> GetActiveCoachesAsync()
         {
-            return await _dbContext.Coaches.Where(c => c.IsAtWork).ToListAsync();
+            return await _dbContext.Coaches.Where(c => c.IsActive).ToListAsync();
         }
 
         public async Task<ICollection<Coach>?> GetCoachesNotAtWorkAsync()
         {
             return await _dbContext.Coaches.Where(c => !c.IsAtWork).ToListAsync();
         }
+        public async Task<ICollection<Coach>?> GetCoachesAtWorkAsync()
+        {
+            return await _dbContext.Coaches.Where(c => c.IsAtWork).ToListAsync();
+        }
 
+        public async Task<ICollection<Coach>?> GetActiveCoachesNotAtWorkAsync()
+        {
+            return await _dbContext.Coaches.Where(c => c.IsActive && !c.IsAtWork).ToListAsync();
+        }
         public async Task<ICollection<Coach>?> GetAllCoachesAsync()
         {
             return await _dbContext.Coaches.ToListAsync();

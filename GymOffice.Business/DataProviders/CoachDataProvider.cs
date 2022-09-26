@@ -12,7 +12,12 @@ public class CoachDataProvider : ICoachDataProvider
 
     public async Task<ICollection<Coach>?> GetCoachesAtWorkAsync()
     {
-        return await _coachRepository.GetActiveCoachesAsync();
+        return await _coachRepository.GetCoachesAtWorkAsync();
+    }
+    
+    public async Task<ICollection<Coach>?> GetActiveCoachesNotAtWorkAsync()
+    {
+        return await _coachRepository.GetActiveCoachesNotAtWorkAsync();
     }
     public async Task<ICollection<Coach>?> GetCoachesNotAtWorkAsync()
     {
@@ -22,6 +27,11 @@ public class CoachDataProvider : ICoachDataProvider
     public async Task<ICollection<Coach>?> GetAllCoachesAsync()
     {
         return await _coachRepository.GetAllCoachesAsync();
+    }
+
+    public async Task<ICollection<Coach>?> GetActiveCoachesAsync()
+    {
+        return await _coachRepository.GetActiveCoachesAsync();
     }
 
     public async Task<Coach?> GetCoachByIdAsync(Guid id)

@@ -34,13 +34,22 @@ namespace GymOffice.DataAccess.SQL.Repositories
         {
             return await _dbContext.Visitors.Where(v => !v.IsInGym).Include(v => v.VisitorCard).ToListAsync();
         }
+        public async Task<ICollection<Visitor>?> GetActiveVisitorsNotInGymAsync()
+        {
+            return await _dbContext.Visitors.Where(v => v.IsActive && !v.IsInGym).Include(v => v.VisitorCard).ToListAsync();
+        }
+
+        public async Task<ICollection<Visitor>?> GetActiveVisitorsAsync()
+        {
+            return await _dbContext.Visitors.Where(v => v.IsActive).Include(v => v.VisitorCard).ToListAsync();
+        }
 
         public async Task<Visitor?> GetVisitorByIdAsync(Guid id)
         {
             return await _dbContext.Visitors.Include(v => v.VisitorCard).FirstOrDefaultAsync(v => v.Id == id);
         }
 
-        public async Task<ICollection<Visitor>?> GetVisitorsAsync()
+        public async Task<ICollection<Visitor>?> GetAllVisitorsAsync()
         {
             return await _dbContext.Visitors.Include(v => v.VisitorCard).ToListAsync();
         }

@@ -6,7 +6,7 @@
 <!-- Inactive Coaches list with checkin possibility -->
 <MudDialog>
     <DialogContent>
-        <MudText Align="Align.Center">List of coaches who are not at work allows to check-in a selected coach.</MudText>
+        <MudText Align="Align.Center">List of active coaches who are not at work allows to check-in a selected coach.</MudText>
         <!-- Coaches list -->
         <MudItem xs="4" sm="4" md="12" Style="overflow-y: scroll; overflow-x: scroll">
             <MudCard Elevation="25" Class="rounded-lg pb-4">
@@ -27,8 +27,6 @@
                                 SortBy="new Func<Coach, object>(x=>x.Email)">Email</MudTableSortLabel></MudTh>
                             <MudTh><MudTableSortLabel SortLabel="ph_sort" T="Coach" 
                                 SortBy="new Func<Coach, object>(x=>x.PhoneNumber)">Phone Number</MudTableSortLabel></MudTh>
-                            <MudTh><MudTableSortLabel SortLabel="ac_sort" T="Coach" 
-                                SortBy="new Func<Coach, object>(x=>x.IsActive)">Active</MudTableSortLabel></MudTh>
                             <MudTh><MudTableSortLabel Enabled="false"
                                 SortBy="new Func<Coach, object>(x=>x.IsAtWork)">At Work</MudTableSortLabel></MudTh>
                         </HeaderContent>
@@ -37,10 +35,6 @@
                             <MudTd Class="flex-shrink-0" DataLabel="Last Name">@context.LastName</MudTd>
                             <MudTd DataLabel="Email" HideSmall="true">@context.Email</MudTd>
                             <MudTd DataLabel="Phone Number" HideSmall="true">@context.PhoneNumber</MudTd>
-                            <MudTd DataLabel="Active" HideSmall="true">
-                                <MudIcon Color="@(context.IsActive ? Color.Success : Color.Error)" 
-                                    Icon="@(context.IsActive ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"></MudIcon>
-                            </MudTd>
                             <MudTd Class="flex-shrink-0" DataLabel="At Work">
                                <MudButton Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsAtWorkChanged(context))"
                                     StartIcon="@(context.IsAtWork ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" 
@@ -77,12 +71,12 @@
     protected override async Task OnInitializedAsync()
     {
         coachesTable = new();
-        await GetCoachesNotAtWorkAsync();
+        await GetActiveCoachesNotAtWorkAsync();
     }
 
-    private async Task GetCoachesNotAtWorkAsync()
+    private async Task GetActiveCoachesNotAtWorkAsync()
     {
-        Coaches = await CoachDataProvider.GetCoachesNotAtWorkAsync();
+        Coaches = await CoachDataProvider.GetActiveCoachesNotAtWorkAsync();
         await Task.Delay(100); // for db connection stability
     }
 
@@ -100,7 +94,7 @@
 
     private async Task CoachesReloadAsync(string? sortLabel)
     {
-        await GetCoachesNotAtWorkAsync();
+        await GetActiveCoachesNotAtWorkAsync();
         if (!string.IsNullOrWhiteSpace(coachSearchString))
             Coaches = Coaches?
                 .Where(c => $"{c.FirstName} {c.LastName} {c.Email} {c.PhoneNumber}".Contains(coachSearchString, StringComparison.OrdinalIgnoreCase))

@@ -6,7 +6,7 @@
 <!-- Inactive Visitors list with checkin possibility -->
 <MudDialog>
     <DialogContent>
-        <MudText Align="Align.Center">List of visitors not in gym allows to check-in a selected visitor.</MudText>
+        <MudText Align="Align.Center">List of active visitors not in gym allows to check-in a selected visitor.</MudText>
         <!-- Visitors list -->
         <MudItem xs="4" sm="4" md="12" Style="overflow-y: scroll; overflow-x: scroll">
             <MudCard Elevation="25" Class="rounded-lg pb-4">
@@ -29,8 +29,6 @@
                                 SortBy="new Func<Visitor, object>(x=>x.PhoneNumber!)">Phone Number</MudTableSortLabel></MudTh>
                             <MudTh><MudTableSortLabel Enabled="false" 
                                 SortBy="new Func<Visitor, object>(x=>x.VisitorCard?.BarCode!)">Card Number</MudTableSortLabel></MudTh>
-                            <MudTh><MudTableSortLabel SortLabel="ac_sort" T="Visitor" 
-                                SortBy="new Func<Visitor, object>(x=>x.IsActive)">Active</MudTableSortLabel></MudTh>
                             <MudTh><MudTableSortLabel Enabled="false"
                                 SortBy="new Func<Visitor, object>(x=>x.IsInGym)">In Gym</MudTableSortLabel></MudTh>
                         </HeaderContent>
@@ -40,10 +38,10 @@
                             <MudTd DataLabel="Email" HideSmall="true">@context.Email</MudTd>
                             <MudTd DataLabel="Phone Number" HideSmall="true">@context.PhoneNumber</MudTd>
                             <MudTd DataLabel="Card Number" HideSmall="true">@context.VisitorCard?.BarCode</MudTd>
-                            <MudTd DataLabel="Active" HideSmall="true">
+                            @*<MudTd DataLabel="Active" HideSmall="true">    // this is for future, if Active icon would be needed
                                 <MudIcon Color="@(context.IsActive ? Color.Success : Color.Error)" 
                                     Icon="@(context.IsActive ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"></MudIcon>
-                            </MudTd>
+                            </MudTd>*@
                             <MudTd Class="flex-shrink-0" DataLabel="In Gym">
                                <MudButton Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsInGymChanged(context))"
                                     StartIcon="@(context.IsInGym ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" 
@@ -80,12 +78,12 @@
     protected override async Task OnInitializedAsync()
     {
         visitorsTable = new();
-        await GetVisitorsNotInGymAsync();
+        await GetActiveVisitorsNotInGymAsync();
     }
 
-    private async Task GetVisitorsNotInGymAsync()
+    private async Task GetActiveVisitorsNotInGymAsync()
     {
-        Visitors = await VisitorDataProvider.GetVisitorsNotInGymAsync();
+        Visitors = await VisitorDataProvider.GetActiveVisitorsNotInGymAsync();
         await Task.Delay(100); // for db connection stability
     }
 
@@ -103,7 +101,7 @@
 
     private async Task VisitorsReloadAsync(string? sortLabel)
     {
-        await GetVisitorsNotInGymAsync();
+        await GetActiveVisitorsNotInGymAsync();
         if (!string.IsNullOrWhiteSpace(visitorSearchString))
             Visitors = Visitors?
                 .Where(c => $"{c.FirstName} {c.LastName} {c.Email} {c.PhoneNumber}".Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))
@@ -118,9 +116,6 @@
                 break;
             case "ph_sort":
                 Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.PhoneNumber).ToList();
-                break;
-            case "ac_sort":
-                Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.IsActive).ToList();
                 break;
         }
         // Visitors = Visitors.Skip(state.Page * state.PageSize).Take(state.PageSize).ToList();
