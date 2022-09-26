@@ -2,8 +2,6 @@
 public interface ICoachRepository
 {
     Task<ICollection<Coach>?> GetAllCoachesAsync();
-<<<<<<< HEAD
-=======
     Task<ICollection<Coach>?> GetActiveCoachesAsync();
     Task<ICollection<Coach>?> GetActiveCoachesNotAtWorkAsync();
     Task<ICollection<Coach>?> GetCoachesAtWorkAsync();
@@ -11,5 +9,4 @@ public interface ICoachRepository
     Task<Coach?> GetCoachByIdAsync(Guid id);
     Task<Guid> AddCoachAsync(Coach coach);
     Task UpdateCoachAsync(Coach coach);
->>>>>>> oleg-feature-receptionist-pages
 }
