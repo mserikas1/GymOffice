@@ -8,9 +8,13 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 
 // DI for Repositories
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<ICoachRepository, CoachRepository>();
+builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
 
 // DI for DataProviders
 builder.Services.AddTransient<IEmployeeDataProvider, EmployeeDataProvider>();
+builder.Services.AddTransient<ICoachDataProvider, CoachDataProvider>();
+builder.Services.AddTransient<IVisitorDataProvider, VisitorDataProvider>();
 
 // DI for Commands
 builder.Services.AddTransient<IAddReceptionistCommand, AddReceptionistCommand>();

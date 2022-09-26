@@ -45,7 +45,9 @@ public class EmployeeRepository : IEmployeeRepository
             .ToListAsync();
     }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     public async Task<ICollection<Receptionist>?> SearchReceptionistsAsync(ReceptionistSearchOptions options)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {        
         var receptionists = _dbContext.Receptionists
             .Include(r => r.CreatedBy)

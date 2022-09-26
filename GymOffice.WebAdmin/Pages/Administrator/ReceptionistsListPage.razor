@@ -15,13 +15,10 @@ else
         HandleSearch_Click="HandleSearch"
         HandleResetSearch_Click="HandleResetSearch" />
 
-    @*<MudTable Items="@Receptionists" Dense="true" Hover="true" Filter="new Func<Receptionist, bool>(FilterFunc1)">*@
-    <MudTable Items="@Receptionists" Dense="true" Hover="true" Filter="new Func<Receptionist, bool>(FilterFunc1)">
+    <MudTable Items="@Receptionists" Dense="true" Hover="true">
         <ToolBarContent>
             <MudText Typo="Typo.h6">Receptionists</MudText>
             <MudSpacer />
-            <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start"
-                AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
         <HeaderContent>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Receptionist, object>(x => x.FirstName)">First Name</MudTableSortLabel></MudTh>

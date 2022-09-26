@@ -1,0 +1,42 @@
+﻿<MudPaper Class="@CardClasses" Height="150px" Width="300px" Elevation="7"
+          onclick="@HandleRedirect_Click">
+    <div class="d-flex w-100 p-2 flex-column justify-content-between">
+        <div class="d-flex align-center">
+            <MudAvatar Color="Color.Primary">
+                @TotalCount
+            </MudAvatar>
+            <MudText Class="ms-3 align-baseline">Total</MudText>
+        </div>
+
+        <div class="d-flex justify-center">
+            <MudText Typo="Typo.h5" Class="d-flex justify-content-center align-center">@GroupName</MudText>
+        </div>
+
+        <div class="d-flex justify-end align-center">
+            <MudText Class="me-3">In Gym</MudText>
+            <MudAvatar Color="Color.Secondary">
+                @InGymCount
+            </MudAvatar>
+        </div>
+    </div>
+</MudPaper>
+
+
+@code {
+    [Parameter]
+    public string? CardClasses { get; set; }
+    [Parameter]
+    public string? GroupName { get; set; }
+    [Parameter]
+    public int TotalCount { get; set; }
+    [Parameter]
+    public int InGymCount { get; set; }
+    [Parameter]
+    public EventCallback HandleRedirect { get; set; }
+
+
+    private void HandleRedirect_Click()
+    {
+        HandleRedirect.InvokeAsync();
+    }
+}

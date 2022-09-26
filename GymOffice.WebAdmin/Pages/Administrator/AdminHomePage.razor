@@ -1,0 +1,13 @@
+﻿@page "/admin"
+
+<PeopleGroupCardComponent GroupName="@CoachesCardName" CardClasses="@CoachesCardClasses"
+                          TotalCount="@CoachesTotalCount" InGymCount="@CoachesInGymCount"
+                          HandleRedirect="RedirectToCoachesPage" />
+
+<PeopleGroupCardComponent GroupName="@ReceptionistsCardName" CardClasses="@ReceptionistsCardClasses"
+                          TotalCount="@ReceptionistsTotalCount" InGymCount="@ReceptionistsInGymCount"
+                          HandleRedirect="RedirectToReceptionistsPage" />
+
+<PeopleGroupCardComponent GroupName="@VisitorsCardName" CardClasses="@VisitorsCardClasses"
+                          TotalCount="@VisitorsTotalCount" InGymCount="@VisitorsInGymCount"
+                          HandleRedirect="RedirectToVisitorsPage" />
