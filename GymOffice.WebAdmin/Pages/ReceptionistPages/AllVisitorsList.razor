@@ -25,7 +25,7 @@
                         SortBy="new Func<Visitor, object>(x=>x.Email!)">Email</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ph_sort" T="Visitor" 
                         SortBy="new Func<Visitor, object>(x=>x.PhoneNumber!)">Phone Number</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel Enabled="false" 
+                    <MudTh><MudTableSortLabel SortLabel="bc_sort" T="Visitor"
                         SortBy="new Func<Visitor, object>(x=>x.VisitorCard?.BarCode!)">Card Number</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ig_sort" T="Visitor"
                         SortBy="new Func<Visitor, object>(x=>x.IsInGym)">In Gym</MudTableSortLabel></MudTh>
@@ -109,6 +109,9 @@
                 break;
             case "ph_sort":
                 Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.PhoneNumber).ToList();
+                break;
+            case "bc_sort":
+                Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.VisitorCard.BarCode).ToList();
                 break;
             case "ig_sort":
                 Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.IsInGym).ToList();

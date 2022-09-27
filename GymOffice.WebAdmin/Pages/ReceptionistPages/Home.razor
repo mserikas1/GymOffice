@@ -1,4 +1,4 @@
-﻿@page "/receptionist/Home"
+﻿@page "/receptionist"
 @using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.Add
 @using GymOffice.Common.Contracts.DataProviderContracts
 @using GymOffice.Common.Contracts.RepositoryContracts
@@ -34,16 +34,10 @@
                     <MudButton Variant="Variant.Filled" Class="md-3 mr-3" Color="Color.Primary" Size="Size.Large" Style="width:50%;"
                         OnClick="CheckVisitorInClick">Check Visitor In</MudButton> 
                         
+                    <!-- Going to a visitor registration form -->
                     <MudButton Variant="Variant.Filled" Class="md-3" Color="Color.Primary" Size="Size.Large" Style="width:50%;" 
                         OnClick="RegisterNewVisitorClick">New Visitor...</MudButton>
-                        <!-- Visitor registration form -->
-                        <MudPopover Open="@_isNewVisitorFormOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomCenter">
-                            <div class="d-flex flex-column">
-                                <MudText Typo="Typo.h5" Align="Align.Center">New visitor registration</MudText>
-                                <MudText>Insert form here</MudText>
-                                <MudButton OnClick="@CloseNewVisitorForm" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Cancel</MudButton>
-                            </div>
-                        </MudPopover>
+                        
                         <!-- Visitor details form -->
                         <MudPopover Open="@_isVisitorViewOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomCenter">
                             <MudText Typo="Typo.h5" Align="Align.Center">Visitor details</MudText>
@@ -143,6 +137,7 @@
     [Inject] public IAddAdministratorCommand AddAdministratorCommand { get; set; } = null!;
     [Inject] public IAddVisitorCardCommand AddVisitorCardCommand { get; set; } = null!;
     [Inject] public IAddVisitorCommand AddVisitorCommand { get; set; } = null!;
+    [Inject] public NavigationManager NavigationManager { get; set; } = null!;
 
     private MudTable<Visitor>? visitorsTable;
     private MudTable<Coach>? coachesTable;
@@ -153,47 +148,10 @@
     private string infoFormat = "Items {first_item}-{last_item} of {all_items}";
     private ICollection<Visitor>? Visitors = new List<Visitor>();
     private ICollection<Coach>? Coaches = new List<Coach>();
-    private bool _isNewVisitorFormOpen = false;
     private bool _isVisitorViewOpen = false;
     private bool _isCoachViewOpen = false;
-    private Visitor? newVisitor;
     private Coach? viewedCoach;
     private Visitor? viewedVisitor;
-
-    private void OpenNewVisitorForm() => _isNewVisitorFormOpen = true;
-    private void CloseNewVisitorForm() => _isNewVisitorFormOpen = false;
-
-    private async Task OpenVisitorCheckIn()
-    {
-        var options = new DialogOptions { 
-                FullWidth = true, 
-                MaxWidth = MaxWidth.Large,
-                CloseButton = true,
-                DisableBackdropClick = true,
-                Position = DialogPosition.Center,
-                CloseOnEscapeKey = true
-        };
-        var dialog = DialogService.Show<VisitorCheckInDialog>("Checking a visitor in", options);
-        await dialog.Result;
-        await VisitorsReloadAsync(visitorsTable?.SortLabel);
-        await Task.Delay(100); // for db connection stability
-    }
-
-    private async Task OpenCoachCheckIn()
-    { 
-        var options = new DialogOptions { 
-                FullWidth = true, 
-                MaxWidth = MaxWidth.Large,
-                CloseButton = true,
-                DisableBackdropClick = true,
-                Position = DialogPosition.Center,
-                CloseOnEscapeKey = true
-        };
-        var dialog = DialogService.Show<CoachCheckInDialog>("Checking a coach in", options);
-        await dialog.Result;
-        await CoachesReloadAsync(coachesTable?.SortLabel);
-        await Task.Delay(100); // for db connection stability
-    }
 
     private void OpenCoachView() => _isCoachViewOpen = true;
     private void CloseCoachView() => _isCoachViewOpen = false;
@@ -227,50 +185,48 @@
     private async Task AddAdminCoachesVisitorsToDB()
     {
         Random r = new Random();
-        
-        /*  Uncomment it to add admin and coaches, already uncommented part adds visitors and visitorcards
-         * 
-        Admin admin = new Admin()
-        {
-        Id = new Guid(),
-        FirstName = "Oleg",
-        LastName = "Melnykov",
-        Email = "olegm72@gmail.com",
-        IsActive = true,
-        PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(1, 999999).ToString(),
-        PhoneNumber = "+38067" + r.Next(1, 9999999).ToString(),
-    PhotoUrl = "OlegMelnykov.jpg"
-        };
-
-    await AddAdministratorCommand.ExecuteAsync(admin);
-
-        Coaches = new List<Coach>() {
-        new Coach() { FirstName = "Nick", LastName = "Kirgios", Email = "Nick@australia.open.com", IsActive = true },
-        new Coach() { FirstName = "Rafael", LastName = "Nadal", Email = "Rafa@tennis.es", IsActive = true },
-        new Coach() { FirstName = "Roger", LastName = "Federer", Email = "Roger@Federer.com", IsActive = false },
-        new Coach() { FirstName = "Olexander", LastName = "Dolgopolov", Email = "dolgo@ukraine.tennis.ua", IsActive = false },
-        new Coach() { FirstName = "Elina", LastName = "Svitolina", Email = "svito@ukr.net", IsActive = true },
-        new Coach() { FirstName = "Marta", LastName = "Kostyuk", Email = "marta@16years.btu.ua", IsActive = false },
-        new Coach() { FirstName = "Novak", LastName = "Djokovich", Email = "antivaxer@serbia.net", IsActive = true },
-        new Coach() { FirstName = "Yaroslava", LastName = "Maguchikh", Email = "jumping@heroes.com", IsActive = true },
-        new Coach() { FirstName = "Serena", LastName = "Williams", Email = "serena@loudvoice.us", IsActive = false },
-        new Coach() { FirstName = "Olexander", LastName = "Usyk", Email = "usyk@boxing.ua", IsActive = true },
-        new Coach() { FirstName = "Vitaly", LastName = "Klichko", Email = "KO@boxing.ua", IsActive = true }
-        };
-
-    foreach (Coach c in Coaches)
-        {
-        c.Id = new Guid(); c.CreatedAt = DateTime.Now; c.ModifiedAt = DateTime.Now;
-        c.CreatedBy = admin; c.ModifiedBy = admin; c.PhotoUrl = "Data/Photos/" + c.FirstName + c.LastName + ".jpg";
-        c.PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(1, 999999).ToString();
-        c.PhoneNumber = "+" + r.Next(1, 499999).ToString() + r.Next(1, 999999).ToString(); c.IsAtWork = c.IsActive;
-
-        await AddCoachCommand.ExecuteAsync(c);
-    }
-        */
 
         Admin? admin = _employeeRepository.GetAdministrators()?.FirstOrDefault();
+        if (admin == null)
+        {
+            admin = new Admin()
+                {
+                    Id = new Guid(),
+                    FirstName = "Oleg",
+                    LastName = "Melnykov",
+                    Email = "olegm72@gmail.com",
+                    IsActive = true,
+                    PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(100000, 999999).ToString(),
+                    PhoneNumber = "+38067" + r.Next(1000000, 9999999).ToString(),
+                    PhotoUrl = "OlegMelnykov.jpg"
+                };
+        await AddAdministratorCommand.ExecuteAsync(admin);
+        }
 
+        Coaches = new List<Coach>() {
+            new Coach() { FirstName = "Nick", LastName = "Kirgios", Email = "Nick@australia.open.com", IsActive = true },
+            new Coach() { FirstName = "Rafael", LastName = "Nadal", Email = "Rafa@tennis.es", IsActive = true },
+            new Coach() { FirstName = "Roger", LastName = "Federer", Email = "Roger@Federer.com", IsActive = false },
+            new Coach() { FirstName = "Olexander", LastName = "Dolgopolov", Email = "dolgo@ukraine.tennis.ua", IsActive = false },
+            new Coach() { FirstName = "Elina", LastName = "Svitolina", Email = "svito@ukr.net", IsActive = true },
+            new Coach() { FirstName = "Marta", LastName = "Kostyuk", Email = "marta@16years.btu.ua", IsActive = false },
+            new Coach() { FirstName = "Novak", LastName = "Djokovich", Email = "antivaxer@serbia.net", IsActive = true },
+            new Coach() { FirstName = "Yaroslava", LastName = "Maguchikh", Email = "jumping@heroes.com", IsActive = true },
+            new Coach() { FirstName = "Serena", LastName = "Williams", Email = "serena@loudvoice.us", IsActive = false },
+            new Coach() { FirstName = "Olexander", LastName = "Usyk", Email = "usyk@boxing.ua", IsActive = true },
+            new Coach() { FirstName = "Vitaly", LastName = "Klichko", Email = "KO@boxing.ua", IsActive = true }
+        };
+
+        foreach (Coach c in Coaches)
+        {
+            c.Id = new Guid(); c.CreatedAt = DateTime.Now; c.ModifiedAt = DateTime.Now;
+            c.CreatedBy = admin; c.ModifiedBy = admin; c.PhotoUrl = "Data/Photos/" + c.FirstName + c.LastName + ".jpg";
+            c.PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(100000, 999999).ToString();
+            c.PhoneNumber = "+" + r.Next(100000, 499999).ToString() + r.Next(100000, 999999).ToString(); c.IsAtWork = c.IsActive;
+
+            await AddCoachCommand.ExecuteAsync(c);
+        }
+        
         Visitors = new List<Visitor>() {
             new Visitor() { FirstName = "Vasiliy", LastName = "Pupkin", Email = "vasiliy@pupkin.net" },
             new Visitor() { FirstName = "Petro", LastName = "Pumpkin", Email = "petropumpkin@ukr.net" },
@@ -286,10 +242,10 @@
         {
             v.Id = new Guid(); v.RegistrationDate = DateTime.Now; v.IsActive = r.Next(0, 10) < 3 ? false : true;
             v.PhotoUrl = "Data/Photos/" + v.FirstName + v.LastName + ".jpg";
-            v.PhoneNumber = $"+3806{r.Next(1, 999999999):N0}"; v.IsInGym = !v.IsActive ? false : (r.Next(0, 10) < 5 ? false : true);
+            v.PhoneNumber = $"+3806{r.Next(100000000, 999999999)}"; v.IsInGym = !v.IsActive ? false : (r.Next(0, 10) < 5 ? false : true);
             VisitorCard vc = new(); 
                 vc.Id = new Guid(); vc.RegistrationDate = v.RegistrationDate; vc.CreatedAt = DateTime.Now;
-                vc.CreatedBy = admin!; vc.IsActive = v.IsActive; vc.BarCode = $"482{r.Next(1, 99999):N0}{r.Next(99999):N0}";
+                vc.CreatedBy = admin!; vc.IsActive = v.IsActive; vc.BarCode = $"482{r.NextInt64(1000000000, 9999999999)}";
                 vc.Visitor = v;
             v.VisitorCard = vc;
             await AddVisitorCardCommand.ExecuteAsync(v.VisitorCard);
@@ -307,7 +263,7 @@
         else if (coachesTable != null && coachesTable.SelectedItem != null && coachesTable.SelectedItem.Equals(visitor))
         {
             selectedVisitorNumber = rowNumber;
-            return ".selected"; // change style to ".selected"
+            return ".selected"; // change style to ".selected" -- but this does not work (don't know why)
         }
         else
         {
@@ -325,7 +281,7 @@
         else if (coachesTable != null && coachesTable.SelectedItem != null && coachesTable.SelectedItem.Equals(coach))
         {
             selectedCoachNumber = rowNumber;
-            return ".selected"; // change style to ".selected"
+            return ".selected"; // change style to ".selected" -- but this does not work (don't know why)
         }
         else
         {
@@ -385,21 +341,20 @@
         await CoachesReloadAsync(coachesTable?.SortLabel);
     }
 
-    private void RegisterNewVisitorClick(MouseEventArgs args)
+    private async void RegisterNewVisitorClick()
     {
-        newVisitor = new Visitor()
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+        var parameters = new DialogParameters();
+        parameters.Add("visitorModel", null);
+        var dialog = DialogService.Show<CreateVisitorDialog>("New Visitor Dialog", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
         {
-            Id = new Guid(),
-            RegistrationDate = DateTime.Now,
-            IsActive = true,
-            IsInGym = true
-        };
-        OpenNewVisitorForm();
-        /*
-        // move this to the method called after the form "Submit" button
-        await AddVisitorCommand.ExecuteAsync(newVisitor);
-        VisitorsReload(visitorsTable?.SortLabel);
-        */
+            // here we can move to some page or redraw current page but it is not needed in this case unless the new visitor is also checked in
+            // StateHasChanged();
+            // NavigationManager.NavigateTo("/receptionist");
+        }
     }
 
     private async Task CheckVisitorInClick(MouseEventArgs args)
@@ -407,9 +362,41 @@
         await OpenVisitorCheckIn();
     }
 
+    private async Task OpenVisitorCheckIn()
+    {
+        var options = new DialogOptions { 
+                FullWidth = true, 
+                MaxWidth = MaxWidth.Large,
+                CloseButton = true,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseOnEscapeKey = true
+        };
+        var dialog = DialogService.Show<VisitorCheckInDialog>("Checking a visitor in", options);
+        await dialog.Result;
+        await VisitorsReloadAsync(visitorsTable?.SortLabel);
+        await Task.Delay(100); // for db connection stability
+    }
+
     private async Task CheckCoachInClick(MouseEventArgs args)
     {
         await OpenCoachCheckIn();
+    }
+
+    private async Task OpenCoachCheckIn()
+    { 
+        var options = new DialogOptions { 
+                FullWidth = true, 
+                MaxWidth = MaxWidth.Large,
+                CloseButton = true,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseOnEscapeKey = true
+        };
+        var dialog = DialogService.Show<CoachCheckInDialog>("Checking a coach in", options);
+        await dialog.Result;
+        await CoachesReloadAsync(coachesTable?.SortLabel);
+        await Task.Delay(100); // for db connection stability
     }
 
     private void VisitorRowClickEvent(TableRowClickEventArgs<Visitor> tableRowClickEventArgs)

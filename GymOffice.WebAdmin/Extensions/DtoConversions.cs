@@ -1,4 +1,6 @@
-﻿namespace GymOffice.WebAdmin.Extensions;
+﻿using GymOffice.Common.DTOs;
+
+namespace GymOffice.WebAdmin.Extensions;
 public static class DtoConversions
 {    
     public static Receptionist ConvertToDto(this ReceptionistVM receptionistVM)
@@ -44,4 +46,24 @@ public static class DtoConversions
             PasswordConfirm = "qwerty123"       // Fake data for model validation. TODO: real data should take from identity dbContext
         };
     }
+
+    public static Visitor ConvertToDto(this VisitorVM visitorVM, VisitorCard visitorCard)
+    {
+        Visitor visitor = new()
+        {
+            Id = visitorVM.Id,
+            FirstName = visitorVM.FirstName,
+            LastName = visitorVM.LastName,
+            Email = visitorVM.Email,
+            IsActive = visitorVM.IsActive,
+            IsInGym = visitorVM.IsInGym,
+            RegistrationDate = visitorVM.RegistrationDate,
+            PhoneNumber = visitorVM.PhoneNumber,
+            PhotoUrl = visitorVM.PhotoUrl,
+        };
+        visitor.VisitorCard = visitorCard;
+        visitorCard.Visitor = visitor;
+        return visitor;
+    }
+
 }

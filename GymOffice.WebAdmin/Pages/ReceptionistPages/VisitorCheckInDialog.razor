@@ -104,7 +104,8 @@
         await GetActiveVisitorsNotInGymAsync();
         if (!string.IsNullOrWhiteSpace(visitorSearchString))
             Visitors = Visitors?
-                .Where(c => $"{c.FirstName} {c.LastName} {c.Email} {c.PhoneNumber}".Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))
+                .Where(c => $"{c.FirstName} {c.LastName} {c.Email} {c.PhoneNumber} {c.VisitorCard.BarCode}"
+                       .Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         switch (sortLabel)
         {

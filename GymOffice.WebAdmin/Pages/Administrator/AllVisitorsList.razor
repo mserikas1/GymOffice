@@ -1,4 +1,4 @@
-﻿@page "/administrator/AllVisitorsList"
+﻿@page "/admin/visitors"
 @using GymOffice.Common.Contracts.CommandContracts.ReceptionistCommands.Update
 @using GymOffice.Common.Contracts.DataProviderContracts
 @using GymOffice.Common.DTOs;
@@ -25,7 +25,7 @@
                         SortBy="new Func<Visitor, object>(x=>x.Email!)">Email</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ph_sort" T="Visitor" 
                         SortBy="new Func<Visitor, object>(x=>x.PhoneNumber!)">Phone Number</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel Enabled="false" 
+                    <MudTh><MudTableSortLabel SortLabel="bc_sort" T="Visitor" 
                         SortBy="new Func<Visitor, object>(x=>x.VisitorCard?.BarCode!)">Card Number</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ac_sort" T="Visitor" 
                         SortBy="new Func<Visitor, object>(x=>x.IsActive)">Active</MudTableSortLabel></MudTh>
@@ -118,7 +118,8 @@
         await GetVisitorsAsync();
         if (!string.IsNullOrWhiteSpace(visitorSearchString))
             Visitors = Visitors?
-                .Where(c => $"{c.FirstName} {c.LastName} {c.Email} {c.PhoneNumber}".Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))
+                .Where(c => $"{c.FirstName} {c.LastName} {c.Email} {c.PhoneNumber} {c.VisitorCard?.BarCode}"
+                      .Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         switch (sortLabel)
         {
@@ -130,6 +131,9 @@
                 break;
             case "ph_sort":
                 Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.PhoneNumber).ToList();
+                break;
+            case "bc_sort":
+                Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.VisitorCard.BarCode).ToList();
                 break;
             case "ac_sort":
                 Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.IsActive).ToList();
