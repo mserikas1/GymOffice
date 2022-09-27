@@ -2,7 +2,7 @@ import "../css/Coach.css";
 import { Icon } from "@iconify/react";
 export default function Coach(props) {
   return (
-    <div className="col">
+    <div className="col-xl-6">
       <div className="coachCard">
         <div className="front">
           <figure className="snip1218">

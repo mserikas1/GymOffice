@@ -18,6 +18,6 @@ namespace GymOffice.CustomerApi.Controllers
             _coachDataProvider = coachDataProvider;
         }
         [HttpGet("[action]")]
-        public IActionResult GetCoaches() => Ok(_coachDataProvider.GetCoaches());
+        public IActionResult GetActiveCoaches() => Ok(_coachDataProvider.GetActiveCoaches());
     }
 }

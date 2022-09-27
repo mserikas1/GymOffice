@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace GymOffice.DataAccess.SQL.Repositories
 {
-    public class CoachRepository : ICoachRepository
+    public class AbonnementRepository : IAbonnementRepository
     {
         private readonly ApplicationDbContext _dbContext;
-
-        public CoachRepository(ApplicationDbContext dbContext)
+        public AbonnementRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public ICollection<Coach>? GetActiveCoaches()
+
+        public ICollection<Abonnement>? GetAbonnementsById(Guid id)
         {
-            return _dbContext.Coaches.Where(coach=>coach.IsActive == true).ToList();
+            throw new NotImplementedException();
         }
     }
 }

@@ -14,13 +14,8 @@ public class CoachDataProvider : ICoachDataProvider
         _coachRepository = coachRepository;
     }
 
-    public async Task<ICollection<Coach>?> GetAllCoachesAsync()
+    public ICollection<Coach>? GetActiveCoaches()
     {
-        return await _coachRepository.GetAllCoachesAsync();
-    }
-
-    public ICollection<Coach> GetCoaches()
-    {
-        return _coachRepository.GetCoaches();
+        return _coachRepository.GetActiveCoaches();
     }
 }

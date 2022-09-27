@@ -7,6 +7,5 @@ using System.Threading.Tasks;
 namespace GymOffice.Common.Contracts.DataProviderContracts;
 public interface ICoachDataProvider
 {
-    ICollection<Coach> GetCoaches();
-    Task<ICollection<Coach>?> GetAllCoachesAsync();
+    ICollection<Coach>? GetActiveCoaches();
 }
