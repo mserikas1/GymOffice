@@ -1,0 +1,75 @@
+﻿<MudDialog DefaultFocus="DefaultFocus.Element"> 
+    <DialogContent>
+    @if (visitorModel == null)
+    {
+        <ErrorDisplay ErrorMessage="No data encountered!" ResetError="HandleResetError" />
+    }
+    else
+    {
+        <MudGrid>
+            <MudItem xs="12" sm="@(visitorModel!.PhotoUrl == null ? 12 : 7)">
+                <MudCard Class="pa-2">
+                    <MudCardContent>
+                        <MudText Typo="Typo.subtitle2" Class="mb-3">Visitor details:</MudText>
+                        <MudTextField Label="First name" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="visitorModel!.FirstName" />
+                        <MudTextField Label="Last name" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="visitorModel!.LastName" />
+                        <MudTextField Label="Phone Number" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="visitorModel!.PhoneNumber" />
+                        <MudTextField Label="Email" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="visitorModel!.Email" />
+                        <MudDivider DividerType="DividerType.Middle" Class="mt-2" />
+                            <MudContainer Class="d-flex flex-row justify-center">
+                            <MudItem sm="4" Class="mr-2">
+                                <MudButton Variant="Variant.Text" Size="Size.Medium"
+                                StartIcon="@(visitorModel!.IsActive ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" 
+                                Color="@(visitorModel!.IsActive ? Color.Success : Color.Error)">
+                                        @(visitorModel!.IsActive ? "Active" : "Not active")
+                                </MudButton>
+                            </MudItem>
+                            <MudItem sm="4">
+                                <MudButton Variant="Variant.Text" Size="Size.Medium"
+                                StartIcon="@(visitorModel!.IsInGym ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" 
+                                Color="@(visitorModel!.IsInGym ? Color.Success : Color.Error)">
+                                        @(visitorModel!.IsInGym ? "In gym" : "Not in gym")
+                                </MudButton>
+                            </MudItem>
+                        </MudContainer>
+                    <MudDivider Class="my-2" />
+                    <div class="d-flex flex-column">
+                        <MudText><b>Visitor Card Number:</b> @visitorModel!.VisitorCard!.BarCode</MudText>
+                        <MudText><b>Created by:</b> @visitorModel!.VisitorCard!.CreatedBy.Email</MudText>
+                        <MudText><b>Registered at:</b> @visitorModel!.VisitorCard!.RegistrationDate.ToShortDateString()</MudText>
+                        <MudDivider Class="my-2" />
+                        <MudText><b>Abonnements:</b> @(visitorModel!.VisitorCard!.Abonnements == null ? "None" : "View")</MudText>
+                        <MudText><b>Group trainings:</b> @(visitorModel!.GroupTrainings == null ? "None" : "View")</MudText>
+                        <MudText><b>Individual trainings:</b> @(visitorModel!.PersonalTrainings == null ? "None" : "View")</MudText>
+                    </div>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            @if (visitorModel!.PhotoUrl != null)
+            {
+                <MudItem xs="12" sm="5">
+                    <MudPaper Class="pa-2 mud-height-full">
+                        <MudText Typo="Typo.subtitle2" Class="pa-2 mb-3">Profile Photo:</MudText>
+                        <MudImage Fluid="true" Src="@visitorModel!.PhotoUrl" Alt="Photo" Elevation="25" Class="rounded-lg" />
+                    </MudPaper>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public Visitor? visitorModel { get; set; }
+
+    [CascadingParameter]
+    MudDialogInstance? MudDialog { get; set; }
+
+    // TODO redirecting to abonnement and training views
+
+    private void HandleResetError()
+    {
+        MudDialog?.Close(DialogResult.Cancel);
+    }
+}

@@ -1,4 +1,4 @@
-﻿@page "/receptionist/AllCoachesList"
+﻿@page "/receptionist/ActiveCoachesList"
 @using GymOffice.Common.Contracts.CommandContracts.ReceptionistCommands.Update
 @using GymOffice.Common.Contracts.DataProviderContracts
 @using GymOffice.Common.DTOs;
@@ -15,7 +15,7 @@
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
-            <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" T="Coach">
+            <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" RowsPerPage="8" OnRowClick="CoachRowClickEvent" T="Coach">
                 <HeaderContent>
                     <MudTh><MudTableSortLabel Enabled="false" 
                         SortBy="new Func<Coach, object>(x=>x.FirstName)">First Name</MudTableSortLabel></MudTh>
@@ -27,6 +27,7 @@
                         SortBy="new Func<Coach, object>(x=>x.PhoneNumber)">Phone Number</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="aw_sort" T="Coach"
                         SortBy="new Func<Coach, object>(x=>x.IsAtWork)">At Work</MudTableSortLabel></MudTh>
+                    <MudTh>Details</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd Class="flex-shrink-0" DataLabel="First Name">@context.FirstName</MudTd>
@@ -40,7 +41,10 @@
                             <MudText>@(context.IsAtWork ? "YES" : "NO  ")</MudText>
                         </MudButton>
                     </MudTd>
-                </RowTemplate>
+                    <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Secondary"
+                        Size="Size.Small" OnClick="(() => OpenCoachView(context))" />
+                    </MudTd>
+                    </RowTemplate>
                 <NoRecordsContent>
                     <MudText>No matching records found</MudText>
                 </NoRecordsContent>
@@ -54,7 +58,8 @@
 
 @code {
     [Inject] public ICoachDataProvider CoachDataProvider { get; set; } = null!;
-    
+    [Inject] public IDialogService DialogService { get; set; } = null!;
+
     // [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
     // void Close() => MudDialog?.Close(DialogResult.Ok(true)); // for the button: OnClick="Close"
     
@@ -118,6 +123,29 @@
     {
         coachSearchString = text;
         await CoachesReloadAsync(coachesTable?.SortLabel);
+    }
+
+    private async Task OpenCoachView(Coach viewedCoach)
+    {
+        var options = new DialogOptions
+            {
+                FullWidth = true,
+                MaxWidth = viewedCoach.PhotoUrl == null ? MaxWidth.Small : MaxWidth.Medium,
+                CloseButton = true,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseOnEscapeKey = true,
+                NoHeader = true
+            };
+        var parameters = new DialogParameters();
+        parameters.Add("coachModel", viewedCoach);
+        var dialog = DialogService.Show<CoachViewDialog>("View a coach", parameters, options);
+        await dialog.Result;
+    }
+
+    private async Task CoachRowClickEvent(TableRowClickEventArgs<Coach> tableRowClickEventArgs)
+    {
+        await OpenCoachView(tableRowClickEventArgs.Item);
     }
 
 }

@@ -1,4 +1,4 @@
-﻿@page "/receptionist/AllVisitorsList"
+﻿@page "/receptionist/ActiveVisitorsList"
 @using GymOffice.Common.Contracts.CommandContracts.ReceptionistCommands.Update
 @using GymOffice.Common.Contracts.DataProviderContracts
 @using GymOffice.Common.DTOs;
@@ -15,7 +15,7 @@
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
-            <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" T="Visitor">
+            <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" RowsPerPage="8" OnRowClick="VisitorRowClickEvent" T="Visitor">
                 <HeaderContent>
                     <MudTh><MudTableSortLabel Enabled="false" 
                         SortBy="new Func<Visitor, object>(x=>x.FirstName!)">First Name</MudTableSortLabel></MudTh>
@@ -29,6 +29,7 @@
                         SortBy="new Func<Visitor, object>(x=>x.VisitorCard?.BarCode!)">Card Number</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ig_sort" T="Visitor"
                         SortBy="new Func<Visitor, object>(x=>x.IsInGym)">In Gym</MudTableSortLabel></MudTh>
+                    <MudTh>Details</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd Class="flex-shrink-0" DataLabel="First Name">@context.FirstName</MudTd>
@@ -43,7 +44,10 @@
                             <MudText>@(context.IsInGym ? "YES" : "NO  ")</MudText>
                         </MudButton>
                     </MudTd>
-                </RowTemplate>
+                    <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Secondary"
+                        Size="Size.Small" OnClick="(() => OpenVisitorView(context))" />
+                    </MudTd>
+                    </RowTemplate>
                 <NoRecordsContent>
                     <MudText>No matching records found</MudText>
                 </NoRecordsContent>
@@ -57,6 +61,7 @@
 
 @code {
     [Inject] public IVisitorDataProvider VisitorDataProvider { get; set; } = null!;
+    [Inject] public IDialogService DialogService { get; set; } = null!;
 
     // [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
     // void Close() => MudDialog?.Close(DialogResult.Ok(true)); // for the button: OnClick="Close"
@@ -125,5 +130,28 @@
     {
         visitorSearchString = text;
         await VisitorsReloadAsync(visitorsTable?.SortLabel);
+    }
+
+    private async Task OpenVisitorView(Visitor viewedVisitor)
+    {
+        var options = new DialogOptions
+            {
+                FullWidth = true,
+                MaxWidth = viewedVisitor.PhotoUrl == null ? MaxWidth.Small : MaxWidth.Medium,
+                CloseButton = true,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseOnEscapeKey = true,
+                NoHeader = true
+            };
+        var parameters = new DialogParameters();
+        parameters.Add("visitorModel", viewedVisitor);
+        var dialog = DialogService.Show<VisitorViewDialog>("View a visitor", parameters, options);
+        await dialog.Result;
+    }
+
+    private async Task VisitorRowClickEvent(TableRowClickEventArgs<Visitor> tableRowClickEventArgs)
+    {
+        await OpenVisitorView(tableRowClickEventArgs.Item);
     }
 }
