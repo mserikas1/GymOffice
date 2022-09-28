@@ -17,8 +17,7 @@
         <MudCardContent>
             <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" RowsPerPage="8" OnRowClick="CoachRowClickEvent" T="Coach">
                 <HeaderContent>
-                    <MudTh><MudTableSortLabel Enabled="false" 
-                        SortBy="new Func<Coach, object>(x=>x.FirstName)">First Name</MudTableSortLabel></MudTh>
+                    <MudTh>First Name</MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Coach" InitialDirection="SortDirection.Ascending" 
                         SortBy="new Func<Coach, object>(x=>x.LastName)">Last Name</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="em_sort" T="Coach" 
@@ -41,7 +40,7 @@
                             <MudText>@(context.IsAtWork ? "YES" : "NO  ")</MudText>
                         </MudButton>
                     </MudTd>
-                    <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Secondary"
+                        <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
                         Size="Size.Small" OnClick="(() => OpenCoachView(context))" />
                     </MudTd>
                     </RowTemplate>
@@ -134,12 +133,11 @@
                 CloseButton = true,
                 DisableBackdropClick = true,
                 Position = DialogPosition.Center,
-                CloseOnEscapeKey = true,
-                NoHeader = true
+                CloseOnEscapeKey = true
             };
         var parameters = new DialogParameters();
         parameters.Add("coachModel", viewedCoach);
-        var dialog = DialogService.Show<CoachViewDialog>("View a coach", parameters, options);
+        var dialog = DialogService.Show<CoachViewDialog>("Coach details", parameters, options);
         await dialog.Result;
     }
 

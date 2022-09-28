@@ -19,8 +19,7 @@
                 <MudCardContent>
                     <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" T="Visitor">
                         <HeaderContent>
-                            <MudTh><MudTableSortLabel Enabled="false" 
-                                SortBy="new Func<Visitor, object>(x=>x.FirstName!)">First Name</MudTableSortLabel></MudTh>
+                            <MudTh>First Name</MudTh>
                             <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Visitor" InitialDirection="SortDirection.Ascending" 
                                 SortBy="new Func<Visitor, object>(x=>x.LastName!)">Last Name</MudTableSortLabel></MudTh>
                             <MudTh><MudTableSortLabel SortLabel="em_sort" T="Visitor" 

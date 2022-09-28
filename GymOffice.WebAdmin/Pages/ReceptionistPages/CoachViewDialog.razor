@@ -8,16 +8,14 @@
     {
         <MudGrid>
             <MudItem xs="12" sm="@(coachModel!.PhotoUrl == null ? 12 : 7)">
-                <MudCard Class="pa-2">
+                <MudCard Class="pa-0">
                     <MudCardContent>
-                        <MudText Typo="Typo.subtitle2" Class="mb-3">Coach details:</MudText>
-                        <MudTextField Label="First name" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="coachModel!.FirstName" />
-                        <MudTextField Label="Last name" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="coachModel!.LastName" />
-                        <MudTextField Label="Phone Number" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="coachModel!.PhoneNumber" />
-                        <MudTextField Label="Email" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="coachModel!.Email" />
-                        <MudTextField Label="Passport Number" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="coachModel!.PassportNumber" />
-                        <MudTextField Label="Education" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="coachModel!.Education" />
-                        <MudTextField Label="Desctiption" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Lines="4"
+                        <MudTextField Class="mb-2" Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" 
+                            Value="@(coachModel!.FirstName + " " + coachModel!.LastName)" />
+                        <MudTextField Class="mb-2" Label="Phone Number" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="coachModel!.PhoneNumber" />
+                        <MudTextField Class="mb-2" Label="Email" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="coachModel!.Email" />
+                        <MudTextField Class="mb-2" Label="Education" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="coachModel!.Education" />
+                        <MudTextField Class="mb-2" Label="Desctiption" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Lines="8"
                             Value="coachModel!.Description" />
                         <MudContainer Class="d-flex flex-row justify-center">
                             <MudItem sm="4" Class="mr-2">
@@ -35,22 +33,21 @@
                                 </MudButton>
                             </MudItem>
                         </MudContainer>
-                        <MudText><b>Group trainings:</b> @(coachModel!.GroupTrainings == null ? "None" : "View")</MudText>
-                        <MudText><b>Individual trainings:</b> @(coachModel!.PersonalTrainings == null ? "None" : "View")</MudText>
-                        <MudText><b>Work schedule:</b> @(coachModel!.JobScheduleItems == null ? "None" : "View")</MudText>
+                        <MudText><b>Group trainings:</b> @(coachModel!.GroupTrainings == null 
+                            || coachModel!.GroupTrainings.Count == 0 ? "None" : "View")</MudText>
+                        <MudText><b>Individual trainings:</b> @(coachModel!.PersonalTrainings == null 
+                            || coachModel!.PersonalTrainings.Count == 0 ? "None" : "View")</MudText>
+                        <MudText><b>Work schedule:</b> @(coachModel!.JobScheduleItems == null 
+                            || coachModel!.JobScheduleItems.Count == 0 ? "None" : "View")</MudText>
                         <MudDivider Class="my-2" />
-                        <div class="d-flex flex-column">
-                            <MudText><b>Created by:</b> @coachModel!.CreatedBy.Email</MudText>
-                            <MudText><b>Created at:</b> @coachModel!.CreatedAt.ToShortDateString()</MudText>
-                        </div>
+                        <MudText><b>Created at</b> @coachModel!.CreatedAt.ToShortDateString() <b>by</b> @coachModel!.CreatedBy.Email</MudText>
                     </MudCardContent>
                 </MudCard>
             </MudItem>
             @if (coachModel!.PhotoUrl != null)
             {
                 <MudItem xs="12" sm="5">
-                    <MudPaper Class="pa-2 mud-height-full">
-                        <MudText Typo="Typo.subtitle2" Class="pa-2 mb-3">Profile Photo:</MudText>
+                    <MudPaper Class="pa-0 mud-height-full">
                         <MudImage Fluid="true" Src="@coachModel!.PhotoUrl" Alt="Photo" Elevation="25" Class="rounded-lg" />
                     </MudPaper>
                 </MudItem>

@@ -17,8 +17,7 @@
         <MudCardContent>
             <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" RowsPerPage="8" OnRowClick="VisitorRowClickEvent" T="Visitor">
                 <HeaderContent>
-                    <MudTh><MudTableSortLabel Enabled="false" 
-                        SortBy="new Func<Visitor, object>(x=>x.FirstName!)">First Name</MudTableSortLabel></MudTh>
+                    <MudTh>First Name</MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Visitor" InitialDirection="SortDirection.Ascending" 
                         SortBy="new Func<Visitor, object>(x=>x.LastName!)">Last Name</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="em_sort" T="Visitor" 
@@ -44,7 +43,7 @@
                             <MudText>@(context.IsInGym ? "YES" : "NO  ")</MudText>
                         </MudButton>
                     </MudTd>
-                    <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Secondary"
+                        <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
                         Size="Size.Small" OnClick="(() => OpenVisitorView(context))" />
                     </MudTd>
                     </RowTemplate>
@@ -141,12 +140,11 @@
                 CloseButton = true,
                 DisableBackdropClick = true,
                 Position = DialogPosition.Center,
-                CloseOnEscapeKey = true,
-                NoHeader = true
+                CloseOnEscapeKey = true
             };
         var parameters = new DialogParameters();
         parameters.Add("visitorModel", viewedVisitor);
-        var dialog = DialogService.Show<VisitorViewDialog>("View a visitor", parameters, options);
+        var dialog = DialogService.Show<VisitorViewDialog>("Visitor detaills", parameters, options);
         await dialog.Result;
     }
 

@@ -35,8 +35,7 @@ else
                     <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" Striped="true" RowsPerPage="6"
                             OnRowClick="VisitorRowClickEvent" T="Visitor">
                         <HeaderContent>
-                            <MudTh><MudTableSortLabel Enabled="false" 
-                                SortBy="new Func<Visitor, object>(x=>x.FirstName!)">First Name</MudTableSortLabel></MudTh>
+                            <MudTh>First Name</MudTh>
                             <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Visitor" InitialDirection="SortDirection.Ascending" 
                                 SortBy="new Func<Visitor, object>(x=>x.LastName!)">Last Name</MudTableSortLabel></MudTh>
                             <MudTh><MudTableSortLabel SortLabel="ph_sort" T="Visitor" 
@@ -47,7 +46,7 @@ else
                             <MudTd DataLabel="First Name">@context.FirstName</MudTd>
                             <MudTd DataLabel="Last Name">@context.LastName</MudTd>
                             <MudTd DataLabel="Phone Number" HideSmall="true">@context.PhoneNumber</MudTd>
-                            <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Secondary"
+                            <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
                                     Size="Size.Small" OnClick="(() => OpenVisitorView(context))" />
                             </MudTd>
                         </RowTemplate>
@@ -81,9 +80,8 @@ else
                         <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" Striped="true" RowsPerPage="6"
                             OnRowClick="CoachRowClickEvent" T="Coach">
                         <HeaderContent>
-                            <MudTh><MudTableSortLabel Enabled="false" 
-                                SortBy="new Func<Coach, object>(x=>x.FirstName)">First Name</MudTableSortLabel></MudTh>
-                            <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Coach" InitialDirection="SortDirection.Ascending" 
+                                <MudTh>First Name</MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Coach" InitialDirection="SortDirection.Ascending" 
                                 SortBy="new Func<Coach, object>(x=>x.LastName)">Last Name</MudTableSortLabel></MudTh>
                             <MudTh><MudTableSortLabel SortLabel="ph_sort" T="Coach" 
                                 SortBy="new Func<Coach, object>(x=>x.PhoneNumber)">Phone Number</MudTableSortLabel></MudTh>
@@ -93,7 +91,7 @@ else
                             <MudTd DataLabel="First Name">@context.FirstName</MudTd>
                             <MudTd DataLabel="Last Name">@context.LastName</MudTd>
                             <MudTd DataLabel="Phone Number" HideSmall="true">@context.PhoneNumber</MudTd>
-                           <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Secondary"
+                               <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
                                     Size="Size.Small" OnClick="(() => OpenCoachView(context))" />
                             </MudTd>
                          </RowTemplate>
@@ -338,10 +336,10 @@ else
 
     private async void RegisterNewVisitorClick()
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
         var parameters = new DialogParameters();
         parameters.Add("visitorModel", null);
-        var dialog = DialogService.Show<CreateVisitorDialog>("New Visitor Dialog", parameters, options);
+        var dialog = DialogService.Show<CreateVisitorDialog>("New visitor registration", parameters, options);
         await dialog.Result;
     }
 
@@ -397,11 +395,10 @@ else
                 DisableBackdropClick = true,
                 Position = DialogPosition.Center,
                 CloseOnEscapeKey = true,
-                NoHeader = true
             };
         var parameters = new DialogParameters();
         parameters.Add("visitorModel", viewedVisitor);
-        var dialog = DialogService.Show<VisitorViewDialog>("View a visitor", parameters, options);
+        var dialog = DialogService.Show<VisitorViewDialog>("Visitor details", parameters, options);
         await dialog.Result;
     }
 
@@ -420,11 +417,10 @@ else
                 DisableBackdropClick = true,
                 Position = DialogPosition.Center,
                 CloseOnEscapeKey = true,
-                NoHeader = true
             };
         var parameters = new DialogParameters();
         parameters.Add("coachModel", viewedCoach);
-        var dialog = DialogService.Show<CoachViewDialog>("View a coach", parameters, options);
+        var dialog = DialogService.Show<CoachViewDialog>("Coach details", parameters, options);
         await dialog.Result;
     }
     

@@ -37,7 +37,7 @@ else
             <MudTd DataLabel="Active">@(context.IsActive == true ? "Yes" : "No")</MudTd>
             <MudTd DataLabel="At Work">@(context.IsAtWork == true ? "Yes" : "No")</MudTd>
             <MudTh>
-                <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Secondary"
+                        <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
                            Size="Size.Medium" Class="me-3" OnClick="(() => GoToPreview_Click(context))" />
                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" 
                            Size="Size.Medium" OnClick="(() => EditReceptionist_Click(context))" />

@@ -16,7 +16,6 @@
             <MudItem xs="12">
                 <MudCard Class="pa-5">
                     <MudCardContent>
-                        <MudText Typo="Typo.h5">New Visitor Registration</MudText>
                         <MudTextField Label="First name" HelperText="Length from 2 to 20 characters"
                                   @bind-Value="visitorModel!.FirstName" For="@(() => visitorModel!.FirstName)" />
                         <MudTextField Label="First name" HelperText="Length from 2 to 20 characters"
@@ -29,7 +28,7 @@
                     </MudCardContent>
                     <MudCardActions Class="d-flex justify-end">
                         <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleCancel">Cancel</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
                         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
                     </MudCardActions>
                     <MudDivider Class="my-2" />
