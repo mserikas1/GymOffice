@@ -21,6 +21,10 @@ builder.Services.AddScoped<ICoachRepository, CoachRepository>();
 
 // DI for DataProviders
 builder.Services.AddScoped<ICoachDataProvider, CoachDataProvider>();
+builder.Services.AddScoped<IAbonnementTypeRepository, AbonnementTypeRepository>();
+
+//DI for DataProviders
+builder.Services.AddScoped<IAbonnementTypeDataProvider, AbonnementTypeDataProvider>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

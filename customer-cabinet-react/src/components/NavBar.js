@@ -1,10 +1,10 @@
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 export default function NavBar() {
   return (
     <div>
@@ -16,7 +16,7 @@ export default function NavBar() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} className="fs-5" to="/Abonements" href="#">
+              <Nav.Link as={Link} className="fs-5" to="/Abonnements" href="#">
                 Abonnements
               </Nav.Link>
               <Nav.Link as={Link} className="fs-5" to="/Coaches" href="">
@@ -27,15 +27,15 @@ export default function NavBar() {
               </Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link href="#deets">
+              <Nav.Link as={Link} to="/Login" href="">
                 <Button variant="secondary" size="lg">
                   Log In
-                </Button>{" "}
+                </Button>
               </Nav.Link>
-              <Nav.Link href="#memes">
+              <Nav.Link as={Link} to="/Register" href="">
                 <Button variant="primary" size="lg">
                   GetStarted
-                </Button>{" "}
+                </Button>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

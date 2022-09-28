@@ -1,0 +1,17 @@
+.intro{
+    background-image: url("C:\Users\Rostyslaw\Desktop\GymOffice\customer-cabinet-react\public\img\IntroBack.jpg");
+    margin-top: 100px;
+    background-size: cover;
+    height: 65vh;
+}
+.introImage > img{
+    height: 100%;
+}
+.title{
+    font-size: 72px;
+}
+@media screen and (max-width: 400px) {
+    .title{
+        font-size: 30px;
+    }
+}

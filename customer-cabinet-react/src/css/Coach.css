@@ -6,10 +6,7 @@
 }
 .coachCard
 {
-    width:400px;
     min-height: 400px;
-    margin-left:auto;
-    margin-right: auto;
     margin-top: 50px;
     position: relative;
     transform-style: preserve-3d;
