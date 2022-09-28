@@ -23,8 +23,19 @@ public class EmployeeDataProvider : IEmployeeDataProvider
 
     public async Task<ICollection<Admin>?> GetAdministratorsAsync()
     {
-        var admins = await _employeeRepository.GetAdministratorsAsync();
-        return admins;
+        return await _employeeRepository.GetAdministratorsAsync();
+    }
+
+    public async Task<Receptionist?> GetReceptionistByIdAsync(Guid id)
+    {
+        Receptionist? entity = await _employeeRepository.GetReceptionistByIdAsync(id);
+
+        if (entity == null || entity.Id != id)
+        {
+            throw new NotFoundException(nameof(Receptionist), id);
+        }
+
+        return entity;
     }
 
     public async Task<ICollection<Receptionist>?> GetReceptionistsAsync()

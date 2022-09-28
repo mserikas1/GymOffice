@@ -1,7 +1,6 @@
 ﻿namespace GymOffice.WebAdmin.Pages.Administrator;
 public partial class ReceptionistsListPage : ComponentBase
 {
-    private string searchString = "";    
     public Receptionist? Receptionist { get; set; }
     public ReceptionistVM? ReceptionistVM { get; set; } = new();
     public string? ErrorMessage { get; set; }
@@ -25,23 +24,6 @@ public partial class ReceptionistsListPage : ComponentBase
     {
         ErrorMessage = null;
         StateHasChanged();
-    }
-
-    private bool FilterFunc1(Receptionist receptionist) => FilterFunc(receptionist, searchString);
-
-    private bool FilterFunc(Receptionist receptionist, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (receptionist.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (receptionist.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (receptionist.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (receptionist.PhoneNumber.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        return false;
     }
 
     private async void EditReceptionist_Click(Receptionist receptionist)

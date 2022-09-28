@@ -17,8 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\CoachPages\" />
-    <Folder Include="Pages\Receptionist\" />
+    <Folder Include="Pages\CoachPages\" />    
     <Folder Include="wwwroot\Data\Photos\" />
   </ItemGroup>
 
