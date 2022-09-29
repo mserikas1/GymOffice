@@ -8,7 +8,7 @@
     {
         <MudGrid>
             <MudItem xs="12" sm="@(coachModel!.PhotoUrl == null ? 12 : 7)">
-                <MudCard Class="pa-0">
+                    <MudCard Elevation="0" Class="pa-0">
                     <MudCardContent>
                         <MudTextField Class="mb-2" Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" 
                             Value="@(coachModel!.FirstName + " " + coachModel!.LastName)" />
@@ -47,8 +47,8 @@
             @if (coachModel!.PhotoUrl != null)
             {
                 <MudItem xs="12" sm="5">
-                    <MudPaper Class="pa-0 mud-height-full">
-                        <MudImage Fluid="true" Src="@coachModel!.PhotoUrl" Alt="Photo" Elevation="25" Class="rounded-lg" />
+                    <MudPaper Elevation="0" Class="pa-0 mud-height-full">
+                         <MudImage Fluid="true" Src="@coachModel!.PhotoUrl" Alt="Photo" Elevation="0" Class="rounded-lg" />
                     </MudPaper>
                 </MudItem>
             }

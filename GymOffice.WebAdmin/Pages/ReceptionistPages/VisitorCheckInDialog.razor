@@ -4,12 +4,12 @@
 @inject IUpdateVisitorCommand UpdateVisitorCommand
     
 <!-- Inactive Visitors list with checkin possibility -->
-<MudDialog>
+<MudDialog DefaultFocus="DefaultFocus.Element"> 
     <DialogContent>
         <MudText Align="Align.Center">List of active visitors not in gym allows to check-in a selected visitor.</MudText>
         <!-- Visitors list -->
         <MudItem xs="4" sm="4" md="12" Style="overflow-y: scroll; overflow-x: scroll">
-            <MudCard Elevation="25" Class="rounded-lg pb-4">
+            <MudCard Elevation="0" Class="rounded-lg pb-4">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudTextField T="string" ValueChanged="@(str=>OnVisitorSearch(str))" Placeholder="Search a visitor" Adornment="Adornment.Start"

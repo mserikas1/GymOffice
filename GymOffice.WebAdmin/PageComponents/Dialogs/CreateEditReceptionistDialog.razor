@@ -83,7 +83,7 @@
                             }
                             else if (ReceptionistModel!.PhotoUrl != null)
                             {
-                                <MudImage Fluid="true" Src="@ReceptionistModel!.PhotoUrl" Alt="Photo" Elevation="25" Class="rounded-lg" />
+                                <MudImage Fluid="true" Src="@ReceptionistModel!.PhotoUrl" Alt="Photo" Elevation="0" Class="rounded-lg" />
                             }
                         </MudPaper>
                     </MudItem>
@@ -92,7 +92,7 @@
                     <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleCancel">Cancel</MudButton>
                     @if (IsEdit == false)
                     {
-                                <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
+                         <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
                     }
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@(IsEdit == true ? "Update" : "Register")</MudButton>
                 </MudCardActions>
