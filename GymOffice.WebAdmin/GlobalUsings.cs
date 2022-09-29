@@ -22,3 +22,4 @@ global using MudBlazor;
 global using MudBlazor.Services;
 global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations;
+global using GymOffice.WebAdmin.PageComponents.Common;

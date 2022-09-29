@@ -1,0 +1,55 @@
+﻿@page "/admin/coaches"
+
+@if (Coaches == null && ErrorMessage == null)
+{
+    <MudText Typo="Typo.h6" Class="pa-5">Loading data...</MudText>
+    <DisplaySpinner />
+}
+else if (ErrorMessage != null)
+{
+    <ErrorDisplay ErrorMessage="@ErrorMessage" ResetError="HandleResetError" />
+}
+else
+{
+    <CoachSearchComponent SearchOptions="SearchOptions"
+                      HandleSearch_Click="HandleSearch"
+                      HandleResetSearch_Click="HandleResetSearch" />
+
+    <MudTable Items="@Coaches" Dense="true" Hover="true">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Coaches</MudText>
+            <MudSpacer />
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Coach, object>(x => x.FirstName)">First Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.LastName)">Last Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.Email)">Email</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.PhoneNumber)">Phone Number</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.GroupTrainings.Any())">Has Groups</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.PersonalTrainings.Any())">Personal</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.IsActive)">Active</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.IsAtWork)">At Work</MudTableSortLabel></MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+            <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+            <MudTd DataLabel="Email">@context.Email</MudTd>
+            <MudTd DataLabel="Phone Number">@context.PhoneNumber</MudTd>
+            <MudTd DataLabel="Has Groups">@(context.GroupTrainings.Any() ? "Yes" : "No")</MudTd>
+            <MudTd DataLabel="Personal">@(context.PersonalTrainings.Any() ? "Yes" : "No")</MudTd>
+            <MudTd DataLabel="Active">@(context.IsActive == true ? "Yes" : "No")</MudTd>
+            <MudTd DataLabel="At Work">@(context.IsAtWork == true ? "Yes" : "No")</MudTd>
+            <MudTh>
+                <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
+                           Size="Size.Medium" Class="me-3" OnClick="(() => GoToPreview_Click(context))" />
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary"
+                           Size="Size.Medium" OnClick="(() => EditCoach_Click(context))" />
+            </MudTh>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager HorizontalAlignment="HorizontalAlignment.End" />
+        </PagerContent>
+    </MudTable>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-6" OnClick="CreateCoach_Click">Create New</MudButton>
+}

@@ -7,5 +7,5 @@ public interface ICoachDataProvider
     Task<ICollection<Coach>?> GetActiveCoachesAsync();
     Task<ICollection<Coach>?> GetActiveCoachesNotAtWorkAsync();
     Task<ICollection<Coach>?> GetCoachesNotAtWorkAsync();
-
+    Task<ICollection<Coach>?> SearchCoachsAsync(CoachSearchOptions options);
 }

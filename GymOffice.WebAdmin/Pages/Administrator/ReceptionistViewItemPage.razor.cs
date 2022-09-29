@@ -1,5 +1,5 @@
 ﻿namespace GymOffice.WebAdmin.Pages.Administrator;
-public partial class ReceptionistWiewItemPage : ComponentBase
+public partial class ReceptionistViewItemPage : ComponentBase
 {
     [Parameter]
     public Guid ReceptionistId { get; set; }

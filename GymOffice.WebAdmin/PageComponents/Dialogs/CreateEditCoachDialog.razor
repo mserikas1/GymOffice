@@ -1,0 +1,101 @@
+﻿<MudDialog DefaultFocus="DefaultFocus.Element">
+    <DialogContent>
+        <InputFile id="photoFile" OnChange="UploadPhoto" accept=".jpg, .jpeg, .png" hidden />
+        <EditForm Model="@CoachModel" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12" sm="7">
+                    <MudCard Class="pa-3 mud-height-full">
+                        <MudText Typo="Typo.subtitle2" Class="pa-5">@(IsEdit ? "Edit" : "Add New") Coach</MudText>
+                        <MudCardContent>
+                            <MudTextField Label="First name" HelperText="Length from 2 to 20 characters"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense" Disabled="@IsEdit"
+                                          @bind-Value="CoachModel!.FirstName" For="@(() => CoachModel!.FirstName)" />
+                            <MudTextField Label="Last name" HelperText="Length from 2 to 20 characters"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense" Disabled="@IsEdit"
+                                          @bind-Value="CoachModel!.LastName" For="@(() => CoachModel!.LastName)" />
+                            <MudTextField Label="Phone Number" Class="mt-3"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense"
+                                          @bind-Value="CoachModel!.PhoneNumber" For="@(() => CoachModel!.PhoneNumber)" />
+                            <MudTextField Label="Email" Class="mt-3"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense"
+                                          @bind-Value="CoachModel!.Email" For="@(() => CoachModel!.Email)" />
+                            <MudTextField Label="Passport" Class="mt-3"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense" Disabled="@IsEdit"
+                                          @bind-Value="CoachModel!.PassportNumber" For="@(() => CoachModel!.PassportNumber)" />
+                            <MudTextField Label="Education" Class="mt-3"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense"
+                                          @bind-Value="CoachModel!.Education" For="@(() => CoachModel!.Education)" />
+                            <MudTextField Label="Description" Class="mt-3" Lines="5"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense"
+                                          @bind-Value="CoachModel!.Description" For="@(() => CoachModel!.Description)" />
+                            @if (IsEdit)
+                            {
+                                <MudSelect T="bool" Label="Active" Margin="Margin.Dense" Dense="true"
+                                       Variant="Variant.Outlined" Class="mt-3"
+                                       @bind-Value="CoachModel!.IsActive" For="@(() => CoachModel!.IsActive)">
+                                    <MudSelectItem Value="@(true)">Yes</MudSelectItem>
+                                    <MudSelectItem Value="@(false)">No</MudSelectItem>
+                                </MudSelect>
+                            }
+                            else
+                            {
+                                <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput"
+                                          Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowPassword_Click" AdornmentAriaLabel="Show Password"
+                                          @bind-Value="CoachModel!.Password" For="@(() => CoachModel!.Password)" />
+                                <MudTextField Label="Confirm Password" HelperText="Repeat the password" Class="mt-3"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput"
+                                          Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowPassword_Click" AdornmentAriaLabel="Show Password"
+                                          @bind-Value="CoachModel!.PasswordConfirm" For="@(() => CoachModel!.PasswordConfirm)" />
+                            }
+                            <MudCardActions Class="mt-3">
+                                <MudButton HtmlTag="label" Color="Color.Success" StartIcon="@Icons.Filled.PersonAdd"
+                                           Variant="Variant.Filled" for="photoFile">@(IsEdit == true ? "Change" : "Add")&nbsp;Photo</MudButton>
+                                <MudText Class="ms-3">(Required. Up to 5 Mb .jpg, .jpeg or .png)</MudText>
+                            </MudCardActions>
+                            @if (IsEdit)
+                            {
+                                <MudDivider Class="my-2" Light />
+                                <div class="d-flex flex-column">
+                                    <MudText><b>Created by:</b> @CoachModel.CreatedBy.Email</MudText>
+                                    <MudText><b>Created at:</b> @CoachModel.CreatedAt.ToShortDateString()</MudText>
+                                    @if (CoachModel.CreatedAt.Day != CoachModel.ModifiedAt.Day)
+                                    {
+                                        <MudText><b>Modified by:</b> @CoachModel.ModifiedBy.Email</MudText>
+                                        <MudText><b>Last Update:</b> @CoachModel.ModifiedAt.ToShortDateString()</MudText>
+                                    }
+                                </div>
+                            }
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="5">
+                    <MudPaper Class="pa-5 mud-height-full">
+                        <MudText Typo="Typo.subtitle2" Class="pa-5">Profile Photo:</MudText>
+                        @if (isLoading == true)
+                        {
+                            <MudText Class="m-4">Uploading...</MudText>
+                        }
+                        else if (photoUploadError != null)
+                        {
+                            <MudText Class="m-4">@photoUploadError</MudText>
+                        }
+                        else if (CoachModel!.PhotoUrl != null)
+                        {
+                            <MudImage Fluid="true" Src="@CoachModel!.PhotoUrl" Alt="Photo" Elevation="25" Class="rounded-lg" />
+                        }
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+            <MudCardActions Class="d-flex justify-end">
+                <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleCancel">Cancel</MudButton>
+                @if (IsEdit == false)
+                {
+                    <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
+                }
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@(IsEdit == true ? "Update" : "Register")</MudButton>
+            </MudCardActions>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
