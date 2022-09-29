@@ -1,27 +1,13 @@
-﻿@*<MudPopover AnchorOrigin="Origin.TopLeft" TransformOrigin="Origin.TopLeft" Class="px-4 pt-4">
-    <MudPaper>
-        <div class="d-flex flex-column">
-            <MudAlert Severity="Severity.Error" Class="my-5">@ErrorMessage</MudAlert>
-            <MudText>Content of the popover can be anything.</MudText>
-            <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
-        </div>
-    </MudPaper>
-    
-</MudPopover>*@
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         <div class="d-flex flex-column">
             <MudAlert Severity="Severity.Error" Class="my-5">@ErrorMessage</MudAlert>
-            <MudText>@ErrorMessage</MudText>
             <MudButton OnClick="@HandleClose" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
         </div>
     </DialogContent>
         
 </MudDialog>
 
-
-@*<MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ms-5" OnClick="ResetError_Click">Back</MudButton>*@
 
 @code {
     [Parameter]
@@ -40,18 +26,8 @@
         ResetError.InvokeAsync();
     }
 
-    //public bool _isOpen;
-
     private void HandleClose()
     {
         DialogInstance.Close();
     }
-
-    //public void ToggleOpen()
-    //{
-    //    if (_isOpen)
-    //        _isOpen = false;
-    //    else
-    //        _isOpen = true;
-    //}
 }
