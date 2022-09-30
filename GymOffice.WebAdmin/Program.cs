@@ -5,20 +5,66 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddDbContext<WebAdminIdentityDbContext>();
 
-// DI for Repositories
-builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-builder.Services.AddScoped<ICoachRepository, CoachRepository>();
-builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddDefaultTokenProviders()
+    .AddDefaultUI()
+    .AddEntityFrameworkStores<WebAdminIdentityDbContext>();
 
-// DI for DataProviders
-builder.Services.AddTransient<IEmployeeDataProvider, EmployeeDataProvider>();
-builder.Services.AddTransient<ICoachDataProvider, CoachDataProvider>();
-builder.Services.AddTransient<IVisitorDataProvider, VisitorDataProvider>();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
-// DI for Commands
-builder.Services.AddTransient<IAddReceptionistCommand, AddReceptionistCommand>();
-builder.Services.AddTransient<IEditReceptionistCommand, EditReceptionistCommand>();
+// example of Razor Identity Pages setup
+// https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Password settings 
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+
+    // Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // User settings
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = false;
+
+    options.SignIn.RequireConfirmedAccount = false; // require confirmed account for sign in
+    options.SignIn.RequireConfirmedEmail = false; // require email validation for sign in
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // Cookie settings
+    options.Cookie.Name = "_GymOfficeStaff";
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Logout";
+    options.AccessDeniedPath = "/Identity/Pages/Account/AccessDenied";
+    options.SlidingExpiration = true;
+});
+
+// If we will do so, only registered users with these roles will be able to login and use the App
+builder.Services.AddAuthorization(
+options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()   // Login, Logout and AccessDenied pages should be set [AllowAnonymous] to avoid cyclic reference
+        .RequireRole("Admin", "Receptionist", "Coach")
+        .Build();
+}
+);
 
 builder.Services.AddMudServices();
 
@@ -36,6 +82,7 @@ builder.Services.AddTransient<IVisitorDataProvider, VisitorDataProvider>();
 builder.Services.AddTransient<IAddCoachCommand, AddCoachCommand>();
 builder.Services.AddTransient<IAddAdministratorCommand, AddAdministratorCommand>();
 builder.Services.AddTransient<IAddReceptionistCommand, AddReceptionistCommand>();
+builder.Services.AddTransient<IEditReceptionistCommand, EditReceptionistCommand>();
 builder.Services.AddTransient<IUpdateVisitorCommand, UpdateVisitorCommand>();
 builder.Services.AddTransient<IUpdateCoachCommand, UpdateCoachCommand>();
 builder.Services.AddTransient<IAddVisitorCardCommand, AddVisitorCardCommand>();
@@ -60,5 +107,8 @@ app.UseRouting();
 app.MapRazorPages();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

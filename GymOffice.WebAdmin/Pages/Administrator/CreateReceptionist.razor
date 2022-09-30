@@ -1,4 +1,5 @@
 ﻿@page "/admin/create-receptionist"
+@attribute [Authorize(Roles = "Admin")]
 
 @if (receptionistModel == null && errorMessage == null)
 {

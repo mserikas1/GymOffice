@@ -1,7 +1,5 @@
 ﻿@page "/admin/visitors"
-@using GymOffice.Common.Contracts.CommandContracts.ReceptionistCommands.Update
-@using GymOffice.Common.Contracts.DataProviderContracts
-@using GymOffice.Common.DTOs;
+@attribute [Authorize(Roles = "Admin")]
 @inject IUpdateVisitorCommand UpdateVisitorCommand
     
 <!-- All Visitors list with checkin possibility -->

@@ -1,4 +1,6 @@
 ﻿@page "/receptionist"
+@attribute [Authorize(Roles = "Receptionist")]
+
 @if (ErrorMessage != null)
 {
     <ErrorDisplay ErrorMessage="@ErrorMessage" ResetError="HandleResetError" />

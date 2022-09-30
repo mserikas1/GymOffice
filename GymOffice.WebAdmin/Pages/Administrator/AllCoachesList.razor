@@ -1,8 +1,7 @@
 ﻿@page "/admin/coaches"
-@using GymOffice.Common.Contracts.CommandContracts.ReceptionistCommands.Update
-@using GymOffice.Common.Contracts.DataProviderContracts
-@using GymOffice.Common.DTOs;
+@attribute [Authorize(Roles = "Admin")]
 @inject IUpdateCoachCommand UpdateCoachCommand
+
     
 <!-- All Coaches list with checkin possibility -->
 <MudText Align="Align.Center">All coaches list allows to (de)activate and/or check-in a selected coach.</MudText>

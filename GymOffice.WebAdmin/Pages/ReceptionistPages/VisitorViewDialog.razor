@@ -1,4 +1,6 @@
-﻿<MudDialog DefaultFocus="DefaultFocus.Element"> 
+﻿@attribute [Authorize(Roles = "Receptionist")]
+
+<MudDialog DefaultFocus="DefaultFocus.Element"> 
     <DialogContent>
     @if (visitorModel == null)
     {

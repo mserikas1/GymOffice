@@ -1,4 +1,5 @@
 ﻿@page "/admin/receptionists"
+@attribute [Authorize(Roles = "Admin")]
 
 @if (Receptionists == null && ErrorMessage == null)
 {
