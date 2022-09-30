@@ -1,4 +1,5 @@
 ﻿using GymOffice.WebAdmin.ViewModels;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GymOffice.WebAdmin.Extensions;
 public static class DtoConversions
@@ -96,6 +97,46 @@ public static class DtoConversions
             PersonalTrainings = coach.PersonalTrainings,
             Password = "qwerty123",             // Fake data for model validation. TODO: real data should take from identity dbContext
             PasswordConfirm = "qwerty123"       // Fake data for model validation. TODO: real data should take from identity dbContext
+        };
+    }
+
+    public static AbonnementType ConvertToDto(this AbonnementTypeVM abonnementTypeVM)
+    {
+        return new AbonnementType
+        {
+            Id = abonnementTypeVM.Id,
+            Name = abonnementTypeVM.Name,
+            Price = abonnementTypeVM.Price,
+            Duration = abonnementTypeVM.Duration,
+            IsActive = abonnementTypeVM.IsActive,
+            CreatedAt = abonnementTypeVM.CreatedAt,
+            ModifiedAt = abonnementTypeVM.ModifiedAt,
+            CreatedBy = abonnementTypeVM.CreatedBy,
+            ModifiedBy = abonnementTypeVM.ModifiedBy,
+            Description = abonnementTypeVM.Description,
+            Abonnements = abonnementTypeVM.Abonnements,
+            StartVisitTime = abonnementTypeVM.StartVisitTime == null ? "00:00" : abonnementTypeVM.StartVisitTime.Value.ToString("hh:mm"),
+            EndVisitTime = abonnementTypeVM.EndVisitTime == null ? "00:00" : abonnementTypeVM.EndVisitTime.Value.ToString("hh:mm")
+        };
+    }
+
+    public static AbonnementTypeVM ConvertToViewModel(this AbonnementType abonnementType)
+    {
+        return new AbonnementTypeVM
+        {
+            Id = abonnementType.Id,
+            Name = abonnementType.Name,
+            Price = abonnementType.Price,
+            Duration = abonnementType.Duration,
+            Description = abonnementType.Description,
+            IsActive = abonnementType.IsActive,
+            CreatedAt = abonnementType.CreatedAt,
+            CreatedBy = abonnementType.CreatedBy,
+            ModifiedAt = abonnementType.ModifiedAt,
+            ModifiedBy = abonnementType.ModifiedBy,
+            Abonnements = abonnementType.Abonnements,
+            StartVisitTime = TimeSpan.Parse(abonnementType.StartVisitTime),
+            EndVisitTime = TimeSpan.Parse(abonnementType.EndVisitTime)
         };
     }
 }

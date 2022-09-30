@@ -11,15 +11,13 @@ else if (ErrorMessage != null)
 }
 else
 {
+    <MudText Typo="Typo.h4" Class="m-3">Receptionists</MudText>
+
     <ReceptionistSearchComponent SearchOptions="SearchOptions"
         HandleSearch_Click="HandleSearch"
         HandleResetSearch_Click="HandleResetSearch" />
 
     <MudTable Items="@Receptionists" Dense="true" Hover="true">
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Receptionists</MudText>
-            <MudSpacer />
-        </ToolBarContent>
         <HeaderContent>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Receptionist, object>(x => x.FirstName)">First Name</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Receptionist, object>(x => x.LastName)">Last Name</MudTableSortLabel></MudTh>

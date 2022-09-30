@@ -65,15 +65,7 @@ public partial class CoachListPage : ComponentBase
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
         var parameters = new DialogParameters();
         parameters.Add("Coach", coach);
-        var dialog = DialogService.Show<CoachViewItemDialog>("ViewCoachDialog", parameters, options);
-        //var result = await dialog.Result;
-
-        //if (!result.Cancelled)
-        //{
-        //    Coaches = (List<Coach>?)await CoachDataProvider.GetAllCoachesAsync();
-        //    StateHasChanged();
-        //}
-        //NavigationManager.NavigateTo($"/admin/coaches/{coach.Id}");
+        var dialog = DialogService.Show<CoachViewItemDialog>("ViewCoachDialog", parameters, options);        
     }
 
     private async void HandleSearch(CoachSearchOptions options)

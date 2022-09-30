@@ -1,6 +1,3 @@
-using GymOffice.Common.DTOs;
-using GymOffice.Common.Utilities.Enums;
-
 namespace GymOffice.DataAccess.SQL.Repositories
 {
     public class CoachRepository : ICoachRepository

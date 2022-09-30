@@ -12,11 +12,13 @@ builder.Services.AddMudServices();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<ICoachRepository, CoachRepository>();
 builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
+builder.Services.AddScoped<IAbonnementTypeRepository, AbonnementTypeRepository>();
 
 // DI for DataProviders
 builder.Services.AddTransient<ICoachDataProvider, CoachDataProvider>();
 builder.Services.AddTransient<IEmployeeDataProvider, EmployeeDataProvider>();
 builder.Services.AddTransient<IVisitorDataProvider, VisitorDataProvider>();
+builder.Services.AddTransient<IAbonnementTypeDataProvider, AbonnementTypeDataProvider>();
 
 // DI for Commands
 builder.Services.AddTransient<IAddCoachCommand, AddCoachCommand>();

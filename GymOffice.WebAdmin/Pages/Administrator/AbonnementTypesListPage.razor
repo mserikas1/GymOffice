@@ -1,0 +1,45 @@
+﻿@page "/admin/abonnement_types"
+
+@if (AbonnementTypes == null && ErrorMessage == null)
+{
+    <MudText Typo="Typo.h6" Class="pa-5">Loading data...</MudText>
+    <DisplaySpinner />
+}
+else if (ErrorMessage != null)
+{
+    <ErrorDisplay ErrorMessage="@ErrorMessage" ResetError="HandleResetError" />
+}
+else
+{
+    <MudText Typo="Typo.h4" Class="m-3">Abonnement Types</MudText>
+
+    <MudTable Items="@AbonnementTypes" Dense="true" Hover="true">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<AbonnementType, object>(x => x.Name)">Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<AbonnementType, object>(x => x.Duration)">Duration</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<AbonnementType, object>(x => x.StartVisitTime)">Start Time</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<AbonnementType, object>(x => x.EndVisitTime)">End Time</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<AbonnementType, object>(x => x.Price)">Price</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<AbonnementType, object>(x => x.IsActive)">Active</MudTableSortLabel></MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Duration">@context.Duration</MudTd>
+            <MudTd DataLabel="Start Time">@context.StartVisitTime</MudTd>
+            <MudTd DataLabel="End Time">@context.EndVisitTime</MudTd>
+            <MudTd DataLabel="Price">@context.Price</MudTd>
+            <MudTd DataLabel="Active">@(context.IsActive == true ? "Yes" : "No")</MudTd>
+            <MudTh>
+                <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
+                       Size="Size.Medium" Class="me-3" OnClick="(() => GoToPreview_Click(context))" />
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary"
+                       Size="Size.Medium" OnClick="(() => EditCoach_Click(context))" />
+            </MudTh>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager HorizontalAlignment="HorizontalAlignment.End" />
+        </PagerContent>
+    </MudTable>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-6" OnClick="CreateCoach_Click">Create New</MudButton>
+}
