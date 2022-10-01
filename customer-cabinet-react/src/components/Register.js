@@ -17,8 +17,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const phoneNumberRegex = /^\+380[0-9]{9}$/;
-const firstNameRegex = /^[A-z][A-z0-9-_]{1,23}$/;
-const lastNameRegex = /^[A-z][A-z0-9-_]{1,23}$/;
+const firstNameRegex = /^[A-z][A-z]{1,23}$/;
+const lastNameRegex = /^[A-z][A-z]{1,23}$/;
 const pwdRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,24}$/;
 export default function Register() {
