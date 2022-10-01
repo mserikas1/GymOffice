@@ -1,7 +1,14 @@
 ﻿<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <h3 class="text-danger"><br><br>Access Denied!</h3>
+                    <h4 class="text-danger"><br>You do not have access to this resource.<br></h4>
+                    <h5><br>Please <a class="text-primary" href="/Identity/Account/LogOut">log out</a> and log in under a different role...</h5>
+                    @* @{ NavigationManager.NavigateTo("/Identity/Account/AccessDenied", true); } *@
+                </NotAuthorized>
+            </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
         </Found>
         <NotFound>
@@ -12,3 +19,7 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+@*
+@code {
+    [Inject] NavigationManager NavigationManager { get; set; } = null!;
+} *@

@@ -18,6 +18,7 @@ global using GymOffice.WebAdmin.Data;
 global using GymOffice.WebAdmin.Extensions;
 global using GymOffice.WebAdmin.PageComponents.Dialogs;
 global using GymOffice.WebAdmin.ViewModels;
+global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Authorization;
@@ -29,4 +30,3 @@ global using MudBlazor;
 global using MudBlazor.Services;
 global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations;
-
