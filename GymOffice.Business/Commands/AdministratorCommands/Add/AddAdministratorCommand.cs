@@ -1,7 +1,4 @@
-﻿using GymOffice.Business.Common.Exceptions;
-using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.Add;
-
-namespace GymOffice.Business.Commands.AdministratorCommands.Add;
+﻿namespace GymOffice.Business.Commands.AdministratorCommands.Add;
 public class AddAdministratorCommand : IAddAdministratorCommand
 {
     private readonly IEmployeeRepository _employeeRepository;
@@ -11,7 +8,7 @@ public class AddAdministratorCommand : IAddAdministratorCommand
         _employeeRepository = employeeRepository;
     }
 
-    public async Task<Guid> ExecuteAsync(Admin administrator)
+    public async Task ExecuteAsync(Admin administrator)
     {
         if (administrator == null)
         {
@@ -30,6 +27,5 @@ public class AddAdministratorCommand : IAddAdministratorCommand
         }
         await _employeeRepository.AddAdministratorAsync(administrator);
         await _employeeRepository.AddEmployeeAsync(administrator);
-        return administrator.Id;
     }
 }

@@ -34,12 +34,12 @@ else
                 <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
                        Size="Size.Medium" Class="me-3" OnClick="(() => GoToPreview_Click(context))" />
                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary"
-                       Size="Size.Medium" OnClick="(() => EditCoach_Click(context))" />
+                       Size="Size.Medium" OnClick="(() => EditAbonnementType_Click(context))" />
             </MudTh>
         </RowTemplate>
         <PagerContent>
             <MudTablePager HorizontalAlignment="HorizontalAlignment.End" />
         </PagerContent>
     </MudTable>
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-6" OnClick="CreateCoach_Click">Create New</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-6" OnClick="CreateAbonnementType_Click">Create New</MudButton>
 }

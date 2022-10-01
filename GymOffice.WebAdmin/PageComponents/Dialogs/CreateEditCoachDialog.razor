@@ -6,7 +6,7 @@
             <MudGrid>
                 <MudItem xs="12" sm="7">
                     <MudCard Class="pa-3 mud-height-full">
-                        <MudText Typo="Typo.subtitle2" Class="pa-5">@(IsEdit ? "Edit" : "Add New") Coach</MudText>
+                        <MudText Typo="Typo.h6" Class="pa-5">@(IsEdit ? "Edit" : "Add New") Coach</MudText>
                         <MudCardContent>
                             <MudTextField Label="First name" HelperText="Length from 2 to 20 characters"
                                           Variant="Variant.Outlined" Margin="Margin.Dense" Disabled="@IsEdit"
@@ -60,7 +60,8 @@
                                 <div class="d-flex flex-column">
                                     <MudText><b>Created by:</b> @CoachModel.CreatedBy.Email</MudText>
                                     <MudText><b>Created at:</b> @CoachModel.CreatedAt.ToShortDateString()</MudText>
-                                    @if (CoachModel.CreatedAt.Day != CoachModel.ModifiedAt.Day)
+                                    @if (CoachModel.CreatedAt.Day != CoachModel.ModifiedAt.Day ||
+                                         CoachModel.CreatedBy != CoachModel.ModifiedBy)
                                     {
                                         <MudText><b>Modified by:</b> @CoachModel.ModifiedBy.Email</MudText>
                                         <MudText><b>Last Update:</b> @CoachModel.ModifiedAt.ToShortDateString()</MudText>
@@ -95,7 +96,7 @@
                     <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
                 }
                 <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@(IsEdit == true ? "Update" : "Register")</MudButton>
-            </MudCardActions>
-        </EditForm>
-    </DialogContent>
-</MudDialog>
+                </MudCardActions>
+            </EditForm>
+        </DialogContent>
+    </MudDialog>

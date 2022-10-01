@@ -7,7 +7,7 @@ public partial class AbonnementTypesListPage : ComponentBase
     public List<AbonnementType>? AbonnementTypes { get; set; }
 
     [Inject]
-    public IAbonnementTypeDataProvider AbonnementTypeDataProvider { get; set; } = null!;
+    public IAbonnementTypeDataProvider AbonnementTypeDataProvider { get; set; } = null!;    
     [Inject]
     public IDialogService DialogService { get; set; } = null!;
     [Inject]
@@ -25,45 +25,45 @@ public partial class AbonnementTypesListPage : ComponentBase
         StateHasChanged();
     }
 
-    private async void EditCoach_Click(AbonnementType type)
+    private async void EditAbonnementType_Click(AbonnementType type)
     {
-        //AbonnementTypeVM = type.ConvertToViewModel();
+        AbonnementTypeVM = type.ConvertToViewModel();
 
-        //var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
-        //var parameters = new DialogParameters();
-        //parameters.Add("AbonnementTypeModel", AbonnementTypeVM);
-        //parameters.Add("IsEdit", true);
-        //var dialog = DialogService.Show<CreateEditAbonnementTypeDialog>("CreateEditAbonnementTypeDialog", parameters, options);
-        //var result = await dialog.Result;
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
+        var parameters = new DialogParameters();
+        parameters.Add("AbonnementTypeModel", AbonnementTypeVM);
+        parameters.Add("IsEdit", true);
+        var dialog = DialogService.Show<CreateEditAbonnementTypeDialog>("CreateEditAbonnementTypeDialog", parameters, options);
+        var result = await dialog.Result;
 
-        //if (!result.Cancelled)
-        //{
-        //    AbonnementTypes = (List<AbonnementType>?)await CoachDataProvider.GetAllCoachesAsync();
-        //    StateHasChanged();
-        //}
+        if (!result.Cancelled)
+        {
+            AbonnementTypes = (List<AbonnementType>?)await AbonnementTypeDataProvider.GetAllAbonnementTypesAsync();
+            StateHasChanged();
+        }
     }
 
-    private async void CreateCoach_Click()
+    private async void CreateAbonnementType_Click()
     {
-        //var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
-        //var parameters = new DialogParameters();
-        //parameters.Add("AbonnementTypeModel", null);
-        //parameters.Add("IsEdit", false);
-        //var dialog = DialogService.Show<CreateEditAbonnementTypeDialog>("CreateEditAbonnementTypeDialog", parameters, options);
-        //var result = await dialog.Result;
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
+        var parameters = new DialogParameters();
+        parameters.Add("AbonnementTypeModel", null);
+        parameters.Add("IsEdit", false);
+        var dialog = DialogService.Show<CreateEditAbonnementTypeDialog>("CreateEditAbonnementTypeDialog", parameters, options);
+        var result = await dialog.Result;
 
-        //if (!result.Cancelled)
-        //{
-        //    AbonnementTypes = (List<AbonnementType>?)await CoachDataProvider.GetAllCoachesAsync();
-        //    StateHasChanged();
-        //}
+        if (!result.Cancelled)
+        {
+            AbonnementTypes = (List<AbonnementType>?)await AbonnementTypeDataProvider.GetAllAbonnementTypesAsync();
+            StateHasChanged();
+        }
     }
 
     private void GoToPreview_Click(AbonnementType type)
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
-        var parameters = new DialogParameters();
-        parameters.Add("AbonnementType", type);
-        var dialog = DialogService.Show<CoachViewItemDialog>("ViewCoachDialog", parameters, options);        
+        //var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
+        //var parameters = new DialogParameters();
+        //parameters.Add("AbonnementType", type);
+        //var dialog = DialogService.Show<AbonnementTypeViewItemDialog>("ViewCoachDialog", parameters, options);        
     }   
 }

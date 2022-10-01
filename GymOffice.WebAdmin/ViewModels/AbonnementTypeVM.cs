@@ -7,17 +7,18 @@ public class AbonnementTypeVM
     public Guid Id { get; set; }
 
     [Required]
+    [StringLength(20, MinimumLength = 2, ErrorMessage = "Name length must be between 2 and 20 characters")]
     public string Name { get; set; } = null!;
 
     [Required]
     [Display(Name = "Start visit time")]
-    [DataType(DataType.Time)]
-    public TimeSpan? StartVisitTime { get; set; } = new(0, 0, 0);
+    //[DataType(DataType.Time)]
+    public TimeSpan? StartVisitTime { get; set; } = TimeSpan.Zero;
 
     [Required]
     [Display(Name = "End visit time")]
-    [DataType(DataType.Time)]
-    public TimeSpan? EndVisitTime { get; set; } = new(0, 0, 0);
+    //[DataType(DataType.Time)]
+    public TimeSpan? EndVisitTime { get; set; } = TimeSpan.Zero;
 
     [Required]
     [DataType(DataType.Currency)]

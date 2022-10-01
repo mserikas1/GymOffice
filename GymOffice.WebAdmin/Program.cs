@@ -30,6 +30,8 @@ builder.Services.AddTransient<IUpdateVisitorCommand, UpdateVisitorCommand>();
 builder.Services.AddTransient<IUpdateCoachCommand, UpdateCoachCommand>();
 builder.Services.AddTransient<IAddVisitorCardCommand, AddVisitorCardCommand>();
 builder.Services.AddTransient<IAddVisitorCommand, AddVisitorCommand>();
+builder.Services.AddTransient<IAddAbonnementTypeCommand, AddAbonnementTypeCommand>();
+builder.Services.AddTransient<IEditAbonnementTypeCommand, EditAbonnementTypeCommand>();
 
 var app = builder.Build();
 

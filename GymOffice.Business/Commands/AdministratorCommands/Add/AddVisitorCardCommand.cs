@@ -1,7 +1,4 @@
-﻿using GymOffice.Business.Common.Exceptions;
-using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.Add;
-
-namespace GymOffice.Business.Commands.AdministratorCommands.Add;
+﻿namespace GymOffice.Business.Commands.AdministratorCommands.Add;
 public class AddVisitorCardCommand : IAddVisitorCardCommand
 {
     private readonly IVisitorRepository _visitorRepository;

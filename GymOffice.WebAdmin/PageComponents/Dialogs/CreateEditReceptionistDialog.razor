@@ -12,7 +12,7 @@
                 <MudGrid>
                     <MudItem xs="12" sm="7">
                         <MudCard Class="pa-3 mud-height-full">
-                            <MudText Typo="Typo.subtitle2" Class="pa-5">@(IsEdit ? "Edit" : "Add New") Receptionist</MudText>
+                            <MudText Typo="Typo.h6" Class="pa-5">@(IsEdit ? "Edit" : "Add New") Receptionist</MudText>
                             <MudCardContent>
                                 <MudTextField Label="First name" HelperText="Length from 2 to 20 characters"
                                           Variant="Variant.Outlined" Margin="Margin.Dense" Disabled="@IsEdit"
@@ -60,7 +60,8 @@
                                     <div class="d-flex flex-column">
                                         <MudText><b>Created by:</b> @ReceptionistModel.CreatedBy.Email</MudText>
                                         <MudText><b>Created at:</b> @ReceptionistModel.CreatedAt.ToShortDateString()</MudText>
-                                        @if (ReceptionistModel.CreatedAt.Day != ReceptionistModel.ModifiedAt.Day)
+                                        @if (ReceptionistModel.CreatedAt.Day != ReceptionistModel.ModifiedAt.Day ||
+                                             ReceptionistModel.CreatedBy != ReceptionistModel.ModifiedBy)
                                         {
                                             <MudText><b>Modified by:</b> @ReceptionistModel.ModifiedBy.Email</MudText>
                                             <MudText><b>Last Update:</b> @ReceptionistModel.ModifiedAt.ToShortDateString()</MudText>

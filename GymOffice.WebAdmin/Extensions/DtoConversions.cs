@@ -115,8 +115,8 @@ public static class DtoConversions
             ModifiedBy = abonnementTypeVM.ModifiedBy,
             Description = abonnementTypeVM.Description,
             Abonnements = abonnementTypeVM.Abonnements,
-            StartVisitTime = abonnementTypeVM.StartVisitTime == null ? "00:00" : abonnementTypeVM.StartVisitTime.Value.ToString("hh:mm"),
-            EndVisitTime = abonnementTypeVM.EndVisitTime == null ? "00:00" : abonnementTypeVM.EndVisitTime.Value.ToString("hh:mm")
+            StartVisitTime = abonnementTypeVM.StartVisitTime == null ? "00:00" : abonnementTypeVM.StartVisitTime.Value.ToString(@"hh\:mm"),
+            EndVisitTime = abonnementTypeVM.EndVisitTime == null ? "00:00" : abonnementTypeVM.EndVisitTime.Value.ToString(@"hh\:mm")
         };
     }
 
