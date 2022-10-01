@@ -15,7 +15,7 @@ function App() {
           <Route path="/Abonnements" element={<Abonnements />} />
           <Route path="/Coaches" element={<Coaches />} />
           <Route path="/GroupTrainings" element={<GroupTrainings />} />
-          <Route path="/Register" />
+          <Route path="/Register" element={<Register />} />
           <Route path="/Login" element={<Login />} />
         </Routes>
       </Layout>
