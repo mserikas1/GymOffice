@@ -1,17 +1,11 @@
-*
-{
-    -webkit-box-sizing:border-box;   
-    -moz-box-sizing:border-box;
-    box-sizing: border-box;
-}
+
 .coachCard
 {
-    min-height: 400px;
+  box-shadow: 1px 1px 50px rgb(214, 214, 214);
     margin-top: 50px;
     position: relative;
     transform-style: preserve-3d;
     transition: all 2s ease-in-out;
-    overflow: visible;
 }
 .coachCard > div 
 {
@@ -26,6 +20,8 @@
 }
 .coachCard .front 
 {
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     z-index: 2;
     backface-visibility: hidden;
 }
@@ -37,7 +33,6 @@
 }
 .coachInfo
 {
-  min-height: 400px;
     display: flex;
     background-color: #ffffff;
     flex-direction: column;
@@ -46,35 +41,4 @@
 }
 .coachInfoItem{
     padding-left: 10px;
-}
-@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
-@import url(https://fonts.googleapis.com/css?family=Raleway:400,800);
-figure.snip1218 {
-  font-family: 'Raleway', Arial, sans-serif;
-  overflow: hidden;
-  color: #333;
-  text-align: center;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-}
-figure.snip1218 * {
-  -webkit-transition: all 0.35s ease;
-  transition: all 0.35s ease;
-}
-figure.snip1218 img {
-  max-width: 100%;
-}
-figure.snip1218 .image {
-  position: relative;
-  z-index: 1;
-}
-figure.snip1218 figcaption {
-  background-color: #ffffff;
-  padding: 18px;
-}
-figure.snip1218 h3 {
-  text-transform: uppercase;
-  font-weight: 400;
-}
-figure.snip1218 h3 span {
-  font-weight: 800;
 }

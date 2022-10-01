@@ -12,7 +12,7 @@ export default function Coaches() {
     });
   }, []);
   return (
-    <div className="row g-4">
+    <div className="row justify-content-between g-5 mb-3">
       {Array.isArray(coaches) ? (
         coaches.map((coach) => <Coach coach={coach} />)
       ) : (
