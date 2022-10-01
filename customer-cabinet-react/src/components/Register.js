@@ -19,7 +19,8 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const phoneNumberRegex = /^\+380[0-9]{9}$/;
 const firstNameRegex = /^[A-z][A-z0-9-_]{1,23}$/;
 const lastNameRegex = /^[A-z][A-z0-9-_]{1,23}$/;
-const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const pwdRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,24}$/;
 export default function Register() {
   library.add(faUser, faLock, faEyeSlash, faR);
   const errRef = useRef();
@@ -149,7 +150,7 @@ export default function Register() {
                   setFieldFocus={setPwdFocus}
                   fieldFocus={setPwdFocus}
                   instruction={
-                    "Password has to have at least one capital letter, small letter, number and sprecial character.\nThe length from 8 to 24 characters. "
+                    "Password has to have at least one capital letter, small letter, number and special character.\nThe length from 8 to 24 characters. "
                   }
                 >
                   <span onClick={showPassword}>
