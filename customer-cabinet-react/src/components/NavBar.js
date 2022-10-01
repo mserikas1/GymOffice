@@ -22,9 +22,6 @@ export default function NavBar() {
               <Nav.Link as={Link} className="fs-5" to="/Coaches" href="">
                 Coaches
               </Nav.Link>
-              <Nav.Link as={Link} className="fs-5" to="/GroupTrainings" href="">
-                Group Trainings
-              </Nav.Link>
             </Nav>
             <Nav>
               <Nav.Link as={Link} to="/Login" href="">
