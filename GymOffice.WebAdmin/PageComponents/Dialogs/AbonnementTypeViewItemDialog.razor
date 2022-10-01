@@ -1,0 +1,61 @@
+﻿<MudDialog DefaultFocus="DefaultFocus.Element">
+    <DialogContent>
+        @if (AbonnementType == null && ErrorMessage == null)
+        {
+            <DisplaySpinner />
+        }
+        else
+        {
+            <MudCard Class="pa-3">
+                <MudText Typo="Typo.h4" Class="pa-4">Abonement Type "@AbonnementType!.Name"</MudText>
+                <MudCardContent>
+                    <div class="d-flex my-3">
+                        <div class="w-25">
+                            <MudText Typo="Typo.subtitle1">Duration:</MudText>
+                            <MudText Typo="Typo.h6" Class="mb-3">@AbonnementType!.Duration</MudText>
+                        </div>
+                        <div class="w-25">
+                            <MudText Typo="Typo.subtitle1">Price:</MudText>
+                            <MudText Typo="Typo.h6" Class="mb-3">@AbonnementType!.Price</MudText>
+                        </div>
+                        <div class="w-25">
+                            <MudText Typo="Typo.subtitle1">Active:</MudText>
+                            <MudText Typo="Typo.h6" Class="mb-3">@(AbonnementType!.IsActive ? "Yes" : "No")</MudText>
+                        </div>
+                    </div>
+                    <div class="d-flex my-3">
+                        <div class="w-25">
+                            <MudText Typo="Typo.subtitle1">Start visit time:</MudText>
+                            <MudText Typo="Typo.h6" Class="mb-3">@AbonnementType!.StartVisitTime</MudText>
+                        </div>
+                        <div class="w-25">
+                            <MudText Typo="Typo.subtitle1">End visit time:</MudText>
+                            <MudText Typo="Typo.h6" Class="mb-3">@AbonnementType!.EndVisitTime</MudText>
+                        </div>
+                        <div class="me-auto"></div>
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(AbonnementType!.Description))
+                    {
+                        <MudText Typo="Typo.subtitle1" Class=""><b>Description:</b></MudText>
+                        <MudText Typo="Typo.body1" Class="mb-3">@AbonnementType!.Description</MudText>
+                    }
+                    <MudDivider Class="my-5" Light />
+                    <div class="d-flex flex-column">
+                        <MudText><b>Created by:</b> @AbonnementType!.CreatedBy.Email</MudText>
+                        <MudText><b>Created at:</b> @AbonnementType!.CreatedAt.ToShortDateString()</MudText>
+                        @if (AbonnementType!.CreatedAt.Day != AbonnementType!.ModifiedAt.Day)
+                        {
+                            <MudText><b>Modified by:</b> @AbonnementType!.ModifiedBy.Email</MudText>
+                            <MudText><b>Last Update:</b> @AbonnementType!.ModifiedAt.ToShortDateString()</MudText>
+                        }
+                    </div>
+                </MudCardContent>
+            </MudCard>
+            <div class="m-3">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-3 ms-3" OnClick="EditAbonnementType_Click">Edit Info</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Default" Class="mt-3 ms-3" OnClick="HandleClose_Click">Cancel</MudButton>
+            </div>
+
+        }
+    </DialogContent>
+</MudDialog>

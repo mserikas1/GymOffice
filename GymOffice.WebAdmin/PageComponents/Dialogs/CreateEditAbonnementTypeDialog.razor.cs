@@ -64,6 +64,7 @@ public partial class CreateEditAbonnementTypeDialog : ComponentBase
             AbonnementTypeModel.ModifiedBy = admin;
         }
         AbonnementTypeModel.Id = Guid.NewGuid();
+        AbonnementTypeModel.Duration = AbonnementDuration.Month;
         AbonnementTypeModel.IsActive = true;
         AbonnementTypeModel.CreatedAt = DateTime.Now;
     }

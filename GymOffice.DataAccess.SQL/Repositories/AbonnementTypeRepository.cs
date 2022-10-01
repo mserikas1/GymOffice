@@ -24,7 +24,10 @@ public class AbonnementTypeRepository : IAbonnementTypeRepository
 
     public async Task<AbonnementType?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.AbonnementTypes.SingleOrDefaultAsync(t => t.Id == id);
+        return await _dbContext.AbonnementTypes
+            .Include(t => t.CreatedBy)
+            .Include(t => t.ModifiedBy)
+            .SingleOrDefaultAsync(t => t.Id == id);
     }
 
     public async Task UpdateTypeAsync(AbonnementType type)

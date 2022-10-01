@@ -61,9 +61,11 @@ public partial class AbonnementTypesListPage : ComponentBase
 
     private void GoToPreview_Click(AbonnementType type)
     {
-        //var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
-        //var parameters = new DialogParameters();
-        //parameters.Add("AbonnementType", type);
-        //var dialog = DialogService.Show<AbonnementTypeViewItemDialog>("ViewCoachDialog", parameters, options);        
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
+        var parameters = new DialogParameters
+        {
+            { "AbonnementType", type }
+        };
+        DialogService.Show<AbonnementTypeViewItemDialog>("ViewAbonnementTypeDialog", parameters, options);
     }   
 }

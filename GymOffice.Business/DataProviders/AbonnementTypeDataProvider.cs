@@ -12,4 +12,9 @@ public class AbonnementTypeDataProvider : IAbonnementTypeDataProvider
     {
         return await _abonnementTypeRepository.GetAllTypesAsync();
     }
+
+    public async Task<AbonnementType?> GetByIdAsync(Guid id)
+    {
+        return await _abonnementTypeRepository.GetByIdAsync(id);
+    }
 }
