@@ -1,4 +1,6 @@
-﻿namespace GymOffice.WebAdmin.Pages.Administrator;
+﻿using GymOffice.Common.DTOs;
+
+namespace GymOffice.WebAdmin.Pages.Administrator;
 public partial class ReceptionistsListPage : ComponentBase
 {
     public Receptionist? Receptionist { get; set; }
@@ -31,9 +33,11 @@ public partial class ReceptionistsListPage : ComponentBase
         ReceptionistVM = receptionist.ConvertToViewModel();
 
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
-        var parameters = new DialogParameters();
-        parameters.Add("ReceptionistModel", ReceptionistVM);
-        parameters.Add("IsEdit", true);
+        var parameters = new DialogParameters
+        {
+            { "ReceptionistModel", ReceptionistVM },
+            { "IsEdit", true }
+        };
         var dialog = DialogService.Show<CreateEditReceptionistDialog>("CreateEditReceptionistDialog", parameters, options);
         var result = await dialog.Result;
 
@@ -47,9 +51,11 @@ public partial class ReceptionistsListPage : ComponentBase
     private async void CreateReceptionist_Click()
     {        
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
-        var parameters = new DialogParameters();
-        parameters.Add("ReceptionistModel", null);
-        parameters.Add("IsEdit", false);
+        var parameters = new DialogParameters
+        {
+            { "ReceptionistModel", null },
+            { "IsEdit", false }
+        };
         var dialog = DialogService.Show<CreateEditReceptionistDialog>("CreateEditReceptionistDialog", parameters, options);
         var result = await dialog.Result;
 
@@ -62,7 +68,12 @@ public partial class ReceptionistsListPage : ComponentBase
 
     private void GoToPreview_Click(Receptionist receptionist)
     {
-        NavigationManager.NavigateTo($"/admin/receptionists/{receptionist.Id}");
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
+        var parameters = new DialogParameters
+        {
+            { "Receptionist", receptionist }
+        };
+        DialogService.Show<ReceptionistViewItemDialog>("ViewReceptionistDialog", parameters, options);
     }
 
     private async void HandleSearch(ReceptionistSearchOptions options)

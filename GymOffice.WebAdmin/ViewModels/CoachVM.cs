@@ -56,7 +56,7 @@ public class CoachVM
 
     public bool IsActive { get; set; }
 
-    public string? PhotoUrl { get; set; }
+    public string PhotoUrl { get; set; } = string.Empty;
 
     public ICollection<JobSchedule> JobScheduleItems { get; set; } = new List<JobSchedule>();
 

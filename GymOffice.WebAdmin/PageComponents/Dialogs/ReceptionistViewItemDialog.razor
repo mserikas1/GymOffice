@@ -1,0 +1,66 @@
+﻿<MudDialog DefaultFocus="DefaultFocus.Element">
+    <DialogContent>
+        @if (Receptionist == null && ErrorMessage == null)
+        {
+            <DisplaySpinner />
+        }
+        else
+        {
+            <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+                <MudTabPanel Text="Personal Info">
+                    <MudGrid>
+                        <MudItem xs="12" sm="7">
+                            <MudCard Class="pa-3 mud-height-full">
+                                <MudText Typo="Typo.h4" Class="pa-4">@Receptionist!.FirstName @Receptionist!.LastName</MudText>
+                                <MudCardContent>
+                                    <MudText Typo="Typo.subtitle1" Class="">Email:</MudText>
+                                    <MudText Typo="Typo.h6" Class="mb-3">@Receptionist!.Email</MudText>
+                                    <MudGrid>
+                                        <MudItem xs="8">
+                                            <MudText Typo="Typo.subtitle1" Class="">Phone:</MudText>
+                                            <MudText Typo="Typo.h6" Class="mb-3">@Receptionist!.PhoneNumber</MudText>
+                                            <MudText Typo="Typo.subtitle1" Class="">Passport:</MudText>
+                                            <MudText Typo="Typo.h6" Class="mb-3">@Receptionist!.PassportNumber</MudText>
+                                        </MudItem>
+                                        <MudItem xs="4">
+                                            <MudText Typo="Typo.subtitle1" Class="">Active:</MudText>
+                                            <MudText Typo="Typo.h6" Class="mb-3">@(Receptionist!.IsActive == true ? "Yes" : "No")</MudText>
+                                            <MudText Typo="Typo.subtitle1" Class="">Working:</MudText>
+                                            <MudText Typo="Typo.h6" Class="mb-3">@(Receptionist!.IsAtWork == true ? "Yes" : "No")</MudText>
+                                        </MudItem>
+                                        </MudGrid>
+                                    <MudDivider Class="my-5" Light />
+                                    <div class="d-flex flex-column">
+                                        <MudText><b>Created by:</b> @Receptionist!.CreatedBy.Email</MudText>
+                                        <MudText><b>Created at:</b> @Receptionist!.CreatedAt.ToShortDateString()</MudText>
+                                        @if (Receptionist!.CreatedAt.Day != Receptionist!.ModifiedAt.Day)
+                                        {
+                                            <MudText><b>Modified by:</b> @Receptionist!.ModifiedBy.Email</MudText>
+                                            <MudText><b>Last Update:</b> @Receptionist!.ModifiedAt.ToShortDateString()</MudText>
+                                        }
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+                        </MudItem>
+                        @if (Receptionist!.PhotoUrl != null)
+                        {
+                            <MudItem xs="12" sm="5">
+                                <MudCard Class="pa-3 mud-height-full">
+                                    <MudCardContent>
+                                        <MudImage Fluid="true" Src="@Receptionist!.PhotoUrl" Alt="Photo..." Elevation="25" Class="rounded-lg" />
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-3 ms-3" OnClick="EditCoach_Click">Edit Info</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Default" Class="mt-3 ms-3" OnClick="HandleClose_Click">Cancel</MudButton>
+                </MudTabPanel>
+
+                <MudTabPanel Text="Schedule" Disabled="true">
+
+                </MudTabPanel>
+            </MudTabs>
+        }
+    </DialogContent>
+</MudDialog>
