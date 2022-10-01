@@ -32,7 +32,7 @@ namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
             string role = (roles != null && roles.Count > 0) ? roles[0] : "Undefined";
             
             await _signInManager.SignOutAsync();
-            _logger.LogInformation($"User {userName} (role: {role}) logged out.");
+            _logger.LogWarning($"User {userName} (role: {role}) logged out.");
 
             if (returnUrl != null)
             {

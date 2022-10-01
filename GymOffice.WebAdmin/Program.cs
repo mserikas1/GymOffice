@@ -51,20 +51,17 @@ builder.Services.ConfigureApplicationCookie(options =>
 
     options.LoginPath = "/Identity/Account/Login";
     options.LogoutPath = "/Identity/Account/Logout";
-    options.AccessDeniedPath = "/Identity/Pages/Account/AccessDenied";
+    // options.AccessDeniedPath = "/Identity/Pages/Account/AccessDenied"; // this is default, so not needed, it is here to show the link
     options.SlidingExpiration = true;
 });
 
-// If we will do so, only registered users with these roles will be able to login and use the App
-builder.Services.AddAuthorization(
-options =>
-{
+// If we do so, only registered users with these roles will be able to login and use the App
+builder.Services.AddAuthorization(options => {
     options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()   // Login, Logout and AccessDenied pages should be set [AllowAnonymous] to avoid cyclic reference
-        .RequireRole("Admin", "Receptionist", "Coach")
+        //.RequireAuthenticatedUser()   // this is for ANY role, that is, to require login
+        .RequireRole("Admin", "Receptionist", "Coach") // Login, Logout and AccessDenied pages should be set [AllowAnonymous] to avoid cyclic reference
         .Build();
-}
-);
+});
 
 builder.Services.AddMudServices();
 

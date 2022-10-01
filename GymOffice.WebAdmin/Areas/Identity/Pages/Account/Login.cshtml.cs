@@ -126,7 +126,7 @@ namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
                     var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
                     IList<string> roles = await _signInManager.UserManager.GetRolesAsync(user);
                     string role = (roles != null && roles.Count > 0) ? roles[0] : "Undefined";
-                    _logger.LogInformation($"User {Input.Email} (role: {role}) logged in.");
+                    _logger.LogWarning($"User {Input.Email} (role: {role}) logged in.");
                     return LocalRedirect("/"+role.ToLower());
                 }
                 if (result.RequiresTwoFactor)
