@@ -1,3 +1,5 @@
+using GymOffice.Common.Contracts.RepositoryContracts;
+
 namespace GymOffice.Business.DataProviders;
 public class CoachDataProvider : ICoachDataProvider
 {
@@ -41,5 +43,18 @@ public class CoachDataProvider : ICoachDataProvider
         }
 
         return entity;
+    }
+
+    public async Task<ICollection<Coach>?> SearchCoachsAsync(CoachSearchOptions options)
+    {
+        if (options == null)
+        {
+            return null;
+        }
+        if (options.IsNullOrEmpty())
+        {
+            return await _coachRepository.GetAllCoachesAsync();
+        }
+        return await _coachRepository.SearchCoachesAsync(options);
     }
 }

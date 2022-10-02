@@ -1,6 +1,13 @@
-﻿<MudAlert Severity="Severity.Error" Class="my-5">@ErrorMessage</MudAlert>
+﻿<MudDialog>
+    <DialogContent>
+        <div class="d-flex flex-column">
+            <MudAlert Severity="Severity.Error" Class="my-5">@ErrorMessage</MudAlert>
+            <MudButton OnClick="@HandleClose" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+        </div>
+    </DialogContent>
+        
+</MudDialog>
 
-<MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ms-5" OnClick="ResetError_Click">Back</MudButton>
 
 @code {
     [Parameter]
@@ -11,8 +18,16 @@
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
 
+    [CascadingParameter]
+    public MudDialogInstance DialogInstance { get; set; } = null!;
+
     private void ResetError_Click()
     {
         ResetError.InvokeAsync();
+    }
+
+    private void HandleClose()
+    {
+        DialogInstance.Close();
     }
 }

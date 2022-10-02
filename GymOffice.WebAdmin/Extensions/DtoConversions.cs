@@ -1,4 +1,7 @@
-﻿namespace GymOffice.WebAdmin.Extensions;
+﻿using GymOffice.WebAdmin.ViewModels;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+namespace GymOffice.WebAdmin.Extensions;
 public static class DtoConversions
 {    
     public static Receptionist ConvertToDto(this ReceptionistVM receptionistVM)
@@ -42,6 +45,98 @@ public static class DtoConversions
             JobScheduleItems = receptionist.JobScheduleItems,
             Password = "qwerty123",             // Fake data for model validation. TODO: real data should take from identity dbContext
             PasswordConfirm = "qwerty123"       // Fake data for model validation. TODO: real data should take from identity dbContext
+        };
+    }
+
+    public static Coach ConvertToDto(this CoachVM coachVM)
+    {
+        return new Coach
+        {
+            Id = coachVM.Id,
+            FirstName = coachVM.FirstName,
+            LastName = coachVM.LastName,
+            Email = coachVM.Email,
+            IsActive = coachVM.IsActive,
+            PassportNumber = coachVM.PassportNumber,
+            PhoneNumber = coachVM.PhoneNumber,
+            PhotoUrl = coachVM.PhotoUrl,
+            CreatedAt = coachVM.CreatedAt,
+            CreatedBy = coachVM.CreatedBy,
+            ModifiedAt = coachVM.ModifiedAt,
+            ModifiedBy = coachVM.ModifiedBy,
+            IsAtWork = coachVM.IsAtWork,
+            JobScheduleItems = coachVM.JobScheduleItems,
+            Education = coachVM.Education,
+            Description = coachVM.Description,
+            GroupTrainings = coachVM.GroupTrainings,
+            PersonalTrainings = coachVM.PersonalTrainings
+        };
+    }
+
+    public static CoachVM ConvertToViewModel(this Coach coach)
+    {
+        return new CoachVM
+        {
+            Id = coach.Id,
+            FirstName = coach.FirstName,
+            LastName = coach.LastName,
+            Email = coach.Email,
+            IsActive = coach.IsActive,
+            PassportNumber = coach.PassportNumber,
+            PhoneNumber = coach.PhoneNumber,
+            PhotoUrl = coach.PhotoUrl,
+            CreatedAt = coach.CreatedAt,
+            CreatedBy = coach.CreatedBy,
+            ModifiedAt = coach.ModifiedAt,
+            ModifiedBy = coach.ModifiedBy,
+            IsAtWork = coach.IsAtWork,
+            JobScheduleItems = coach.JobScheduleItems,
+            Education = coach.Education,
+            Description = coach.Description,
+            GroupTrainings = coach.GroupTrainings,
+            PersonalTrainings = coach.PersonalTrainings,
+            Password = "qwerty123",             // Fake data for model validation. TODO: real data should take from identity dbContext
+            PasswordConfirm = "qwerty123"       // Fake data for model validation. TODO: real data should take from identity dbContext
+        };
+    }
+
+    public static AbonnementType ConvertToDto(this AbonnementTypeVM abonnementTypeVM)
+    {
+        return new AbonnementType
+        {
+            Id = abonnementTypeVM.Id,
+            Name = abonnementTypeVM.Name,
+            Price = abonnementTypeVM.Price,
+            Duration = abonnementTypeVM.Duration,
+            IsActive = abonnementTypeVM.IsActive,
+            CreatedAt = abonnementTypeVM.CreatedAt,
+            ModifiedAt = abonnementTypeVM.ModifiedAt,
+            CreatedBy = abonnementTypeVM.CreatedBy,
+            ModifiedBy = abonnementTypeVM.ModifiedBy,
+            Description = abonnementTypeVM.Description,
+            Abonnements = abonnementTypeVM.Abonnements,
+            StartVisitTime = abonnementTypeVM.StartVisitTime == null ? "00:00" : abonnementTypeVM.StartVisitTime.Value.ToString(@"hh\:mm"),
+            EndVisitTime = abonnementTypeVM.EndVisitTime == null ? "00:00" : abonnementTypeVM.EndVisitTime.Value.ToString(@"hh\:mm")
+        };
+    }
+
+    public static AbonnementTypeVM ConvertToViewModel(this AbonnementType abonnementType)
+    {
+        return new AbonnementTypeVM
+        {
+            Id = abonnementType.Id,
+            Name = abonnementType.Name,
+            Price = abonnementType.Price,
+            Duration = abonnementType.Duration,
+            Description = abonnementType.Description,
+            IsActive = abonnementType.IsActive,
+            CreatedAt = abonnementType.CreatedAt,
+            CreatedBy = abonnementType.CreatedBy,
+            ModifiedAt = abonnementType.ModifiedAt,
+            ModifiedBy = abonnementType.ModifiedBy,
+            Abonnements = abonnementType.Abonnements,
+            StartVisitTime = TimeSpan.Parse(abonnementType.StartVisitTime),
+            EndVisitTime = TimeSpan.Parse(abonnementType.EndVisitTime)
         };
     }
 }

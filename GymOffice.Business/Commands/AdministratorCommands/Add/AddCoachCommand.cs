@@ -1,7 +1,4 @@
-﻿using GymOffice.Business.Common.Exceptions;
-using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.Add;
-
-namespace GymOffice.Business.Commands.AdministratorCommands.Add;
+﻿namespace GymOffice.Business.Commands.AdministratorCommands.Add;
 public class AddCoachCommand : IAddCoachCommand
 {
     private readonly ICoachRepository _coachRepository;
@@ -11,7 +8,7 @@ public class AddCoachCommand : IAddCoachCommand
         _coachRepository = coachRepository;
     }
 
-    public async Task<Guid> ExecuteAsync(Coach coach)
+    public async Task ExecuteAsync(Coach coach)
     {
         if (coach == null)
         {
@@ -20,7 +17,10 @@ public class AddCoachCommand : IAddCoachCommand
         if (coach.FirstName == null ||
             coach.LastName == null ||
             coach.Email == null ||
-            coach.PhoneNumber == null)
+            coach.PhoneNumber == null ||
+            coach.PhotoUrl == null ||
+            coach.CreatedBy == null ||
+            coach.ModifiedBy == null)
         {
             throw new RequiredPropertiesNotFilledException();
         }
@@ -29,6 +29,6 @@ public class AddCoachCommand : IAddCoachCommand
             throw new SameEntityExistsException(nameof(Coach), coach.Id);
         }
 
-        return await _coachRepository.AddCoachAsync(coach);
+        await _coachRepository.AddCoachAsync(coach);
     }
 }

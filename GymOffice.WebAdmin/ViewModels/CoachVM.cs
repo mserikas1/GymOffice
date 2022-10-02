@@ -1,5 +1,5 @@
 ﻿namespace GymOffice.WebAdmin.ViewModels;
-public class ReceptionistVM
+public class CoachVM
 {
     public Guid Id { get; set; }
 
@@ -40,6 +40,10 @@ public class ReceptionistVM
     [RegularExpression(@"^[А-ГҐДЕЄЖЗИІЇЙК-ЯA-Z]{2}\d{6}", ErrorMessage = "Passport must be like \"AЯ123456\"")]
     public string PassportNumber { get; set; } = String.Empty;
 
+    public string? Education { get; set; }
+
+    public string? Description { get; set; }
+
     public Admin CreatedBy { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
@@ -52,7 +56,11 @@ public class ReceptionistVM
 
     public bool IsActive { get; set; }
 
-    public string? PhotoUrl { get; set; }
+    public string PhotoUrl { get; set; } = string.Empty;
 
     public ICollection<JobSchedule> JobScheduleItems { get; set; } = new List<JobSchedule>();
+
+    public ICollection<PersonalTraining> PersonalTrainings { get; set; } = new List<PersonalTraining>();
+
+    public ICollection<GroupTraining> GroupTrainings { get; set; } = new List<GroupTraining>();
 }

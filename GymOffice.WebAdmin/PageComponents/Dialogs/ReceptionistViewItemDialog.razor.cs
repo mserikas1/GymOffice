@@ -1,8 +1,7 @@
-﻿namespace GymOffice.WebAdmin.Pages.Administrator;
-public partial class ReceptionistWiewItemPage : ComponentBase
+﻿namespace GymOffice.WebAdmin.PageComponents.Dialogs;
+public partial class ReceptionistViewItemDialog : ComponentBase
 {
     [Parameter]
-    public Guid ReceptionistId { get; set; }
     public Receptionist? Receptionist { get; set; }
     public string? ErrorMessage { get; set; }
 
@@ -12,30 +11,16 @@ public partial class ReceptionistWiewItemPage : ComponentBase
     public IDialogService DialogService { get; set; } = null!;
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
+    [CascadingParameter]
+    public MudDialogInstance DialogInstance { get; set; } = null!;
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            Receptionist = await EmployeeDataProvider.GetReceptionistByIdAsync(ReceptionistId);
-        }
-        catch (Exception ex)
-        {
-            ErrorMessage = ex.Message;
-        }
-    }
 
-    private void HandleResetError()
-    {
-        ErrorMessage = null;
-        NavigationManager.NavigateTo("/admin/receptionists");
-    }
-
-    private async void EditReceptionist_Click()
+    private async void EditCoach_Click()
     {
         if (Receptionist == null)
         {
             ErrorMessage = "Something went wrong. Try again.";
+            DisplayErrorDialog(ErrorMessage);
             StateHasChanged();
             return;
         }
@@ -51,13 +36,21 @@ public partial class ReceptionistWiewItemPage : ComponentBase
 
         if (!result.Cancelled)
         {
-            Receptionist = await EmployeeDataProvider.GetReceptionistByIdAsync(ReceptionistId);
+            Receptionist = await EmployeeDataProvider.GetReceptionistByIdAsync(receptionistVM.Id);
             StateHasChanged();
         }
     }
 
-    private void RedirectToReceptionistsList_Click()
+    private void DisplayErrorDialog(string message)
     {
-        NavigationManager.NavigateTo("/admin/receptionists");
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = false, MaxWidth = MaxWidth.Medium, NoHeader = true };
+        var parameters = new DialogParameters();
+        parameters.Add("ErrorMessage", message);
+        DialogService.Show<ErrorDisplay>("ErrorDisplayDialog", parameters, options);
+    }
+
+    private void HandleClose_Click()
+    {
+        DialogInstance.Close();
     }
 }

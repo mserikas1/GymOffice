@@ -1,12 +1,10 @@
-﻿using System.Threading.Channels;
-
-namespace GymOffice.WebAdmin.PageComponents.Dialogs;
-public partial class CreateEditReceptionistDialog : ComponentBase
+﻿namespace GymOffice.WebAdmin.PageComponents.Dialogs;
+public partial class CreateEditCoachDialog : ComponentBase
 {
     private Admin? admin;
     private IBrowserFile? imageFile;
     private string imageFileName = string.Empty;
-    private string? relativeImagePath = null;
+    private string relativeImagePath = "";
     private readonly long maxFileSize = 1024 * 1024 * 5;
     private bool isLoading;
     private string? photoUploadError;
@@ -15,6 +13,9 @@ public partial class CreateEditReceptionistDialog : ComponentBase
     private bool isActiveOriginal;
     private string? phoneNumberOriginal;
     private string? emailOriginal;
+    private string? educationOriginal;
+    private string? descriptionOriginal;
+    private string? photoOriginal;
     private InputType PasswordInput = InputType.Password;
     private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
 
@@ -22,7 +23,7 @@ public partial class CreateEditReceptionistDialog : ComponentBase
     [Parameter]
     public bool IsEdit { get; set; }
     [Parameter]
-    public ReceptionistVM? ReceptionistModel { get; set; } = new ReceptionistVM();
+    public CoachVM? CoachModel { get; set; } = new();
 
     [CascadingParameter]
     public MudDialogInstance DialogInstance { get; set; } = null!;
@@ -34,9 +35,11 @@ public partial class CreateEditReceptionistDialog : ComponentBase
     [Inject]
     public IEmployeeDataProvider EmployeeDataProvider { get; set; } = null!;
     [Inject]
-    public IAddReceptionistCommand AddReceptionistCommand { get; set; } = null!;
+    public IAddCoachCommand AddCoachCommand { get; set; } = null!;
     [Inject]
-    public IEditReceptionistCommand EditReceptionistCommand { get; set; } = null!;
+    public IEditCoachCommand EditCoachCommand { get; set; } = null!;
+    [Inject]
+    public IDialogService DialogService { get; set; } = null!;    
 
 
     protected override void OnInitialized()
@@ -46,13 +49,16 @@ public partial class CreateEditReceptionistDialog : ComponentBase
             admin = GetAdmin();
             if (IsEdit)
             {
-                isActiveOriginal = ReceptionistModel!.IsActive;
-                phoneNumberOriginal = ReceptionistModel!.PhoneNumber;
-                emailOriginal = ReceptionistModel!.Email;
+                isActiveOriginal = CoachModel!.IsActive;
+                phoneNumberOriginal = CoachModel!.PhoneNumber;
+                emailOriginal = CoachModel!.Email;
+                educationOriginal = CoachModel!.Education;
+                descriptionOriginal = CoachModel!.Description;
+                photoOriginal = CoachModel!.PhotoUrl;
             }
             else
             {
-                InitialReceptionistModel();
+                InitialCoachModel();
             }
             StateHasChanged();
         }
@@ -67,17 +73,17 @@ public partial class CreateEditReceptionistDialog : ComponentBase
         return EmployeeDataProvider.GetAdministrators()?.FirstOrDefault();
     }
 
-    private void InitialReceptionistModel()
+    private void InitialCoachModel()
     {
-        ReceptionistModel = new ReceptionistVM();
+        CoachModel = new CoachVM();
         if (admin != null)
         {
-            ReceptionistModel.CreatedBy = admin;
-            ReceptionistModel.ModifiedBy = admin;
+            CoachModel.CreatedBy = admin;
+            CoachModel.ModifiedBy = admin;
         }
-        ReceptionistModel.Id = Guid.NewGuid();
-        ReceptionistModel.IsActive = true;
-        ReceptionistModel.CreatedAt = DateTime.Now;
+        CoachModel.Id = Guid.NewGuid();
+        CoachModel.IsActive = true;
+        CoachModel.CreatedAt = DateTime.Now;
     }
 
     private async void HandleValidSubmit()
@@ -87,34 +93,52 @@ public partial class CreateEditReceptionistDialog : ComponentBase
             DialogInstance.Close();
             return;
         }
-        ReceptionistModel!.ModifiedAt = DateTime.Now;
-        Receptionist receptionist = ReceptionistModel!.ConvertToDto();
+        if (string.IsNullOrWhiteSpace(CoachModel!.PhotoUrl))
+        {
+            errorMessage = "The photo is required. Please upload.";
+            DisplayErrorDialog(errorMessage);
+            return;
+        }
 
         try
         {
+            CoachModel!.ModifiedAt = DateTime.Now;
+            Coach coach = CoachModel!.ConvertToDto();
             if (IsEdit)
             {
-                await EditReceptionistCommand.ExecuteAsync(receptionist);
+                await EditCoachCommand.ExecuteAsync(coach);
             }
             else
             {
-                await AddReceptionistCommand.ExecuteAsync(receptionist);
+                await AddCoachCommand.ExecuteAsync(coach);
             }
         }
         catch (Exception ex)
         {
             errorMessage = ex.Message;
+            DisplayErrorDialog(errorMessage);
+            StateHasChanged();
         }
 
-        StateHasChanged();
         DialogInstance.Close();
+    }
+
+    private void DisplayErrorDialog(string message)
+    {  
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = false, MaxWidth = MaxWidth.Medium, NoHeader = true };
+        var parameters = new DialogParameters();
+        parameters.Add("ErrorMessage", message);
+        var dialog = DialogService.Show<ErrorDisplay>("ErrorDisplayDialog", parameters, options);
     }
 
     private bool CheckForAnyChanges()
     {
-        return (isActiveOriginal != ReceptionistModel!.IsActive ||
-            phoneNumberOriginal != ReceptionistModel!.PhoneNumber ||
-            emailOriginal != ReceptionistModel!.Email);
+        return (isActiveOriginal != CoachModel!.IsActive ||
+            phoneNumberOriginal != CoachModel!.PhoneNumber ||
+            emailOriginal != CoachModel!.Email ||
+            educationOriginal != CoachModel!.Education ||
+            descriptionOriginal != CoachModel!.Description ||
+            photoOriginal != CoachModel!.PhotoUrl);
     }
 
     private async Task UploadPhoto(InputFileChangeEventArgs e)
@@ -136,8 +160,8 @@ public partial class CreateEditReceptionistDialog : ComponentBase
             photoUploadError = ex.Message;
         }
 
-        if (ReceptionistModel != null)
-            ReceptionistModel.PhotoUrl = relativeImagePath;
+        if (CoachModel != null)
+            CoachModel.PhotoUrl = relativeImagePath;
 
         isLoading = false;
         StateHasChanged();
@@ -147,15 +171,15 @@ public partial class CreateEditReceptionistDialog : ComponentBase
 
     private void HandleFormReset()
     {
-        InitialReceptionistModel();
-        relativeImagePath = null;
+        InitialCoachModel();
+        relativeImagePath = "";
         StateHasChanged();
     }
 
     private void HandleResetError()
     {
         errorMessage = null;
-        InitialReceptionistModel();
+        InitialCoachModel();
         StateHasChanged();
     }
 
@@ -180,4 +204,3 @@ public partial class CreateEditReceptionistDialog : ComponentBase
         }
     }
 }
-

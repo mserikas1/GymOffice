@@ -4,3 +4,4 @@ global using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.E
 global using GymOffice.Common.Contracts.DataProviderContracts;
 global using GymOffice.Common.Contracts.RepositoryContracts;
 global using GymOffice.Common.DTOs;
+global using GymOffice.Common.SearchParams;

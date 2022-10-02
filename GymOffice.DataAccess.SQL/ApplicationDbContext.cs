@@ -106,8 +106,8 @@
         }
         public void AbonnementTypeConfigure(EntityTypeBuilder<AbonnementType> builder)
         {
-            builder.Property(a => a.Price).HasColumnType("decimal").HasPrecision(2);
-            builder.Property(a => a.Duration).HasConversion<string>().HasColumnType("nvarchar");
+            builder.Property(a => a.Price).HasColumnType("decimal").HasPrecision(10, 2);
+            builder.Property(a => a.Duration).HasConversion<int>();
             //builder.Property(a => a.CreatedBy).IsRequired();
             //builder.Property(a => a.ModifiedBy).IsRequired();
             builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);

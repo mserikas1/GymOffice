@@ -11,15 +11,13 @@ else if (ErrorMessage != null)
 }
 else
 {
+    <MudText Typo="Typo.h4" Class="m-3">Receptionists</MudText>
+
     <ReceptionistSearchComponent SearchOptions="SearchOptions"
         HandleSearch_Click="HandleSearch"
         HandleResetSearch_Click="HandleResetSearch" />
 
     <MudTable Items="@Receptionists" Dense="true" Hover="true">
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Receptionists</MudText>
-            <MudSpacer />
-        </ToolBarContent>
         <HeaderContent>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Receptionist, object>(x => x.FirstName)">First Name</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Receptionist, object>(x => x.LastName)">Last Name</MudTableSortLabel></MudTh>
@@ -37,7 +35,7 @@ else
             <MudTd DataLabel="Active">@(context.IsActive == true ? "Yes" : "No")</MudTd>
             <MudTd DataLabel="At Work">@(context.IsAtWork == true ? "Yes" : "No")</MudTd>
             <MudTh>
-                <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Secondary"
+                <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
                            Size="Size.Medium" Class="me-3" OnClick="(() => GoToPreview_Click(context))" />
                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" 
                            Size="Size.Medium" OnClick="(() => EditReceptionist_Click(context))" />
