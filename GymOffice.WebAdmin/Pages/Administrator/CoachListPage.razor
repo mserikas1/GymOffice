@@ -23,10 +23,10 @@ else
             <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.LastName)">Last Name</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.Email)">Email</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.PhoneNumber)">Phone Number</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.GroupTrainings.Any())">Has Groups</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.PersonalTrainings.Any())">Personal</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.IsActive)">Active</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.IsAtWork)">At Work</MudTableSortLabel></MudTh>
+            <MudTh Class="px-1"><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.GroupTrainings.Any())">Groups</MudTableSortLabel></MudTh>
+            <MudTh Class="px-1"><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.PersonalTrainings.Any())">Personal</MudTableSortLabel></MudTh>
+            <MudTh Class="px-1"><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.IsActive)">Active</MudTableSortLabel></MudTh>
+            <MudTh Class="px-1"><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.IsAtWork)">At Work</MudTableSortLabel></MudTh>
             <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
@@ -34,7 +34,7 @@ else
             <MudTd DataLabel="Last Name">@context.LastName</MudTd>
             <MudTd DataLabel="Email">@context.Email</MudTd>
             <MudTd DataLabel="Phone Number">@context.PhoneNumber</MudTd>
-            <MudTd DataLabel="Has Groups">@(context.GroupTrainings.Any() ? "Yes" : "No")</MudTd>
+            <MudTd DataLabel="Groups">@(context.GroupTrainings.Any() ? "Yes" : "No")</MudTd>
             <MudTd DataLabel="Personal">@(context.PersonalTrainings.Any() ? "Yes" : "No")</MudTd>
             <MudTd DataLabel="Active">@(context.IsActive == true ? "Yes" : "No")</MudTd>
             <MudTd DataLabel="At Work">@(context.IsAtWork == true ? "Yes" : "No")</MudTd>

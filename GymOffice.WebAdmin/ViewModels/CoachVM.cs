@@ -37,7 +37,7 @@ public class CoachVM
     [Required]
     [Display(Name = "Passport")]
     [StringLength(8)]
-    [RegularExpression(@"^[А-ГҐДЕЄЖЗИІЇЙК-Я]{2}\d{6}", ErrorMessage = "Passport must be like \"AЯ123456\"")]
+    [RegularExpression(@"^[А-ГҐДЕЄЖЗИІЇЙК-ЯA-Z]{2}\d{6}", ErrorMessage = "Passport must be like \"AЯ123456\"")]
     public string PassportNumber { get; set; } = String.Empty;
 
     public string? Education { get; set; }
