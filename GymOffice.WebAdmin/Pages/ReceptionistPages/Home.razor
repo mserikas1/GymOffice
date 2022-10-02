@@ -1,78 +1,56 @@
-﻿@page "/receptionist/Home"
-@using GymOffice.Common.Contracts.CommandContracts.AdministratorCommands.Add
-@using GymOffice.Common.Contracts.DataProviderContracts
-@using GymOffice.Common.Contracts.RepositoryContracts
-@using GymOffice.Common.DTOs;
-@using GymOffice.DataAccess.SQL.Repositories
-@inject IVisitorRepository _visitorRepository
-@inject IEmployeeRepository _employeeRepository
-@inject ICoachRepository _coachRepository
-@inject IDialogService DialogService
+﻿@page "/receptionist"
+@attribute [Authorize(Roles = "Receptionist")]
 
-<style>
-    .selected {
-        background-color: #1E88E5 !important;
-    }
-
-        .selected > td {
-            color: white !important;
-        }
-
-            .selected > td .mud-input {
-                color: white !important;
-            }
-</style>
-
+@if (ErrorMessage != null)
+{
+    <ErrorDisplay ErrorMessage="@ErrorMessage" ResetError="HandleResetError" />
+}
+else if (coachesTable == null || visitorsTable == null)
+{
+    <MudText Typo="Typo.h6" Class="pa-5">Loading data...</MudText>
+    <DisplaySpinner />
+}
+else
+{
 <MudContainer Class="mt-4">
     <MudText Align="Align.Center">Receptionist's Work Place shows lists of visitors in gym and coaches at work and allows to check them in and register new visitors.</MudText>
     <MudGrid Class="mt-0">
         <!-- Visitors list -->
-        <MudItem xs="4" sm="4" md="6">
-            <MudCard Elevation="25" Class="rounded-lg pb-4">
+        <MudItem xs="12" sm="6">
+            <MudCard Elevation="0" Class="rounded-lg pb-2">
                 <MudCardActions Class="d-flex justify-center">
                     <!-- Opening Visitors Not In Gym list with checkin possibility -->
-                    <MudButton Variant="Variant.Filled" Class="md-3 mr-3" Color="Color.Primary" Size="Size.Large" Style="width:50%;"
+                    <MudButton Variant="Variant.Filled" Class="md-3 mr-3" Color="Color.Primary" Size="Size.Medium" Style="width:40%;"
                         OnClick="CheckVisitorInClick">Check Visitor In</MudButton> 
-                        
-                    <MudButton Variant="Variant.Filled" Class="md-3" Color="Color.Primary" Size="Size.Large" Style="width:50%;" 
+                    <!-- Going to a visitor registration form -->
+                        <MudButton Variant="Variant.Filled" Class="md-3" Color="Color.Primary" Size="Size.Medium" Style="width:40%;" 
                         OnClick="RegisterNewVisitorClick">New Visitor...</MudButton>
-                        <!-- Visitor registration form -->
-                        <MudPopover Open="@_isNewVisitorFormOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomCenter">
-                            <div class="d-flex flex-column">
-                                <MudText Typo="Typo.h5" Align="Align.Center">New visitor registration</MudText>
-                                <MudText>Insert form here</MudText>
-                                <MudButton OnClick="@CloseNewVisitorForm" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Cancel</MudButton>
-                            </div>
-                        </MudPopover>
-                        <!-- Visitor details form -->
-                        <MudPopover Open="@_isVisitorViewOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomCenter">
-                            <MudText Typo="Typo.h5" Align="Align.Center">Visitor details</MudText>
-                            <MudText>Insert form here</MudText>
-                            <MudButton OnClick="@CloseVisitorView" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
-                        </MudPopover>
                 </MudCardActions>
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h5" Align="Align.Center">Visitors In Gym</MudText>
+                        <MudText Typo="Typo.h6" Align="Align.Center">Visitors In Gym</MudText>
                         <MudTextField T="string" ValueChanged="@(str=>OnVisitorSearch(str))" Placeholder="Search a visitor" Adornment="Adornment.Start"
                             AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" Height="250px" RowsPerPage="6"
-                            RowClassFunc="@SelectedVisitorRowClassFunc" OnRowClick="VisitorRowClickEvent" T="Visitor">
+                    <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" Striped="true" RowsPerPage="6"
+                            OnRowClick="VisitorRowClickEvent" T="Visitor">
                         <HeaderContent>
-                            <MudTh><MudTableSortLabel Enabled="false" 
-                                SortBy="new Func<Visitor, object>(x=>x.FirstName!)">First Name</MudTableSortLabel></MudTh>
+                            <MudTh>First Name</MudTh>
                             <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Visitor" InitialDirection="SortDirection.Ascending" 
                                 SortBy="new Func<Visitor, object>(x=>x.LastName!)">Last Name</MudTableSortLabel></MudTh>
-                            <MudTh><MudTableSortLabel SortLabel="em_sort" T="Visitor" 
-                                SortBy="new Func<Visitor, object>(x=>x.Email!)">Email</MudTableSortLabel></MudTh>
+                            <MudTh><MudTableSortLabel SortLabel="ph_sort" T="Visitor" 
+                                SortBy="new Func<Visitor, object>(x=>x.PhoneNumber!)">Phone Number</MudTableSortLabel></MudTh>
+                            <MudTh>View</MudTh>
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="First Name">@context.FirstName</MudTd>
                             <MudTd DataLabel="Last Name">@context.LastName</MudTd>
-                            <MudTd DataLabel="Email" HideSmall="true">@context.Email</MudTd>
+                            <MudTd DataLabel="Phone Number" HideSmall="true">@context.PhoneNumber</MudTd>
+                            <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
+                                    Size="Size.Small" OnClick="(() => OpenVisitorView(context))" />
+                            </MudTd>
                         </RowTemplate>
                         <NoRecordsContent>
                             <MudText>No matching records found</MudText>
@@ -86,43 +64,39 @@
         </MudItem>
         
         <!-- Coaches list -->
-        <MudItem xs="4" sm="4" md="6">
-            <MudCard Elevation="25" Class="rounded-lg pb-4">
+        <MudItem xs="12" sm="6">
+                <MudCard Elevation="0" Class="rounded-lg pb-2">
                 <MudCardActions Class="d-flex justify-center">
                     <!-- Opening Coaches Not At Work list with checkin possibility -->
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;" 
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" Style="width:40%;" 
                         OnClick="CheckCoachInClick">Check Coach In</MudButton>
-
-                        <!-- Coach details form -->
-                        <MudPopover Open="@_isCoachViewOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomCenter">
-                            <MudText Typo="Typo.h5" Align="Align.Center">Coach details</MudText>
-                            <MudText>Insert form here</MudText>
-                            <MudButton OnClick="@CloseCoachView" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
-                        </MudPopover>
                 </MudCardActions>
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h5" Align="Align.Center">Coaches At Work</MudText>
+                        <MudText Typo="Typo.h6" Align="Align.Center">Coaches At Work</MudText>
                         <MudTextField T="string" ValueChanged="@(str=>OnCoachSearch(str))" Placeholder="Search a coach" Adornment="Adornment.Start"
                             AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" Height="250px" RowsPerPage="6"
-                            RowClassFunc="@SelectedCoachRowClassFunc" OnRowClick="CoachRowClickEvent" T="Coach">
+                        <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" Striped="true" RowsPerPage="6"
+                            OnRowClick="CoachRowClickEvent" T="Coach">
                         <HeaderContent>
-                            <MudTh><MudTableSortLabel Enabled="false" 
-                                SortBy="new Func<Coach, object>(x=>x.FirstName)">First Name</MudTableSortLabel></MudTh>
-                            <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Coach" InitialDirection="SortDirection.Ascending" 
+                                <MudTh>First Name</MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Coach" InitialDirection="SortDirection.Ascending" 
                                 SortBy="new Func<Coach, object>(x=>x.LastName)">Last Name</MudTableSortLabel></MudTh>
-                            <MudTh><MudTableSortLabel SortLabel="em_sort" T="Coach" 
-                                SortBy="new Func<Coach, object>(x=>x.Email)">Email</MudTableSortLabel></MudTh>
+                            <MudTh><MudTableSortLabel SortLabel="ph_sort" T="Coach" 
+                                SortBy="new Func<Coach, object>(x=>x.PhoneNumber)">Phone Number</MudTableSortLabel></MudTh>
+                            <MudTh>View</MudTh>
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="First Name">@context.FirstName</MudTd>
                             <MudTd DataLabel="Last Name">@context.LastName</MudTd>
-                            <MudTd DataLabel="Email" HideSmall="true">@context.Email</MudTd>
-                        </RowTemplate>
+                            <MudTd DataLabel="Phone Number" HideSmall="true">@context.PhoneNumber</MudTd>
+                               <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
+                                    Size="Size.Small" OnClick="(() => OpenCoachView(context))" />
+                            </MudTd>
+                         </RowTemplate>
                         <NoRecordsContent>
                             <MudText>No matching records found</MudText>
                         </NoRecordsContent>
@@ -135,8 +109,13 @@
         </MudItem>
     </MudGrid>
 </MudContainer>
+}
 
 @code {
+    [Inject] public IVisitorRepository VisitorRepository { get; set; } = null!;
+    [Inject] public IEmployeeRepository EmployeeRepository { get; set; } = null!;
+    [Inject] public ICoachRepository CoachRepository { get; set; } = null!;
+    [Inject] public IDialogService DialogService { get; set; } = null!;
     [Inject] public ICoachDataProvider CoachDataProvider { get; set; } = null!;
     [Inject] public IVisitorDataProvider VisitorDataProvider { get; set; } = null!;
     [Inject] public IAddCoachCommand AddCoachCommand { get; set; } = null!;
@@ -144,66 +123,19 @@
     [Inject] public IAddVisitorCardCommand AddVisitorCardCommand { get; set; } = null!;
     [Inject] public IAddVisitorCommand AddVisitorCommand { get; set; } = null!;
 
-    private MudTable<Visitor>? visitorsTable;
-    private MudTable<Coach>? coachesTable;
-    private int selectedCoachNumber = -1;
-    private int selectedVisitorNumber = -1;
+    private MudTable<Visitor>? visitorsTable = null;
+    private MudTable<Coach>? coachesTable = null;
     private string? visitorSearchString = null;
     private string? coachSearchString = null;
     private string infoFormat = "Items {first_item}-{last_item} of {all_items}";
     private ICollection<Visitor>? Visitors = new List<Visitor>();
     private ICollection<Coach>? Coaches = new List<Coach>();
-    private bool _isNewVisitorFormOpen = false;
-    private bool _isVisitorViewOpen = false;
-    private bool _isCoachViewOpen = false;
-    private Visitor? newVisitor;
-    private Coach? viewedCoach;
-    private Visitor? viewedVisitor;
-
-    private void OpenNewVisitorForm() => _isNewVisitorFormOpen = true;
-    private void CloseNewVisitorForm() => _isNewVisitorFormOpen = false;
-
-    private async Task OpenVisitorCheckIn()
-    {
-        var options = new DialogOptions { 
-                FullWidth = true, 
-                MaxWidth = MaxWidth.Large,
-                CloseButton = true,
-                DisableBackdropClick = true,
-                Position = DialogPosition.Center,
-                CloseOnEscapeKey = true
-        };
-        var dialog = DialogService.Show<VisitorCheckInDialog>("Checking a visitor in", options);
-        await dialog.Result;
-        await VisitorsReloadAsync(visitorsTable?.SortLabel);
-        await Task.Delay(100); // for db connection stability
-    }
-
-    private async Task OpenCoachCheckIn()
-    { 
-        var options = new DialogOptions { 
-                FullWidth = true, 
-                MaxWidth = MaxWidth.Large,
-                CloseButton = true,
-                DisableBackdropClick = true,
-                Position = DialogPosition.Center,
-                CloseOnEscapeKey = true
-        };
-        var dialog = DialogService.Show<CoachCheckInDialog>("Checking a coach in", options);
-        await dialog.Result;
-        await CoachesReloadAsync(coachesTable?.SortLabel);
-        await Task.Delay(100); // for db connection stability
-    }
-
-    private void OpenCoachView() => _isCoachViewOpen = true;
-    private void CloseCoachView() => _isCoachViewOpen = false;
-    private void OpenVisitorView() => _isVisitorViewOpen = true;
-    private void CloseVisitorView() => _isVisitorViewOpen = false;
+    public string? ErrorMessage { get; set; } = null;
 
 
     protected override async Task OnInitializedAsync()
     {
-        // await AddAdminCoachesVisitorsToDB();
+        // await AddAdminCoachesVisitorsToDB(); // call it ONCE to fill the empty DB with coaches and visitors and add one admin (Oleg M)
 
         await GetCoachesAtWorkAsync();
         await GetVisitorsInGymAsync();
@@ -211,65 +143,132 @@
         visitorsTable = new();
     }
 
+    private async Task HandleResetError()
+    {
+        ErrorMessage = null;
+        await GetCoachesAtWorkAsync();
+        await GetVisitorsInGymAsync();
+        coachesTable = new();
+        visitorsTable = new();
+        StateHasChanged();
+    }
+
     private async Task GetCoachesAtWorkAsync()
     {
-        Coaches = await CoachDataProvider.GetCoachesAtWorkAsync();
-        await Task.Delay(100); // for db connection stability
+        try
+        {
+            Coaches = await CoachDataProvider.GetCoachesAtWorkAsync();
+            await Task.Delay(100); // for db connection stability
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
     }
 
     private async Task GetVisitorsInGymAsync()
     {
-        Visitors = await VisitorDataProvider.GetVisitorsInGymAsync();
-        await Task.Delay(100); // for db connection stability
+        try
+        {
+            Visitors = await VisitorDataProvider.GetVisitorsInGymAsync();
+            await Task.Delay(100); // for db connection stability
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
     }
 
     /// <summary>Temporary method, call it ONCE to fill the empty DB with coaches and visitors and add one admin (Oleg M)</summary>
     private async Task AddAdminCoachesVisitorsToDB()
     {
         Random r = new Random();
-        
-        /*  Uncomment it to add admin and coaches, already uncommented part adds visitors and visitorcards
-         * 
-        Admin admin = new Admin()
-        {
-        Id = new Guid(),
-        FirstName = "Oleg",
-        LastName = "Melnykov",
-        Email = "olegm72@gmail.com",
-        IsActive = true,
-        PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(1, 999999).ToString(),
-        PhoneNumber = "+38067" + r.Next(1, 9999999).ToString(),
-    PhotoUrl = "OlegMelnykov.jpg"
-        };
+        Admin? admin = null;
 
-    await AddAdministratorCommand.ExecuteAsync(admin);
+        try
+        { 
+            admin = EmployeeRepository.GetAdministrators()?.FirstOrDefault();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+
+        if (admin == null)
+        {
+            admin = new Admin()
+                {
+                    Id = new Guid(),
+                    FirstName = "Oleg",
+                    LastName = "Melnykov",
+                    Email = "olegm72@gmail.com",
+                    IsActive = true,
+                    PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(100000, 999999).ToString(),
+                    PhoneNumber = "+38067" + r.Next(1000000, 9999999).ToString(),
+                    PhotoUrl = "OlegMelnykov.jpg"
+                };
+            try
+            {
+                await AddAdministratorCommand.ExecuteAsync(admin);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+        }
 
         Coaches = new List<Coach>() {
-        new Coach() { FirstName = "Nick", LastName = "Kirgios", Email = "Nick@australia.open.com", IsActive = true },
-        new Coach() { FirstName = "Rafael", LastName = "Nadal", Email = "Rafa@tennis.es", IsActive = true },
-        new Coach() { FirstName = "Roger", LastName = "Federer", Email = "Roger@Federer.com", IsActive = false },
-        new Coach() { FirstName = "Olexander", LastName = "Dolgopolov", Email = "dolgo@ukraine.tennis.ua", IsActive = false },
-        new Coach() { FirstName = "Elina", LastName = "Svitolina", Email = "svito@ukr.net", IsActive = true },
-        new Coach() { FirstName = "Marta", LastName = "Kostyuk", Email = "marta@16years.btu.ua", IsActive = false },
-        new Coach() { FirstName = "Novak", LastName = "Djokovich", Email = "antivaxer@serbia.net", IsActive = true },
-        new Coach() { FirstName = "Yaroslava", LastName = "Maguchikh", Email = "jumping@heroes.com", IsActive = true },
-        new Coach() { FirstName = "Serena", LastName = "Williams", Email = "serena@loudvoice.us", IsActive = false },
-        new Coach() { FirstName = "Olexander", LastName = "Usyk", Email = "usyk@boxing.ua", IsActive = true },
-        new Coach() { FirstName = "Vitaly", LastName = "Klichko", Email = "KO@boxing.ua", IsActive = true }
+            new Coach() { FirstName = "Nick", LastName = "Kirgios", Email = "Nick@australia.open.com", IsActive = true,
+                Education = "Lyneham Tennis Centre, Canberra", // max description is 460-480 chars (up to column 500 here in the code)
+                Description = "Australian professional tennis player. Career-high ATP singles ranking of world No. 13 was achieved on 24 October 2016. Has won seven ATP Tour singles titles, including the 2019 and 2022 Washington Open, and reached eleven finals, most notably a major final at the 2022 Wimbledon Championships, and a Masters 1000 final at the 2017 Cincinnati Masters." },
+            new Coach() { FirstName = "Rafael", LastName = "Nadal", Email = "Rafa@tennis.es", IsActive = true,
+                Education = "Royal Club of Tennis, Barcelona",
+                Description = "Spanish professional tennis player, has been ranked world No. 1 for 209 weeks. Has won an all-time record 22 Grand Slam men's singles titles, including a record 14 French Open titles. Has 92 ATP singles titles, including 36 Masters titles, with 63 of these on clay courts. Nadal is one of only two men to complete the Career Golden Slam in singles. His 81 consecutive wins on clay is the longest single-surface win streak in the Open Era." },
+            new Coach() { FirstName = "Roger", LastName = "Federer", Email = "Roger@Federer.com", IsActive = false,
+                Education = "National centre for Swiss Tennis, Biel",
+                Description = "Swiss professional tennis player. Was ranked world No. 1 for 310 weeks, including a record 237 consecutive weeks, and finished as the year-end No. 1 five times. Won 103 ATP singles titles, the second most of all time, including 20 Grand Slam singles titles, a record eight men's singles Wimbledon titles, an Open Era record-tying five men's singles US Open titles, and a record six year-end championships." },
+            new Coach() { FirstName = "Olexander", LastName = "Dolgopolov", Email = "dolgo@ukraine.tennis.ua", IsActive = false,
+                Education = "Trained by his father who trained very successful players",
+                Description = "Ukrainian professional tennis player. Reached the quarterfinals of the 2011 Australian Open and achieved a career-high singles ranking of World No. 13 in January 2012." },
+            new Coach() { FirstName = "Elina", LastName = "Svitolina", Email = "svito@ukr.net", IsActive = true,
+                Education = "Tennis school by Yuriy Sapronov, Kharkiv",
+                Description = "Ukrainian professional tennis player. Reached career-high rankings of world No. 3 in singles and 108 in doubles. Won 16 WTA Tour singles titles including the 2018 WTA Finals. The first Ukrainian woman to reach the top 10 in rankings. Has reached two Grand Slam semifinals in 2019. In 2021, won the Olympic bronze medal in the women's singles tournament at the 2020 Summer Olympics and became the first Olympian to win a medal in tennis for Ukraine." },
+            new Coach() { FirstName = "Marta", LastName = "Kostyuk", Email = "marta@16years.btu.ua", IsActive = false,
+                Education = "Antey Tennis Club, Kyiv",
+                Description = "Ukrainian professional tennis player. Has career-high rankings of 49 in singles, achieved on 14 February 2022, and world No. 45 in doubles, reached on 6 June 2022. Has one title (Slovenia Open 2022) in doubles." },
+            new Coach() { FirstName = "Novak", LastName = "Djokovich", Email = "antivaxer@serbia.net", IsActive = true,
+                Education = "Niki Pilic Academy, Munich",
+                Description = "Serbian professional tennis player, ranked world No. 1 for a record total 373 weeks. Has won 21 Grand Slam men's singles titles. Overall, has won 88 ATP singles titles. Has completed a non-calendar year Grand Slam in singles, becoming the only man in tennis history to be the reigning champion of the four majors at once across three different surfaces. The first man in the Open Era to achieve a double Career Grand Slam in singles." },
+            new Coach() { FirstName = "Yaroslava", LastName = "Mahuchikh", Email = "jumping@heroes.com", IsActive = true,
+                Education = "Light athletics center, Dnipro",
+                Description = "Ukrainian high jumper. Was the 2020 Summer Olympics bronze medalist, 2019 and 2022 World Championships silver medalist, and 2022 World Indoor Championships gold medalist. At the 2022 Brussels Diamond League, jumped 2.05 m, which is her outdoor personal best and a Ukrainian record. In 2021, achieved her indoor personal best of 2.06 m, which is also a national record." },
+            new Coach() { FirstName = "Serena", LastName = "Williams", Email = "serena@loudvoice.us", IsActive = false,
+                Education = "Tennis academy of Rick Macci, West Palm Beach, Florida",
+                Description = "American professional tennis player. Was ranked world No. 1 in singles by the Women's Tennis Association (WTA) for 319 weeks, including a joint-record 186 consecutive weeks, and finished as the year-end No. 1 five times. Won 23 Grand Slam singles titles, the most by any player in the Open Era, and the second-most of all time. Also won 14 major women's doubles titles, all with her sister Venus." },
+            new Coach() { FirstName = "Olexander", LastName = "Usyk", Email = "usyk@boxing.ua", IsActive = true,
+                Education = "State University of Physical Culture, Lviv",
+                Description = "Ukrainian professional boxer. The world champion in two weight classes, having held the unified WBA (Super), IBF, WBO and IBO heavyweight titles since 2021, The Ring magazine heavyweight title since 2022, and the undisputed cruiserweight title from 2018 to 2019, being the first cruiserweight champion to hold all four major world titles. One of only three boxers to have unified all cruiserweight world titles and become a world heavyweight champion." },
+            new Coach() { FirstName = "Vitali", LastName = "Klitschko", Email = "KO@boxing.ua", IsActive = true,
+                Education = "Kyiv University, Physical Science Department, Ph.D.",
+                Description = "Ukrainian professional boxer who also serves as mayor of Kyiv since June 2014. Holds a Doctoral Degree (Ph.D.) from Kyiv University's Physical Science Department. won multiple world heavyweight championships. Held the World Boxing Organization (WBO) title from 1999 to 2000, the Ring magazine title from 2004 to 2005, and the World Boxing Council (WBC) title twice between 2004 and 2013. Defeated 15 opponents in world heavyweight title fights." }
         };
 
-    foreach (Coach c in Coaches)
+        foreach (Coach c in Coaches)
         {
-        c.Id = new Guid(); c.CreatedAt = DateTime.Now; c.ModifiedAt = DateTime.Now;
-        c.CreatedBy = admin; c.ModifiedBy = admin; c.PhotoUrl = "Data/Photos/" + c.FirstName + c.LastName + ".jpg";
-        c.PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(1, 999999).ToString();
-        c.PhoneNumber = "+" + r.Next(1, 499999).ToString() + r.Next(1, 999999).ToString(); c.IsAtWork = c.IsActive;
+            c.Id = new Guid(); c.CreatedAt = DateTime.Now; c.ModifiedAt = DateTime.Now;
+            c.CreatedBy = admin; c.ModifiedBy = admin; c.PhotoUrl = "Data/Photos/" + c.FirstName + c.LastName + ".jpg";
+            c.PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(100000, 999999).ToString();
+            c.PhoneNumber = "+" + r.Next(100000, 499999).ToString() + r.Next(100000, 999999).ToString(); c.IsAtWork = c.IsActive;
 
-        await AddCoachCommand.ExecuteAsync(c);
-    }
-        */
-
-        Admin? admin = _employeeRepository.GetAdministrators()?.FirstOrDefault();
+            try
+            {
+                await AddCoachCommand.ExecuteAsync(c);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+        }
 
         Visitors = new List<Visitor>() {
             new Visitor() { FirstName = "Vasiliy", LastName = "Pupkin", Email = "vasiliy@pupkin.net" },
@@ -279,57 +278,29 @@
             new Visitor() { FirstName = "Tatiana", LastName = "Loseva", Email = "loseva_tatiana@gmail.com" },
             new Visitor() { FirstName = "Ivan", LastName = "Ivanov", Email = "ivanov@kabmin.gov.ua" },
             new Visitor() { FirstName = "Bogdan", LastName = "Vernyi", Email = "bog@faith.com" },
-            new Visitor() { FirstName = "Silvester", LastName = "Stallone", Email = "rambo@rocky.us" }
+            new Visitor() { FirstName = "Sylvester", LastName = "Stallone", Email = "rambo@rocky.us" }
         };
 
         foreach (Visitor v in Visitors)
         {
             v.Id = new Guid(); v.RegistrationDate = DateTime.Now; v.IsActive = r.Next(0, 10) < 3 ? false : true;
-            v.PhotoUrl = "Data/Photos/" + v.FirstName + v.LastName + ".jpg";
-            v.PhoneNumber = $"+3806{r.Next(1, 999999999):N0}"; v.IsInGym = !v.IsActive ? false : (r.Next(0, 10) < 5 ? false : true);
+            v.PhotoUrl = null; // "Data/Photos/" + v.FirstName + v.LastName + ".jpg";
+            if (v.Email == "rambo@rocky.us") v.PhotoUrl = "Data/Photos/SylvesterStallone.jpg";
+            v.PhoneNumber = $"+3806{r.Next(100000000, 999999999)}"; v.IsInGym = !v.IsActive ? false : (r.Next(0, 10) < 5 ? false : true);
             VisitorCard vc = new(); 
-                vc.Id = new Guid(); vc.RegistrationDate = v.RegistrationDate; vc.CreatedAt = DateTime.Now;
-                vc.CreatedBy = admin!; vc.IsActive = v.IsActive; vc.BarCode = $"482{r.Next(1, 99999):N0}{r.Next(99999):N0}";
-                vc.Visitor = v;
+            vc.Id = new Guid(); vc.RegistrationDate = v.RegistrationDate; vc.CreatedAt = DateTime.Now;
+            vc.CreatedBy = admin!; vc.IsActive = v.IsActive; vc.BarCode = $"482{r.NextInt64(1000000000, 9999999999)}";
+            vc.Visitor = v;
             v.VisitorCard = vc;
-            await AddVisitorCardCommand.ExecuteAsync(v.VisitorCard);
-            // await AddVisitorCommand.ExecuteAsync(v); // Visitors are added automatically as external keys (commands are not called)
-        }
-    }
-
-    private string SelectedVisitorRowClassFunc(Visitor visitor, int rowNumber)  // RowStyleFunc can be used instead
-    {
-        if (selectedVisitorNumber == rowNumber)
-        {
-            selectedVisitorNumber = -1;
-            return string.Empty;
-        }
-        else if (coachesTable != null && coachesTable.SelectedItem != null && coachesTable.SelectedItem.Equals(visitor))
-        {
-            selectedVisitorNumber = rowNumber;
-            return ".selected"; // change style to ".selected"
-        }
-        else
-        {
-            return string.Empty;
-        }
-    }
-
-    private string SelectedCoachRowClassFunc(Coach coach, int rowNumber)  // RowStyleFunc can be used instead
-    {
-        if (selectedCoachNumber == rowNumber)
-        {
-            selectedCoachNumber = -1;
-            return string.Empty;
-        }
-        else if (coachesTable != null && coachesTable.SelectedItem != null && coachesTable.SelectedItem.Equals(coach))
-        {
-            selectedCoachNumber = rowNumber;
-            return ".selected"; // change style to ".selected"
-        }
-        else
-        {
-            return string.Empty;
+            try
+            {
+                await AddVisitorCardCommand.ExecuteAsync(v.VisitorCard);
+                // await AddVisitorCommand.ExecuteAsync(v); // Visitors are added automatically as external keys (commands are not called)
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
     }
 
@@ -338,15 +309,16 @@
         await GetCoachesAtWorkAsync();
         if (!string.IsNullOrWhiteSpace(coachSearchString))
             Coaches = Coaches?
-                .Where(c => $"{c.FirstName} {c.LastName} {c.Email}".Contains(coachSearchString, StringComparison.OrdinalIgnoreCase))
+                .Where(c => $"{c.FirstName} {c.LastName} {c.PhoneNumber} {c.Email}"
+                    .Contains(coachSearchString, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         switch (sortLabel)
         {
             case "ln_sort":
                 Coaches = Coaches.OrderByDirection(SortDirection.Ascending, o => o.LastName).ToList();
                 break;
-            case "em_sort":
-                Coaches = Coaches.OrderByDirection(SortDirection.Ascending, o => o.Email).ToList();
+            case "ph_sort":
+                Coaches = Coaches.OrderByDirection(SortDirection.Ascending, o => o.PhoneNumber).ToList();
                 break;
         }
         // Coaches = Coaches.Skip(state.Page * state.PageSize).Take(state.PageSize).ToList();
@@ -358,15 +330,16 @@
         await GetVisitorsInGymAsync();
         if (!string.IsNullOrWhiteSpace(visitorSearchString))
             Visitors = Visitors?
-                .Where(v => $"{v.FirstName} {v.LastName} {v.Email}".Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))
+                .Where(v => $"{v.FirstName} {v.LastName} {v.PhoneNumber} {v.Email} {v.VisitorCard?.BarCode}"
+                        .Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         switch (sortLabel)
         {
             case "ln_sort":
                 Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.LastName).ToList();
                 break;
-            case "em_sort":
-                Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.Email).ToList();
+            case "ph_sort":
+                Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.PhoneNumber).ToList();
                 break;
         }
         // Visitors = Visitors.Skip(state.Page * state.PageSize).Take(state.PageSize).ToList();
@@ -385,21 +358,13 @@
         await CoachesReloadAsync(coachesTable?.SortLabel);
     }
 
-    private void RegisterNewVisitorClick(MouseEventArgs args)
+    private async void RegisterNewVisitorClick()
     {
-        newVisitor = new Visitor()
-        {
-            Id = new Guid(),
-            RegistrationDate = DateTime.Now,
-            IsActive = true,
-            IsInGym = true
-        };
-        OpenNewVisitorForm();
-        /*
-        // move this to the method called after the form "Submit" button
-        await AddVisitorCommand.ExecuteAsync(newVisitor);
-        VisitorsReload(visitorsTable?.SortLabel);
-        */
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
+        var parameters = new DialogParameters();
+        parameters.Add("visitorModel", null);
+        var dialog = DialogService.Show<CreateVisitorDialog>("New visitor registration", parameters, options);
+        await dialog.Result;
     }
 
     private async Task CheckVisitorInClick(MouseEventArgs args)
@@ -407,20 +372,85 @@
         await OpenVisitorCheckIn();
     }
 
+    private async Task OpenVisitorCheckIn()
+    {
+        var options = new DialogOptions { 
+                FullWidth = true, 
+                MaxWidth = MaxWidth.Large,
+                CloseButton = true,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseOnEscapeKey = true
+        };
+        var dialog = DialogService.Show<VisitorCheckInDialog>("Checking a visitor in", options);
+        await dialog.Result;
+        await VisitorsReloadAsync(visitorsTable?.SortLabel);
+        await Task.Delay(100); // for db connection stability
+    }
+
     private async Task CheckCoachInClick(MouseEventArgs args)
     {
         await OpenCoachCheckIn();
     }
 
-    private void VisitorRowClickEvent(TableRowClickEventArgs<Visitor> tableRowClickEventArgs)
-    {
-        viewedVisitor = tableRowClickEventArgs.Item;
-        OpenVisitorView(); // TODO Visior View form should be opened with details of the given visitor
+    private async Task OpenCoachCheckIn()
+    { 
+        var options = new DialogOptions { 
+                FullWidth = true, 
+                MaxWidth = MaxWidth.Large,
+                CloseButton = true,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseOnEscapeKey = true
+        };
+        var dialog = DialogService.Show<CoachCheckInDialog>("Checking a coach in", options);
+        await dialog.Result;
+        await CoachesReloadAsync(coachesTable?.SortLabel);
+        await Task.Delay(100); // for db connection stability
     }
 
-    private void CoachRowClickEvent(TableRowClickEventArgs<Coach> tableRowClickEventArgs)
+    private async Task OpenVisitorView(Visitor viewedVisitor)
     {
-        viewedCoach = tableRowClickEventArgs.Item;
-        OpenCoachView(); // TODO Coach View form should be opened with details of the given coach
+        var options = new DialogOptions
+            {
+                FullWidth = true,
+                MaxWidth = viewedVisitor.PhotoUrl == null ? MaxWidth.Small : MaxWidth.Medium,
+                CloseButton = true,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseOnEscapeKey = true,
+            };
+        var parameters = new DialogParameters();
+        parameters.Add("visitorModel", viewedVisitor);
+        var dialog = DialogService.Show<VisitorViewDialog>("Visitor details", parameters, options);
+        await dialog.Result;
     }
+
+    private async Task VisitorRowClickEvent(TableRowClickEventArgs<Visitor> tableRowClickEventArgs)
+    {
+        await OpenVisitorView(tableRowClickEventArgs.Item);
+    }
+
+    private async Task OpenCoachView(Coach viewedCoach)
+    {
+        var options = new DialogOptions
+            {
+                FullWidth = true,
+                MaxWidth = viewedCoach.PhotoUrl == null ? MaxWidth.Small : MaxWidth.Medium,
+                CloseButton = true,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseOnEscapeKey = true,
+            };
+        var parameters = new DialogParameters();
+        parameters.Add("coachModel", viewedCoach);
+        var dialog = DialogService.Show<CoachViewDialog>("Coach details", parameters, options);
+        await dialog.Result;
+    }
+    
+    private async Task CoachRowClickEvent(TableRowClickEventArgs<Coach> tableRowClickEventArgs)
+    {
+        await OpenCoachView(tableRowClickEventArgs.Item);
+    }
+    
 }

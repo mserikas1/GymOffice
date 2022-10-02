@@ -1,38 +1,56 @@
-﻿<MudNavMenu >
-    @if (PagePath == "admin")
-    {
-        <AdminNavMenu />
-    }
-    @if (PagePath == "coach")
-    {
-        <CoachNavMenu />
-    }
-    @if (PagePath == "receptionist")
-    {
-        <ReceptionistNavMenu />
-    }
-</MudNavMenu>
+﻿<AuthorizeView>
+    <Authorized>
+        <MudNavMenu>
+            @if (CurrentUserRole == "Admin" || CurrentUserRole == "Receptionist")
+            {
+                <MudNavLink Href="@("/"+CurrentUserRole.ToLower())" Match="NavLinkMatch.All">Home</MudNavLink>
+                <MudDivider DividerType="DividerType.Middle" Class="my-2" />
+                @if (CurrentUserRole == "Admin")
+                {
+                    <MudNavLink Href="/receptionists" Match="NavLinkMatch.Prefix">Receptionists</MudNavLink>
+                }
+                <MudNavLink Href="/coaches" Match="NavLinkMatch.Prefix">Coaches</MudNavLink>
+                <MudNavLink Href="/visitors" Match="NavLinkMatch.Prefix">Visitors</MudNavLink>
+                @if (CurrentUserRole == "Admin")
+                {
+                    <MudNavLink Href="/abonnement_types" Match="NavLinkMatch.Prefix">Abonnement Types</MudNavLink>
+                }
+                <MudNavLink Href="/abonnements" Match="NavLinkMatch.Prefix">Abonnements</MudNavLink>
+            }
+            else @* // for Coaches, Visitors etc *@
+            {
+                @* Show no menu *@
+            }
+        </MudNavMenu>
+    </Authorized>
+    <NotAuthorized>
+        @* Show no menu *@
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
-    public string PagePath { get; set; } = string.Empty;
-    public string EditedPath { get; set; } = string.Empty;
+    [Inject] UserManager<IdentityUser> UserManager { get; set; } = null!;
+    
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationStateTask { get; set; }
 
-    [Inject]
-    public NavigationManager NavigationManager { get; set; } = null!;
+    protected string CurrentUserRole { get; set; } = string.Empty;
 
-    protected override void OnInitialized()
+    protected async Task<string> GetCurrenUserRole()
     {
-        PagePath = NavigationManager.Uri.Substring(NavigationManager.BaseUri.Length).Split('/')[0];
+        var User = (await authenticationStateTask!).User;
+        if (User == null)
+            return ""; // most probably, cookies are not set or a user was never logged in
+        if (!User.Identity!.IsAuthenticated)  // or if (!SignInManager.IsSignedIn(User))
+            return "";
+        IdentityUser currentUser = await UserManager.GetUserAsync(User);
+        IList<string> roles = await UserManager.GetRolesAsync(currentUser);
+        return roles.FirstOrDefault() ?? "Undefined";
     }
 
-    protected override void OnAfterRender(bool firstRender)
-    {        
-        EditedPath = NavigationManager.Uri.Substring(NavigationManager.BaseUri.Length).Split('/')[0];
-
-        if (!EditedPath.Equals(PagePath))
-        {
-            PagePath = EditedPath;
-            StateHasChanged();
-        }
+    protected override async Task OnInitializedAsync()
+    {
+        if (CurrentUserRole == "")
+            CurrentUserRole = await GetCurrenUserRole();
     }
 }

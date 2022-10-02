@@ -1,15 +1,13 @@
-﻿@using GymOffice.Common.Contracts.CommandContracts.ReceptionistCommands.Update
-@using GymOffice.Common.Contracts.DataProviderContracts
-@using GymOffice.Common.DTOs;
+﻿@attribute [Authorize(Roles = "Receptionist")]
 @inject IUpdateVisitorCommand UpdateVisitorCommand
     
 <!-- Inactive Visitors list with checkin possibility -->
-<MudDialog>
+<MudDialog DefaultFocus="DefaultFocus.Element"> 
     <DialogContent>
         <MudText Align="Align.Center">List of active visitors not in gym allows to check-in a selected visitor.</MudText>
         <!-- Visitors list -->
         <MudItem xs="4" sm="4" md="12" Style="overflow-y: scroll; overflow-x: scroll">
-            <MudCard Elevation="25" Class="rounded-lg pb-4">
+            <MudCard Elevation="0" Class="rounded-lg pb-4">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudTextField T="string" ValueChanged="@(str=>OnVisitorSearch(str))" Placeholder="Search a visitor" Adornment="Adornment.Start"
@@ -19,8 +17,7 @@
                 <MudCardContent>
                     <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" T="Visitor">
                         <HeaderContent>
-                            <MudTh><MudTableSortLabel Enabled="false" 
-                                SortBy="new Func<Visitor, object>(x=>x.FirstName!)">First Name</MudTableSortLabel></MudTh>
+                            <MudTh>First Name</MudTh>
                             <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Visitor" InitialDirection="SortDirection.Ascending" 
                                 SortBy="new Func<Visitor, object>(x=>x.LastName!)">Last Name</MudTableSortLabel></MudTh>
                             <MudTh><MudTableSortLabel SortLabel="em_sort" T="Visitor" 
@@ -104,7 +101,8 @@
         await GetActiveVisitorsNotInGymAsync();
         if (!string.IsNullOrWhiteSpace(visitorSearchString))
             Visitors = Visitors?
-                .Where(c => $"{c.FirstName} {c.LastName} {c.Email} {c.PhoneNumber}".Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))
+                .Where(c => $"{c.FirstName} {c.LastName} {c.Email} {c.PhoneNumber} {c.VisitorCard.BarCode}"
+                       .Contains(visitorSearchString, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         switch (sortLabel)
         {

@@ -5,6 +5,63 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddDbContext<WebAdminIdentityDbContext>();
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddDefaultTokenProviders()
+    .AddDefaultUI()
+    .AddEntityFrameworkStores<WebAdminIdentityDbContext>();
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+
+// example of Razor Identity Pages setup
+// https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Password settings 
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequiredUniqueChars = 1;
+
+    // Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // User settings
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = false;
+
+    options.SignIn.RequireConfirmedAccount = false; // require confirmed account for sign in
+    options.SignIn.RequireConfirmedEmail = false; // require email validation for sign in
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // Cookie settings
+    options.Cookie.Name = "_GymOfficeStaff";
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Logout";
+    // options.AccessDeniedPath = "/Identity/Pages/Account/AccessDenied"; // this is default, so not needed, it is here to show the link
+    options.SlidingExpiration = true;
+});
+
+// If we do so, only registered users with these roles will be able to login and use the App
+builder.Services.AddAuthorization(options => {
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        //.RequireAuthenticatedUser()   // this is for ANY role, that is, to require login
+        .RequireRole("Admin", "Receptionist", "Coach") // Login, Logout and AccessDenied pages should be set [AllowAnonymous] to avoid cyclic reference
+        .Build();
+});
 
 builder.Services.AddMudServices();
 
@@ -52,5 +109,8 @@ app.UseRouting();
 app.MapRazorPages();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

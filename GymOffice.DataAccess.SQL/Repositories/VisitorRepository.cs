@@ -10,7 +10,8 @@ public class VisitorRepository : IVisitorRepository
 
     public async Task<ICollection<Visitor>?> GetAllVisitorsAsync()
     {
-        return await _dbContext.Visitors.Include(v => v.VisitorCard).ToListAsync();
+        return await _dbContext.Visitors
+            .Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).ToListAsync();
     }
 
     public async Task AddVisitorAsync(Visitor visitor)
@@ -21,25 +22,29 @@ public class VisitorRepository : IVisitorRepository
 
     public async Task<ICollection<Visitor>?> GetVisitorsInGymAsync()
     {
-        return await _dbContext.Visitors.Where(v => v.IsInGym).Include(v => v.VisitorCard).ToListAsync();
+        return await _dbContext.Visitors.Where(v => v.IsInGym)
+            .Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).ToListAsync();
     }
     public async Task<ICollection<Visitor>?> GetVisitorsNotInGymAsync()
     {
-        return await _dbContext.Visitors.Where(v => !v.IsInGym).Include(v => v.VisitorCard).ToListAsync();
+        return await _dbContext.Visitors.Where(v => !v.IsInGym)
+            .Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).ToListAsync();
     }
     public async Task<ICollection<Visitor>?> GetActiveVisitorsNotInGymAsync()
     {
-        return await _dbContext.Visitors.Where(v => v.IsActive && !v.IsInGym).Include(v => v.VisitorCard).ToListAsync();
+        return await _dbContext.Visitors.Where(v => v.IsActive && !v.IsInGym)
+            .Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).ToListAsync();
     }
 
     public async Task<ICollection<Visitor>?> GetActiveVisitorsAsync()
     {
-        return await _dbContext.Visitors.Where(v => v.IsActive).Include(v => v.VisitorCard).ToListAsync();
+        return await _dbContext.Visitors.Where(v => v.IsActive)
+            .Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).ToListAsync();
     }
 
     public async Task<Visitor?> GetVisitorByIdAsync(Guid id)
     {
-        return await _dbContext.Visitors.Include(v => v.VisitorCard).FirstOrDefaultAsync(v => v.Id == id);
+        return await _dbContext.Visitors.Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).FirstOrDefaultAsync(v => v.Id == id);
     }
 
     public async Task UpdateVisitorAsync(Visitor visitor)

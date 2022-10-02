@@ -1,13 +1,11 @@
-﻿@page "/receptionist/AllCoachesList"
-@using GymOffice.Common.Contracts.CommandContracts.ReceptionistCommands.Update
-@using GymOffice.Common.Contracts.DataProviderContracts
-@using GymOffice.Common.DTOs;
+﻿@page "/receptionist/ActiveCoachesList"
+@attribute [Authorize(Roles = "Receptionist")]
 @inject IUpdateCoachCommand UpdateCoachCommand
     
 <!-- All Coaches list with checkin possibility -->
 <MudText Align="Align.Center">Active coaches list allows to check-in a selected coach.</MudText>
 <MudItem xs="4" sm="4" md="12" Style="overflow-y: scroll; overflow-x: scroll">
-    <MudCard Elevation="25" Class="rounded-lg pb-4">
+    <MudCard Elevation="0" Class="rounded-lg pb-4">
         <MudCardHeader>
             <CardHeaderContent>
                 <MudTextField T="string" ValueChanged="@(str=>OnCoachSearch(str))" Placeholder="Search a coach" Adornment="Adornment.Start"
@@ -15,10 +13,9 @@
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
-            <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" T="Coach">
+            <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" RowsPerPage="8" OnRowClick="CoachRowClickEvent" T="Coach">
                 <HeaderContent>
-                    <MudTh><MudTableSortLabel Enabled="false" 
-                        SortBy="new Func<Coach, object>(x=>x.FirstName)">First Name</MudTableSortLabel></MudTh>
+                    <MudTh>First Name</MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Coach" InitialDirection="SortDirection.Ascending" 
                         SortBy="new Func<Coach, object>(x=>x.LastName)">Last Name</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="em_sort" T="Coach" 
@@ -27,6 +24,7 @@
                         SortBy="new Func<Coach, object>(x=>x.PhoneNumber)">Phone Number</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="aw_sort" T="Coach"
                         SortBy="new Func<Coach, object>(x=>x.IsAtWork)">At Work</MudTableSortLabel></MudTh>
+                    <MudTh>Details</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd Class="flex-shrink-0" DataLabel="First Name">@context.FirstName</MudTd>
@@ -40,7 +38,10 @@
                             <MudText>@(context.IsAtWork ? "YES" : "NO  ")</MudText>
                         </MudButton>
                     </MudTd>
-                </RowTemplate>
+                        <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
+                        Size="Size.Small" OnClick="(() => OpenCoachView(context))" />
+                    </MudTd>
+                    </RowTemplate>
                 <NoRecordsContent>
                     <MudText>No matching records found</MudText>
                 </NoRecordsContent>
@@ -54,7 +55,8 @@
 
 @code {
     [Inject] public ICoachDataProvider CoachDataProvider { get; set; } = null!;
-    
+    [Inject] public IDialogService DialogService { get; set; } = null!;
+
     // [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
     // void Close() => MudDialog?.Close(DialogResult.Ok(true)); // for the button: OnClick="Close"
     
@@ -118,6 +120,28 @@
     {
         coachSearchString = text;
         await CoachesReloadAsync(coachesTable?.SortLabel);
+    }
+
+    private async Task OpenCoachView(Coach viewedCoach)
+    {
+        var options = new DialogOptions
+            {
+                FullWidth = true,
+                MaxWidth = viewedCoach.PhotoUrl == null ? MaxWidth.Small : MaxWidth.Medium,
+                CloseButton = true,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseOnEscapeKey = true
+            };
+        var parameters = new DialogParameters();
+        parameters.Add("coachModel", viewedCoach);
+        var dialog = DialogService.Show<CoachViewDialog>("Coach details", parameters, options);
+        await dialog.Result;
+    }
+
+    private async Task CoachRowClickEvent(TableRowClickEventArgs<Coach> tableRowClickEventArgs)
+    {
+        await OpenCoachView(tableRowClickEventArgs.Item);
     }
 
 }

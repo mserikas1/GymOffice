@@ -1,13 +1,11 @@
-﻿@page "/receptionist/AllVisitorsList"
-@using GymOffice.Common.Contracts.CommandContracts.ReceptionistCommands.Update
-@using GymOffice.Common.Contracts.DataProviderContracts
-@using GymOffice.Common.DTOs;
+﻿@page "/receptionist/ActiveVisitorsList"
+@attribute [Authorize(Roles = "Receptionist")]
 @inject IUpdateVisitorCommand UpdateVisitorCommand
     
 <!-- All Visitors list with checkin possibility -->
 <MudText Align="Align.Center">Active visitors list allows to check-in a selected visitor.</MudText>
 <MudItem xs="4" sm="4" md="12" Style="overflow-y: scroll; overflow-x: scroll">
-    <MudCard Elevation="25" Class="rounded-lg pb-4">
+    <MudCard Elevation="0" Class="rounded-lg pb-4">
         <MudCardHeader>
             <CardHeaderContent>
                 <MudTextField T="string" ValueChanged="@(str=>OnVisitorSearch(str))" Placeholder="Search a visitor" Adornment="Adornment.Start"
@@ -15,20 +13,20 @@
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
-            <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" T="Visitor">
+            <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" RowsPerPage="8" OnRowClick="VisitorRowClickEvent" T="Visitor">
                 <HeaderContent>
-                    <MudTh><MudTableSortLabel Enabled="false" 
-                        SortBy="new Func<Visitor, object>(x=>x.FirstName!)">First Name</MudTableSortLabel></MudTh>
+                    <MudTh>First Name</MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ln_sort" T="Visitor" InitialDirection="SortDirection.Ascending" 
                         SortBy="new Func<Visitor, object>(x=>x.LastName!)">Last Name</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="em_sort" T="Visitor" 
                         SortBy="new Func<Visitor, object>(x=>x.Email!)">Email</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ph_sort" T="Visitor" 
                         SortBy="new Func<Visitor, object>(x=>x.PhoneNumber!)">Phone Number</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel Enabled="false" 
+                    <MudTh><MudTableSortLabel SortLabel="bc_sort" T="Visitor"
                         SortBy="new Func<Visitor, object>(x=>x.VisitorCard?.BarCode!)">Card Number</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="ig_sort" T="Visitor"
                         SortBy="new Func<Visitor, object>(x=>x.IsInGym)">In Gym</MudTableSortLabel></MudTh>
+                    <MudTh>Details</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd Class="flex-shrink-0" DataLabel="First Name">@context.FirstName</MudTd>
@@ -43,7 +41,10 @@
                             <MudText>@(context.IsInGym ? "YES" : "NO  ")</MudText>
                         </MudButton>
                     </MudTd>
-                </RowTemplate>
+                        <MudTd><MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
+                        Size="Size.Small" OnClick="(() => OpenVisitorView(context))" />
+                    </MudTd>
+                    </RowTemplate>
                 <NoRecordsContent>
                     <MudText>No matching records found</MudText>
                 </NoRecordsContent>
@@ -57,6 +58,7 @@
 
 @code {
     [Inject] public IVisitorDataProvider VisitorDataProvider { get; set; } = null!;
+    [Inject] public IDialogService DialogService { get; set; } = null!;
 
     // [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
     // void Close() => MudDialog?.Close(DialogResult.Ok(true)); // for the button: OnClick="Close"
@@ -110,6 +112,9 @@
             case "ph_sort":
                 Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.PhoneNumber).ToList();
                 break;
+            case "bc_sort":
+                Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.VisitorCard.BarCode).ToList();
+                break;
             case "ig_sort":
                 Visitors = Visitors.OrderByDirection(SortDirection.Ascending, o => o.IsInGym).ToList();
                 break;
@@ -122,5 +127,27 @@
     {
         visitorSearchString = text;
         await VisitorsReloadAsync(visitorsTable?.SortLabel);
+    }
+
+    private async Task OpenVisitorView(Visitor viewedVisitor)
+    {
+        var options = new DialogOptions
+            {
+                FullWidth = true,
+                MaxWidth = viewedVisitor.PhotoUrl == null ? MaxWidth.Small : MaxWidth.Medium,
+                CloseButton = true,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseOnEscapeKey = true
+            };
+        var parameters = new DialogParameters();
+        parameters.Add("visitorModel", viewedVisitor);
+        var dialog = DialogService.Show<VisitorViewDialog>("Visitor detaills", parameters, options);
+        await dialog.Result;
+    }
+
+    private async Task VisitorRowClickEvent(TableRowClickEventArgs<Visitor> tableRowClickEventArgs)
+    {
+        await OpenVisitorView(tableRowClickEventArgs.Item);
     }
 }

@@ -1,4 +1,5 @@
 ﻿@page "/admin"
+@attribute [Authorize(Roles = "Admin")]
 
 <PeopleGroupCardComponent GroupName="@CoachesCardName" CardClasses="@CoachesCardClasses"
                           TotalCount="@CoachesTotalCount" InGymCount="@CoachesInGymCount"

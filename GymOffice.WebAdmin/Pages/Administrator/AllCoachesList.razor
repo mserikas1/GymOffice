@@ -1,13 +1,12 @@
-﻿@page "/administrator/AllCoachesList"
-@using GymOffice.Common.Contracts.CommandContracts.ReceptionistCommands.Update
-@using GymOffice.Common.Contracts.DataProviderContracts
-@using GymOffice.Common.DTOs;
+﻿@page "/admin/coaches"
+@attribute [Authorize(Roles = "Admin")]
 @inject IUpdateCoachCommand UpdateCoachCommand
+
     
 <!-- All Coaches list with checkin possibility -->
 <MudText Align="Align.Center">All coaches list allows to (de)activate and/or check-in a selected coach.</MudText>
 <MudItem xs="4" sm="4" md="12" Style="overflow-y: scroll; overflow-x: scroll">
-    <MudCard Elevation="25" Class="rounded-lg pb-4">
+    <MudCard Elevation="0" Class="rounded-lg pb-4">
         <MudCardHeader>
             <CardHeaderContent>
                 <MudTextField T="string" ValueChanged="@(str=>OnCoachSearch(str))" Placeholder="Search a coach" Adornment="Adornment.Start"

@@ -1,12 +1,25 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-    </Found>
-    <NotFound>
-        <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
+﻿<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <h3 class="text-danger"><br><br>Access Denied!</h3>
+                    <h4 class="text-danger"><br>You do not have access to this resource.<br></h4>
+                    <h5><br>Please <a class="text-primary" href="/Identity/Account/LogOut">log out</a> and log in under a different role...</h5>
+                    @* @{ NavigationManager.NavigateTo("/Identity/Account/AccessDenied", true); } *@
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <h5><br><p align="center" role="alert">Sorry, there's nothing at this address.</p></h5>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>
+@*
+@code {
+    [Inject] NavigationManager NavigationManager { get; set; } = null!;
+} *@

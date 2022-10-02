@@ -1,0 +1,48 @@
+﻿@attribute [Authorize(Roles = "Receptionist")]
+
+<MudDialog DefaultFocus="DefaultFocus.Element">
+    <DialogContent>
+    @if (visitorModel == null && errorMessage == null)
+    {
+        <MudText Typo="Typo.subtitle2" Class="pa-5">Loading data...</MudText>
+    }
+    else if (errorMessage != null)
+    {
+        <ErrorDisplay ErrorMessage="@errorMessage" ResetError="HandleResetError" />
+    }
+    else
+    {
+        <EditForm Model="@visitorModel" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <MudGrid>
+            <MudItem xs="12">
+                <MudCard Elevation="0" Class="pa-5">
+                    <MudCardContent>
+                        <MudTextField Label="First name" HelperText="Length from 2 to 20 characters"
+                                  @bind-Value="visitorModel!.FirstName" For="@(() => visitorModel!.FirstName)" />
+                        <MudTextField Label="First name" HelperText="Length from 2 to 20 characters"
+                                  @bind-Value="visitorModel!.LastName" For="@(() => visitorModel!.LastName)" />
+                        <MudTextField Label="Phone Number" Class="mt-3" HelperText="Start with '+' and enter the full number"
+                                  @bind-Value="visitorModel!.PhoneNumber" For="@(() => visitorModel!.PhoneNumber)" />
+                        <MudTextField Label="Email" Class="mt-3" HelperText="Optional"
+                                  @bind-Value="visitorModel!.Email" For="@(() => visitorModel!.Email)" />
+                        <MudDivider DividerType="DividerType.Middle" Class="mt-4" />
+                    </MudCardContent>
+                    <MudCardActions Class="d-flex justify-end">
+                        <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleCancel">Cancel</MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
+                    </MudCardActions>
+                    <MudDivider Class="my-2" />
+                    <div class="d-flex flex-column">
+                        <MudText><b>Visitor Card Number:</b> @visitorModel!.VisitorCard!.BarCode</MudText>
+                        <MudText><b>Created by:</b> @visitorModel!.VisitorCard!.CreatedBy.Email</MudText>
+                        <MudText><b>Created at:</b> @visitorModel!.VisitorCard!.RegistrationDate.ToShortDateString()</MudText>
+                    </div>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+    }
+    </DialogContent>
+</MudDialog>
