@@ -9,3 +9,7 @@ GymOffice.WebAdmin/obj/
 GymOffice.WebAdmin/bin/
 GymOffice.UnitTests/bin/
 GymOffice.UnitTests/obj/
+/customer-cabinet-react/node_modules
+/GymOffice.CustomerApi/bin/Debug/net6.0
+/GymOffice.CustomerApi/obj/Debug/net6.0
+/GymOffice.CustomerApi/obj
