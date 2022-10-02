@@ -5,7 +5,9 @@
 
 <AuthorizeView>
     <Authorized>
-        @{ NavigationManager.NavigateTo("/"+CurrentUserRole.ToLower(), true); }
+        @{
+            NavigationManager.NavigateTo("/"+(CurrentUserRole == String.Empty ? String.Empty : CurrentUserRole.ToLower()), true);
+        }
     </Authorized>
     <NotAuthorized>
         @{ NavigationManager.NavigateTo("Identity/Account/Login", true); }
@@ -29,9 +31,9 @@
         if (!User.Identity!.IsAuthenticated)
             return "";
         IdentityUser currentUser = await UserManager.GetUserAsync(User);
-        await Task.Delay(200); // to avoid InvalidOperationException: A second operation was started on this context instance before a previous operation completed.
+        // await Task.Delay(200); // to avoid InvalidOperationException: A second operation was started on this context instance before a previous operation completed.
         IList<string> roles = await UserManager.GetRolesAsync(currentUser);
-        return roles.FirstOrDefault() ?? "Undefined";
+        return roles.FirstOrDefault() ?? "";
     }
 
     protected override async Task OnInitializedAsync()
