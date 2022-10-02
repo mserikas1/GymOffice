@@ -28,8 +28,8 @@
             return ""; // most probably, cookies are not set or a user was never logged in
         if (!User.Identity!.IsAuthenticated)
             return "";
-        await Task.Delay(200); // to avoid InvalidOperationException: A second operation was started on this context instance before a previous operation completed.
         IdentityUser currentUser = await UserManager.GetUserAsync(User);
+        await Task.Delay(200); // to avoid InvalidOperationException: A second operation was started on this context instance before a previous operation completed.
         IList<string> roles = await UserManager.GetRolesAsync(currentUser);
         return roles.FirstOrDefault() ?? "Undefined";
     }

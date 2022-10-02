@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-﻿using GymOffice.WebAdmin.ViewModels;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-=======
-﻿using GymOffice.Common.DTOs;
->>>>>>> oleg-feature-receptionist-pages-continued
-
 namespace GymOffice.WebAdmin.Extensions;
 public static class DtoConversions
 {    
@@ -52,7 +45,6 @@ public static class DtoConversions
         };
     }
 
-<<<<<<< HEAD
     public static Coach ConvertToDto(this CoachVM coachVM)
     {
         return new Coach
@@ -144,7 +136,6 @@ public static class DtoConversions
             EndVisitTime = TimeSpan.Parse(abonnementType.EndVisitTime)
         };
     }
-=======
     public static Visitor ConvertToDto(this VisitorVM visitorVM, VisitorCard visitorCard)
     {
         Visitor visitor = new()
@@ -163,6 +154,4 @@ public static class DtoConversions
         visitorCard.Visitor = visitor;
         return visitor;
     }
-
->>>>>>> oleg-feature-receptionist-pages-continued
 }
