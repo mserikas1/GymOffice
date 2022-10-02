@@ -1,4 +1,6 @@
-﻿namespace GymOffice.WebAdmin.PageComponents.Dialogs;
+﻿using System;
+
+namespace GymOffice.WebAdmin.PageComponents.Dialogs;
 public partial class CoachViewItemDialog : ComponentBase
 {
     [Parameter]

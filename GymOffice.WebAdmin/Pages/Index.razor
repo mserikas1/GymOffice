@@ -1,46 +1,20 @@
 ﻿@page "/"
-@attribute [AllowAnonymous]
+@inject NavigationManager NavigationManager
 
 <PageTitle>GymOffice</PageTitle>
 
-<AuthorizeView>
-    <Authorized>
-        @{
-            NavigationManager.NavigateTo("/"+(CurrentUserRole == String.Empty ? String.Empty : CurrentUserRole.ToLower()), true);
-        }
-    </Authorized>
-    <NotAuthorized>
-        @{ NavigationManager.NavigateTo("Identity/Account/Login", true); }
-    </NotAuthorized>
+<AuthorizeView Roles="Admin">
+    @{
+        NavigationManager.NavigateTo("/admin", true);
+    }
 </AuthorizeView>
-
-@code {
-    [Inject] UserManager<IdentityUser> UserManager { get; set; } = null!;
-    [Inject] NavigationManager NavigationManager { get; set; } = null!;
-
-    [CascadingParameter]
-    private Task<AuthenticationState>? authenticationStateTask { get; set; }
-
-    string CurrentUserRole { get; set; } = string.Empty;
-
-    protected async Task<string> GetCurrenUserRole()
-    {
-        var User = (await authenticationStateTask!).User;
-        if (User == null)
-            return ""; // most probably, cookies are not set or a user was never logged in
-        if (!User.Identity!.IsAuthenticated)
-            return "";
-        IdentityUser currentUser = await UserManager.GetUserAsync(User);
-        // await Task.Delay(200); // to avoid InvalidOperationException: A second operation was started on this context instance before a previous operation completed.
-        IList<string> roles = await UserManager.GetRolesAsync(currentUser);
-        return roles.FirstOrDefault() ?? "";
+<AuthorizeView Roles="Receptionist">
+    @{
+        NavigationManager.NavigateTo("/receptionist", true);
     }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (CurrentUserRole == "")
-            CurrentUserRole = await GetCurrenUserRole();
-        // NavigationManager.NavigateTo("/" + CurrentUserRole.ToLower());
+</AuthorizeView>
+<AuthorizeView Roles="Coach">
+    @{
+        NavigationManager.NavigateTo("/coach", true);
     }
-
-}
+</AuthorizeView>

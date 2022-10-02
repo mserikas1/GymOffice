@@ -76,13 +76,13 @@ public class EmployeeRepository : IEmployeeRepository
             receptionists = receptionists.Where(r => r.Email.Contains(options.Email, StringComparison.InvariantCultureIgnoreCase));
         if (!string.IsNullOrEmpty(options.Phone))
             receptionists = receptionists.Where(r => r.PhoneNumber.Contains(options.Phone, StringComparison.InvariantCultureIgnoreCase));
-        if (options.IsActive == SelectedIItem.Selected)
+        if (options.IsActive == SelectedItem.Selected)
             receptionists = receptionists.Where(r => r.IsActive == true);
-        if (options.IsActive == SelectedIItem.Unselected)
+        if (options.IsActive == SelectedItem.Unselected)
             receptionists = receptionists.Where(r => r.IsActive == false);
-        if (options.IsAtWork == SelectedIItem.Selected)
+        if (options.IsAtWork == SelectedItem.Selected)
             receptionists = receptionists.Where(r => r.IsAtWork == true);
-        if (options.IsAtWork == SelectedIItem.Unselected)
+        if (options.IsAtWork == SelectedItem.Unselected)
             receptionists = receptionists.Where(r => r.IsAtWork == false);
         
         return receptionists.ToList();

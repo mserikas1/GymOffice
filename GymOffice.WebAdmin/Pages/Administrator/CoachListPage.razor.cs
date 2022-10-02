@@ -1,4 +1,6 @@
 ﻿namespace GymOffice.WebAdmin.Pages.Administrator;
+
+[Authorize(Roles = "Admin, Receptionist")]
 public partial class CoachListPage : ComponentBase
 {
     public Coach? Coach { get; set; }
@@ -10,14 +12,25 @@ public partial class CoachListPage : ComponentBase
     [Inject]
     public ICoachDataProvider CoachDataProvider { get; set; } = null!;
     [Inject]
+    public IUpdateCoachCommand UpdateCoachCommand { get; set; } = null!;
+    [Inject]
     public IDialogService DialogService { get; set; } = null!;
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
-
+    public bool CurrentUserIsAdmin { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
-        Coaches = (List<Coach>?)await CoachDataProvider.GetAllCoachesAsync();
+        await GetCoacherListAsync();
+    }
+
+    protected async Task GetCoacherListAsync()
+    {
+        if (CurrentUserIsAdmin)
+            Coaches = (List<Coach>?)await CoachDataProvider.GetAllCoachesAsync();
+        else
+            Coaches = (List<Coach>?)await CoachDataProvider.GetActiveCoachesAsync();
+        // await Task.Delay(100); // for db connection stability
     }
 
     private void HandleResetError()
@@ -39,7 +52,7 @@ public partial class CoachListPage : ComponentBase
 
         if (!result.Cancelled)
         {
-            Coaches = (List<Coach>?)await CoachDataProvider.GetAllCoachesAsync();
+            await GetCoacherListAsync();
             StateHasChanged();
         }
     }
@@ -55,11 +68,20 @@ public partial class CoachListPage : ComponentBase
 
         if (!result.Cancelled)
         {
-            Coaches = (List<Coach>?)await CoachDataProvider.GetAllCoachesAsync();
+            await GetCoacherListAsync();
             StateHasChanged();
         }
     }
 
+    private async Task IsAtWorkChanged(Coach currentCoach)
+    {
+        if (currentCoach != null)
+        {
+            currentCoach.IsAtWork = !currentCoach.IsAtWork;
+            await UpdateCoachCommand.ExecuteAsync(currentCoach);
+            StateHasChanged();
+        }
+    }
     private void GoToPreview_Click(Coach coach)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
@@ -71,6 +93,7 @@ public partial class CoachListPage : ComponentBase
     private async void HandleSearch(CoachSearchOptions options)
     {
         SearchOptions = options;
+        // TODO make a corresponding option in CoachSearchOptions to exclude some fields from search for receptionist
         Coaches = (List<Coach>?)await CoachDataProvider.SearchCoachsAsync(options);
         StateHasChanged();
     }
@@ -78,7 +101,7 @@ public partial class CoachListPage : ComponentBase
     private async Task HandleResetSearch()
     {
         SearchOptions = new();
-        Coaches = (List<Coach>?)await CoachDataProvider.GetAllCoachesAsync();
+        await GetCoacherListAsync();
         StateHasChanged();
     }
 }

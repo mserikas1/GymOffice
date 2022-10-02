@@ -81,17 +81,17 @@ namespace GymOffice.DataAccess.SQL.Repositories
                 coaches = coaches.Where(r => r.Email.Contains(options.Email, StringComparison.InvariantCultureIgnoreCase));
             if (!string.IsNullOrEmpty(options.Phone))
                 coaches = coaches.Where(r => r.PhoneNumber.Contains(options.Phone, StringComparison.InvariantCultureIgnoreCase));
-            if (options.IsActive == SelectedIItem.Selected)
+            if (options.IsActive == SelectedItem.Selected)
                 coaches = coaches.Where(r => r.IsActive == true);
-            if (options.IsActive == SelectedIItem.Unselected)
+            if (options.IsActive == SelectedItem.Unselected)
                 coaches = coaches.Where(r => r.IsActive == false);
-            if (options.IsAtWork == SelectedIItem.Selected)
+            if (options.IsAtWork == SelectedItem.Selected)
                 coaches = coaches.Where(r => r.IsAtWork == true);
-            if (options.IsAtWork == SelectedIItem.Unselected)
+            if (options.IsAtWork == SelectedItem.Unselected)
                 coaches = coaches.Where(r => r.IsAtWork == false);
-            if (options.HasGroupTraining == SelectedIItem.Selected)
+            if (options.HasGroupTraining == SelectedItem.Selected)
                 coaches = coaches.Where(r => r.GroupTrainings.Any());
-            if (options.HasGroupTraining == SelectedIItem.Unselected)
+            if (options.HasGroupTraining == SelectedItem.Unselected)
                 coaches = coaches.Where(r => r.GroupTrainings == null || r.GroupTrainings.Any() == false);
 
             return await Task.FromResult(coaches.ToList());

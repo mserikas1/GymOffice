@@ -63,8 +63,13 @@
                             </MudItem>
                         }
                     </MudGrid>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-3 ms-3" OnClick="EditCoach_Click">Edit Info</MudButton>
-                    <MudButton Variant="Variant.Filled" Color="Color.Default" Class="mt-3 ms-3" OnClick="HandleClose_Click">Cancel</MudButton>
+                    <AuthorizeView Roles="Admin">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-3 ms-3" OnClick="EditCoach_Click">Edit Info</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Default" Class="mt-3 ms-3" OnClick="HandleClose_Click">Cancel</MudButton>
+                    </AuthorizeView>
+                    <AuthorizeView Roles="Receptionist">
+                        <MudButton Variant="Variant.Filled" Color="Color.Default" Class="mt-3 ms-3" OnClick="HandleClose_Click">Close</MudButton>
+                    </AuthorizeView>
                 </MudTabPanel>
 
                 <MudTabPanel Text="Schedule" Disabled="true">

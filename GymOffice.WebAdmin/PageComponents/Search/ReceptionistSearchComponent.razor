@@ -13,19 +13,19 @@
             </div>
             <div class="d-flex flex-row gap-4">
                 <MudItem xs="6" Class="d-inline-flex gap-4">
-                    <MudSelect T="SelectedIItem" Label="Active" Margin="Margin.Dense" Dense="true"
+                    <MudSelect T="SelectedItem" Label="Active" Margin="Margin.Dense" Dense="true"
                                Variant="Variant.Outlined" Class="mt-3"
                                @bind-Value="SearchOptions.IsActive" For="@(() => SearchOptions.IsActive)">
-                        <MudSelectItem Value="@(SelectedIItem.None)">All</MudSelectItem>
-                        <MudSelectItem Value="@(SelectedIItem.Selected)">Yes</MudSelectItem>
-                        <MudSelectItem Value="@(SelectedIItem.Unselected)">No</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.None)">All</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.Selected)">Yes</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.Unselected)">No</MudSelectItem>
                     </MudSelect>
-                    <MudSelect T="SelectedIItem" Label="At Work" Margin="Margin.Dense" Dense="true"
+                    <MudSelect T="SelectedItem" Label="At Work" Margin="Margin.Dense" Dense="true"
                                Variant="Variant.Outlined" Class="mt-3"
                                @bind-Value="SearchOptions.IsAtWork" For="@(() => SearchOptions.IsAtWork)">
-                        <MudSelectItem Value="@(SelectedIItem.None)">All</MudSelectItem>
-                        <MudSelectItem Value="@(SelectedIItem.Selected)">At work</MudSelectItem>
-                        <MudSelectItem Value="@(SelectedIItem.Unselected)">Not at work</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.None)">All</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.Selected)">At work</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.Unselected)">Not at work</MudSelectItem>
                     </MudSelect>
                 </MudItem>
             </div>
