@@ -1,22 +1,30 @@
 ﻿<AuthorizeView>
     <Authorized>
         <MudNavMenu>
-            @if (CurrentUserRole == "Admin")
+            @if (CurrentUserRole == "Admin" || CurrentUserRole == "Receptionist")
             {
-                <AdminNavMenu />
+                <MudNavLink Href="@("/"+CurrentUserRole.ToLower())" Match="NavLinkMatch.All">Home</MudNavLink>
+                <MudDivider DividerType="DividerType.Middle" Class="my-2" />
+                @if (CurrentUserRole == "Admin")
+                {
+                    <MudNavLink Href="/receptionists" Match="NavLinkMatch.Prefix">Receptionists</MudNavLink>
+                }
+                <MudNavLink Href="/coaches" Match="NavLinkMatch.Prefix">Coaches</MudNavLink>
+                <MudNavLink Href="/visitors" Match="NavLinkMatch.Prefix">Visitors</MudNavLink>
+                @if (CurrentUserRole == "Admin")
+                {
+                    <MudNavLink Href="/abonnement_types" Match="NavLinkMatch.Prefix">Abonnement Types</MudNavLink>
+                }
+                <MudNavLink Href="/abonnements" Match="NavLinkMatch.Prefix">Abonnements</MudNavLink>
             }
-            @if (CurrentUserRole == "Coach")
+            else @* // for Coaches, Visitors etc *@
             {
-                <CoachNavMenu />
-            }
-            @if (CurrentUserRole == "Receptionist")
-            {
-                <ReceptionistNavMenu />
+                @* Show no menu *@
             }
         </MudNavMenu>
     </Authorized>
     <NotAuthorized>
-        @*Show no menu*@
+        @* Show no menu *@
     </NotAuthorized>
 </AuthorizeView>
 
@@ -26,7 +34,7 @@
     [CascadingParameter]
     private Task<AuthenticationState>? authenticationStateTask { get; set; }
 
-    string CurrentUserRole { get; set; } = string.Empty;
+    protected string CurrentUserRole { get; set; } = string.Empty;
 
     protected async Task<string> GetCurrenUserRole()
     {
