@@ -81,6 +81,7 @@ public partial class CreateEditCoachDialog : ComponentBase
             CoachModel.CreatedBy = admin;
             CoachModel.ModifiedBy = admin;
         }
+        CoachModel.Id = Guid.NewGuid();
         CoachModel.IsActive = true;
         CoachModel.CreatedAt = DateTime.Now;
     }

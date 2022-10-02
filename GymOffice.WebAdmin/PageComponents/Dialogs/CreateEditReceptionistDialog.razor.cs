@@ -75,6 +75,7 @@ public partial class CreateEditReceptionistDialog : ComponentBase
             ReceptionistModel.CreatedBy = admin;
             ReceptionistModel.ModifiedBy = admin;
         }
+        ReceptionistModel.Id = Guid.NewGuid();
         ReceptionistModel.IsActive = true;
         ReceptionistModel.CreatedAt = DateTime.Now;
     }
