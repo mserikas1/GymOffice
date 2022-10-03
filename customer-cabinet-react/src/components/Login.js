@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { Link } from "react-router-dom";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import RegistrationField from "./RegistrationField";
 import {
   faUser,
   faLock,
@@ -13,6 +14,8 @@ import {
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const pwdRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,24}$/;
 export default function Login() {
   library.add(faUser, faLock, faEyeSlash, faR);
   const emailRef = useRef();
@@ -24,6 +27,8 @@ export default function Login() {
 
   const [pwd, setPwd] = useState("");
   const [pwdType, setPwdType] = useState("password");
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
@@ -40,9 +45,16 @@ export default function Login() {
   }, [email]);
 
   useEffect(() => {
+    const result = pwdRegex.test(pwd);
+    console.log(result);
+    setValidPwd(result);
+  }, [pwd]);
+
+  useEffect(() => {
     setErrMsg("");
   }, [email]);
-  const showPassword = () => {
+  const showPassword = (e) => {
+    e.preventDefault();
     if (pwdType === "password") {
       setPwdType("text");
     } else {
@@ -100,21 +112,36 @@ export default function Login() {
                       value={pwd}
                       placeholder="Enter your Password"
                       onChange={(e) => setPwd(e.target.value)}
+                      onFocus={() => setPwdFocus(true)}
+                      onBlur={() => setPwdFocus(false)}
                       required
                     />
-                    <button
-                      className="btn bg-white text-muted "
-                      onClick={showPassword}
-                    >
+                    <span className="pe-2" onClick={(e) => showPassword(e)}>
                       {pwdType === "password" ? (
                         <FontAwesomeIcon icon="eye-slash" />
                       ) : (
                         <FontAwesomeIcon icon={faEye} />
                       )}
-                    </button>
+                    </span>
                   </div>
                 </div>
-                <div className="d-block btn btn-primary btn-block mt-3">
+                <p
+                  className={
+                    pwdFocus && pwd && !validPwd ? "instructions" : "hide"
+                  }
+                >
+                  <FontAwesomeIcon className="px-2" icon={faInfoCircle} />
+                  {
+                    "Password has to have at least one capital letter, small letter, number and special character.\nThe length from 8 to 24 characters."
+                  }
+                </p>
+                <div
+                  className={
+                    validPwd && validEmail
+                      ? "d-block btn btn-primary btn-block mt-3"
+                      : "d-block btn btn-primary btn-block mt-3 disabled"
+                  }
+                >
                   Login
                 </div>
                 <div className="text-center pt-4 text-muted">

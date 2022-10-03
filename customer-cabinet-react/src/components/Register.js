@@ -62,6 +62,8 @@ export default function Register() {
     validFirstName,
     validLastName,
     validPhoneNumber,
+    validPwd,
+    validMatch,
   ];
   const setsField = [setEmail, setFirstName, setLastName, setPhoneNumber];
   const setsFieldFocus = [
@@ -82,6 +84,12 @@ export default function Register() {
     "Last name has to start from capital or small letter",
     "Phone number has to have format +380XXXXXXXXX",
   ];
+
+  const checkValid = () => {
+    let totalValid = false;
+    validsField.forEach((value) => (totalValid = value));
+    return totalValid;
+  };
 
   useEffect(() => {
     setValidEmail(emailRegex.test(email));
@@ -148,12 +156,12 @@ export default function Register() {
                   validField={validPwd}
                   setField={setPwd}
                   setFieldFocus={setPwdFocus}
-                  fieldFocus={setPwdFocus}
+                  fieldFocus={pwdFocus}
                   instruction={
-                    "Password has to have at least one capital letter, small letter, number and special character.\nThe length from 8 to 24 characters. "
+                    "Password has to have at least one capital letter, small letter, number and special character.\nThe length from 8 to 24 characters."
                   }
                 >
-                  <span onClick={showPassword}>
+                  <span onClick={(e) => showPassword(e)}>
                     {pwdType === "password" ? (
                       <FontAwesomeIcon className="fs-6" icon="eye-slash" />
                     ) : (
@@ -172,7 +180,13 @@ export default function Register() {
                   fieldFocus={matchFocus}
                   instruction={"Passwords are different"}
                 />
-                <div className="d-block btn btn-primary btn-block mt-3">
+                <div
+                  className={
+                    checkValid()
+                      ? "d-block btn btn-primary btn-block mt-3"
+                      : "d-block btn btn-primary btn-block mt-3 disabled"
+                  }
+                >
                   Register
                 </div>
                 <div className="text-center pt-4 text-muted">
