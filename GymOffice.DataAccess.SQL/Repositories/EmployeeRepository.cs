@@ -49,7 +49,7 @@ public class EmployeeRepository : IEmployeeRepository
     }
     public async Task<Employee?> GetEmployeeByIdAsync(Guid id)
     {
-        return await _dbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+        return await _dbContext.Employees.SingleOrDefaultAsync(e => e.Id == id);
     }
 
     public async Task<ICollection<Receptionist>?> GetReceptionistsAsync()

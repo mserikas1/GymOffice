@@ -15,6 +15,8 @@ public partial class CreateVisitorDialog : ComponentBase
     public IEmployeeDataProvider EmployeeDataProvider { get; set; } = null!;
     [Inject]
     public IAddVisitorCardCommand AddVisitorCardCommand { get; set; } = null!;
+    [Inject]
+    public IIdentityRepository IdentityRepository { get; set; } = null!;
 
     protected override void OnInitialized()
     {

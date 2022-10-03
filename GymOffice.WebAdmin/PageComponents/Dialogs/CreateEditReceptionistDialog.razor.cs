@@ -1,4 +1,5 @@
-﻿using System.Threading.Channels;
+﻿using GymOffice.Common.DTOs;
+using System.Threading.Channels;
 
 namespace GymOffice.WebAdmin.PageComponents.Dialogs;
 public partial class CreateEditReceptionistDialog : ComponentBase
@@ -37,6 +38,8 @@ public partial class CreateEditReceptionistDialog : ComponentBase
     public IAddReceptionistCommand AddReceptionistCommand { get; set; } = null!;
     [Inject]
     public IEditReceptionistCommand EditReceptionistCommand { get; set; } = null!;
+    [Inject]
+    public IIdentityRepository IdentityRepository { get; set; } = null!;
 
 
     protected override void OnInitialized()
@@ -88,17 +91,20 @@ public partial class CreateEditReceptionistDialog : ComponentBase
             return;
         }
         ReceptionistModel!.ModifiedAt = DateTime.Now;
-        Receptionist receptionist = ReceptionistModel!.ConvertToDto();
+        Receptionist? receptionist = ReceptionistModel!.ConvertToDto();
 
         try
         {
             if (IsEdit)
             {
                 await EditReceptionistCommand.ExecuteAsync(receptionist);
+                receptionist = await EmployeeDataProvider.GetReceptionistByIdAsync(receptionist.Id);
+                await IdentityRepository.UpdateReceptionistAsync(receptionist!);
             }
             else
             {
                 await AddReceptionistCommand.ExecuteAsync(receptionist);
+                await IdentityRepository.AddReceptionistAsync(ReceptionistModel);
             }
         }
         catch (Exception ex)

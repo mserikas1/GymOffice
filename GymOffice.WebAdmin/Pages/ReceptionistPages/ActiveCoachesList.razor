@@ -32,7 +32,7 @@
                     <MudTd DataLabel="Email" HideSmall="true">@context.Email</MudTd>
                     <MudTd DataLabel="Phone Number" HideSmall="true">@context.PhoneNumber</MudTd>
                     <MudTd Class="flex-shrink-0" DataLabel="At Work">
-                        <MudButton Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsAtWorkChanged(context))"
+                        <MudButton Size="Size.Small" Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsAtWorkChanged(context))"
                             StartIcon="@(context.IsAtWork ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" 
                             Color="@(context.IsAtWork ? Color.Success : Color.Error)">
                             <MudText>@(context.IsAtWork ? "YES" : "NO  ")</MudText>
@@ -46,7 +46,7 @@
                     <MudText>No matching records found</MudText>
                 </NoRecordsContent>
                 <PagerContent>
-                        <MudTablePager PageSizeOptions="new int[]{8, 15, 30}" InfoFormat="@infoFormat" HorizontalAlignment="HorizontalAlignment.Center" />
+                        <MudTablePager PageSizeOptions="new int[]{8, 15, 30, 50}" InfoFormat="@infoFormat" HorizontalAlignment="HorizontalAlignment.Center" />
                 </PagerContent>
             </MudTable>
         </MudCardContent>

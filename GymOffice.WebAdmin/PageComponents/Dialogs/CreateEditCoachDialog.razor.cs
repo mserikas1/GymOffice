@@ -1,4 +1,7 @@
-﻿namespace GymOffice.WebAdmin.PageComponents.Dialogs;
+﻿using GymOffice.Business.Common.Exceptions;
+using GymOffice.WebAdmin.ViewModels;
+
+namespace GymOffice.WebAdmin.PageComponents.Dialogs;
 public partial class CreateEditCoachDialog : ComponentBase
 {
     private Admin? admin;
@@ -35,12 +38,15 @@ public partial class CreateEditCoachDialog : ComponentBase
     [Inject]
     public IEmployeeDataProvider EmployeeDataProvider { get; set; } = null!;
     [Inject]
+    public ICoachDataProvider CoachDataProvider { get; set; } = null!;
+    [Inject]
     public IAddCoachCommand AddCoachCommand { get; set; } = null!;
     [Inject]
     public IEditCoachCommand EditCoachCommand { get; set; } = null!;
     [Inject]
-    public IDialogService DialogService { get; set; } = null!;    
-
+    public IDialogService DialogService { get; set; } = null!;
+    [Inject]
+    public IIdentityRepository IdentityRepository { get; set; } = null!;
 
     protected override void OnInitialized()
     {
@@ -103,14 +109,17 @@ public partial class CreateEditCoachDialog : ComponentBase
         try
         {
             CoachModel!.ModifiedAt = DateTime.Now;
-            Coach coach = CoachModel!.ConvertToDto();
+            Coach? coach = CoachModel!.ConvertToDto();
             if (IsEdit)
             {
                 await EditCoachCommand.ExecuteAsync(coach);
+                coach = await CoachDataProvider.GetCoachByIdAsync(coach.Id);
+                await IdentityRepository.UpdateCoachAsync(coach!);
             }
             else
             {
                 await AddCoachCommand.ExecuteAsync(coach);
+                await IdentityRepository.AddCoachAsync(CoachModel);
             }
         }
         catch (Exception ex)

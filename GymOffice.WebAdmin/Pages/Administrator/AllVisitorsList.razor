@@ -37,14 +37,14 @@
                     <MudTd DataLabel="Phone Number" HideSmall="true">@context.PhoneNumber</MudTd>
                     <MudTd DataLabel="Card Number" HideSmall="true">@context.VisitorCard?.BarCode</MudTd>
                     <MudTd DataLabel="Active" HideSmall="true">
-                        <MudButton Variant="Variant.Text" OnClick="@(()=>IsActiveChanged(context))"
+                        <MudButton Size="Size.Small" Variant="Variant.Text" OnClick="@(()=>IsActiveChanged(context))"
                             StartIcon="@(context.IsActive ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" 
                             Color="@(context.IsActive ? Color.Success : Color.Error)">
                             <MudText>@(context.IsActive ? "YES" : "NO  ")</MudText>
                         </MudButton>
                     </MudTd>
                     <MudTd Class="flex-shrink-0" DataLabel="In Gym">
-                        <MudButton Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsInGymChanged(context))"
+                            <MudButton Size="Size.Small" Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsInGymChanged(context))"
                             StartIcon="@(context.IsInGym ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" 
                             Color="@(context.IsInGym ? Color.Success : Color.Error)">
                             <MudText>@(context.IsInGym ? "YES" : "NO  ")</MudText>

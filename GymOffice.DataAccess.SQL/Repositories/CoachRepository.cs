@@ -43,13 +43,13 @@ namespace GymOffice.DataAccess.SQL.Repositories
 
         public async Task<Coach?> GetCoachByIdAsync(Guid id)
         {
-            return await _dbContext.Coaches.FirstOrDefaultAsync(c => c.Id == id);
+            return await _dbContext.Coaches.SingleOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task UpdateCoachAsync(Coach coach)
         {
             Coach? entity = await _dbContext.Coaches
-            .SingleOrDefaultAsync(r => r.Id == coach.Id);
+                .SingleOrDefaultAsync(r => r.Id == coach.Id);
             if (entity != null)
             {
                 entity.PhoneNumber = coach.PhoneNumber;

@@ -14,14 +14,10 @@
         public DbSet<VisitorCard> VisitorCards { get; set; } = null!;
         public DbSet<Receptionist> Receptionists { get; set; } = null!;
         public DbSet<Admin> Admins { get; set; } = null!;
-        public ApplicationDbContext()
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+        }
 
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=GymDb;Trusted_Connection=True;");
-        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Abonnement>(AbonnementConfigure);

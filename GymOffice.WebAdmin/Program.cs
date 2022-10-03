@@ -1,16 +1,21 @@
+using GymOffice.WebAdmin.Data.Contracts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddDbContext<ApplicationDbContext>();
-builder.Services.AddDbContext<WebAdminIdentityDbContext>();
+builder.Services.AddDbContext<ApplicationDbContext>(options => options
+    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<UserIdentityDbContext>(options => options
+    .UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddDefaultTokenProviders()
     .AddDefaultUI()
-    .AddEntityFrameworkStores<WebAdminIdentityDbContext>();
+    .AddEntityFrameworkStores<UserIdentityDbContext>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddRazorPages();
@@ -21,11 +26,11 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio
 builder.Services.Configure<IdentityOptions>(options =>
 {
-    // Password settings 
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequireUppercase = true;
+    // Password settings - this should correspond to the settings for passwords in Coach's and Receptionist's view models
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
     options.Password.RequiredLength = 8;
     options.Password.RequiredUniqueChars = 1;
 
@@ -66,6 +71,7 @@ builder.Services.AddAuthorization(options => {
 builder.Services.AddMudServices();
 
 // DI for Repositories
+builder.Services.AddScoped<IIdentityRepository, IdentityRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<ICoachRepository, CoachRepository>();
 builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
