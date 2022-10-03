@@ -96,5 +96,9 @@ namespace GymOffice.DataAccess.SQL.Repositories
 
             return await Task.FromResult(coaches.ToList());
         }
+        public ICollection<Coach>? GetActiveCoaches()
+        {
+            return _dbContext.Coaches.Where(coach => coach.IsActive == true).ToList();
+        }
     }
 }

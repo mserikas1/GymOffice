@@ -13,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B774267C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymOffice.WebAdmin", "GymOffice.WebAdmin\GymOffice.WebAdmin.csproj", "{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "customer-cabinet-react", "Customer-Cabinet-React\customer-cabinet-react.esproj", "{014EB848-DD43-4241-849D-0D8C625AC517}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymOffice.CustomerApi", "GymOffice.CustomerApi\GymOffice.CustomerApi.csproj", "{DB0C14FB-01A1-4776-879A-8B680362869C}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymOffice.UnitTests", "GymOffice.UnitTests\GymOffice.UnitTests.csproj", "{7053EB4B-5315-442F-B987-3C362B4347C4}"
 EndProject
 Global
@@ -37,10 +41,23 @@ Global
 		{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
+		{014EB848-DD43-4241-849D-0D8C625AC517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{014EB848-DD43-4241-849D-0D8C625AC517}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{014EB848-DD43-4241-849D-0D8C625AC517}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{014EB848-DD43-4241-849D-0D8C625AC517}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{014EB848-DD43-4241-849D-0D8C625AC517}.Release|Any CPU.Build.0 = Release|Any CPU
+		{014EB848-DD43-4241-849D-0D8C625AC517}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DB0C14FB-01A1-4776-879A-8B680362869C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB0C14FB-01A1-4776-879A-8B680362869C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB0C14FB-01A1-4776-879A-8B680362869C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB0C14FB-01A1-4776-879A-8B680362869C}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
 		{7053EB4B-5315-442F-B987-3C362B4347C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7053EB4B-5315-442F-B987-3C362B4347C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7053EB4B-5315-442F-B987-3C362B4347C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7053EB4B-5315-442F-B987-3C362B4347C4}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> develop
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

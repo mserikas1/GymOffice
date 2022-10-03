@@ -14,7 +14,7 @@ public class CoachDataProvider : ICoachDataProvider
     {
         return await _coachRepository.GetCoachesAtWorkAsync();
     }
-    
+
     public async Task<ICollection<Coach>?> GetActiveCoachesNotAtWorkAsync()
     {
         return await _coachRepository.GetActiveCoachesNotAtWorkAsync();
@@ -34,7 +34,7 @@ public class CoachDataProvider : ICoachDataProvider
     }
 
     public async Task<Coach?> GetCoachByIdAsync(Guid id)
-    {        
+    {
         Coach? entity = await _coachRepository.GetCoachByIdAsync(id);
 
         if (entity == null || entity.Id != id)
@@ -56,5 +56,9 @@ public class CoachDataProvider : ICoachDataProvider
             return await _coachRepository.GetAllCoachesAsync();
         }
         return await _coachRepository.SearchCoachesAsync(options);
+    }
+    public ICollection<Coach>? GetActiveCoaches()
+    {
+        return _coachRepository.GetActiveCoaches();
     }
 }

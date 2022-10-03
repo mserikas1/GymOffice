@@ -3,4 +3,5 @@ public interface IAbonnementTypeDataProvider
 {
     Task<ICollection<AbonnementType>?> GetAllAbonnementTypesAsync();
     Task<AbonnementType?> GetByIdAsync(Guid id);
+    ICollection<AbonnementType>? GetActiveAbonnementTypes();
 }

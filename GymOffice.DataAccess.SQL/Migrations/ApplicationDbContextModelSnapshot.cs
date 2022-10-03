@@ -17,7 +17,7 @@ namespace GymOffice.DataAccess.SQL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -56,7 +56,8 @@ namespace GymOffice.DataAccess.SQL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("SoldPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<Guid>("TypeId")
                         .HasColumnType("uniqueidentifier");
@@ -147,7 +148,7 @@ namespace GymOffice.DataAccess.SQL.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -171,17 +172,23 @@ namespace GymOffice.DataAccess.SQL.Migrations
 
                     b.Property<string>("PassportNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PhotoUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Email");
+
+                    b.HasAlternateKey("PassportNumber");
+
+                    b.HasAlternateKey("PhoneNumber");
 
                     b.HasIndex("CreatedById");
 
@@ -198,7 +205,7 @@ namespace GymOffice.DataAccess.SQL.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -213,16 +220,22 @@ namespace GymOffice.DataAccess.SQL.Migrations
 
                     b.Property<string>("PassportNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Email");
+
+                    b.HasAlternateKey("PassportNumber");
+
+                    b.HasAlternateKey("PhoneNumber");
 
                     b.ToTable("Employees");
                 });

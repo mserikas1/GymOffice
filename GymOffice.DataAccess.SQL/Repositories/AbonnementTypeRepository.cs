@@ -43,4 +43,8 @@ public class AbonnementTypeRepository : IAbonnementTypeRepository
         _dbContext.Update(entity);
         await _dbContext.SaveChangesAsync();
     }
+    public ICollection<AbonnementType>? GetActiveAbonnementTypes()
+    {
+        return _dbContext.AbonnementTypes.Where(abonnement => abonnement.IsActive == true).ToList();
+    }
 }

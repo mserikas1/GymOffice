@@ -10,4 +10,5 @@ public interface ICoachRepository
     Task AddCoachAsync(Coach coach);
     Task UpdateCoachAsync(Coach coach);
     Task<ICollection<Coach>?> SearchCoachesAsync(CoachSearchOptions options);
+    ICollection<Coach>? GetActiveCoaches();
 }
