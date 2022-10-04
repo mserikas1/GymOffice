@@ -1,12 +1,12 @@
 ﻿<AuthorizeView>
     <Authorized>
-        <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="d-flex flex-row justify-content-end">
-            <MudText Typo="Typo.subtitle1" Class="d-flex flex-row text-light">
-                <a class="nav-link text-light" href="Identity/Account/Logout">Log out</a>
-            </MudText>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="d-flex flex-row justify-content-end">
+            <MudLink Color="Color.Inherit" Href="Identity/Account/Logout?ReturnUrl=%2F">
+                Logout <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Logout" />
+            </MudLink>
         </MudContainer>
     </Authorized>
     <NotAuthorized>
-        <MudLink Color="Color.Default" Href="Identity/Account/Login">Log in</MudLink>
+        <MudLink Color="Color.Inherit" Href="/Identity/Account/Login">Log in</MudLink>
     </NotAuthorized>
 </AuthorizeView>
