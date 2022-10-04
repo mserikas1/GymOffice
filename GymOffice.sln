@@ -41,7 +41,6 @@ Global
 		{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{532C6388-1BC9-4FBA-A6D8-ACE0F6A371FC}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{014EB848-DD43-4241-849D-0D8C625AC517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{014EB848-DD43-4241-849D-0D8C625AC517}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{014EB848-DD43-4241-849D-0D8C625AC517}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -52,12 +51,10 @@ Global
 		{DB0C14FB-01A1-4776-879A-8B680362869C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB0C14FB-01A1-4776-879A-8B680362869C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB0C14FB-01A1-4776-879A-8B680362869C}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
 		{7053EB4B-5315-442F-B987-3C362B4347C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7053EB4B-5315-442F-B987-3C362B4347C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7053EB4B-5315-442F-B987-3C362B4347C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7053EB4B-5315-442F-B987-3C362B4347C4}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> develop
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
