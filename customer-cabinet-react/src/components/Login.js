@@ -2,9 +2,11 @@ import "../css/Login.css";
 import { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { Link } from "react-router-dom";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import useAuth from "../hooks/useAuth";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import RegistrationField from "./RegistrationField";
+import axios from "axios";
 import {
   faUser,
   faLock,
@@ -17,7 +19,15 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const pwdRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,24}$/;
 export default function Login() {
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
+
   library.add(faUser, faLock, faEyeSlash, faR);
+
   const emailRef = useRef();
   const errRef = useRef();
 
@@ -31,22 +41,48 @@ export default function Login() {
   const [pwdFocus, setPwdFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
-
+  const url = "http://localhost:5173/api/Identity/Login";
+  const submitForm = async (e) => {
+    e.preventDefault();
+    const visitor = {
+      email: email,
+      password: pwd,
+    };
+    try {
+      const response = await axios.post(url, JSON.stringify(visitor), {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      console.log(JSON.stringify(response?.data));
+      const accessToken = response?.data?.accessToken;
+      setAuth({ email, accessToken });
+      setEmail("");
+      setPwd("");
+      navigate(from, { replace: true });
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setErrMsg("Unauthorized");
+      } else {
+        setErrMsg("Login Failed");
+      }
+      errRef.current.focus();
+    }
+  };
   useEffect(() => {
     emailRef.current.focus();
   }, []);
 
   useEffect(() => {
     const result = emailRegex.test(email);
-    console.log(result);
-    console.log(email);
     setValidEmail(result);
   }, [email]);
 
   useEffect(() => {
     const result = pwdRegex.test(pwd);
-    console.log(result);
     setValidPwd(result);
   }, [pwd]);
 
@@ -69,7 +105,7 @@ export default function Login() {
           <div className="panel border bg-white">
             <p
               ref={errRef}
-              className={errMsg ? "errmsg" : "offscreen"}
+              className={errMsg ? "errmsg" : "hide"}
               aria-live="assertive"
             >
               {errMsg}
@@ -136,6 +172,7 @@ export default function Login() {
                   }
                 </p>
                 <div
+                  onClick={(e) => submitForm(e)}
                   className={
                     validPwd && validEmail
                       ? "d-block btn btn-primary btn-block mt-3"

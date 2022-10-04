@@ -3,9 +3,10 @@ import "../css/Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { BsFillXCircleFill, BsCheck2 } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import RegistrationField from "./RegistrationField";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import axios from "axios";
 import {
   faUser,
   faLock,
@@ -90,7 +91,45 @@ export default function Register() {
     validsField.forEach((value) => (totalValid = value));
     return totalValid;
   };
-
+  const url = "http://localhost:5173/api/Identity/Register";
+  const submitForm = async (e) => {
+    e.preventDefault();
+    const visitor = {
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+      password: pwd,
+      confirmPassword: matchPwd,
+    };
+    try {
+      const response = await axios.post(url, JSON.stringify(visitor), {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      console.log(JSON.stringify(response?.data));
+      const accessToken = response?.data?.accessToken;
+      //setAuth({ email, accessToken });
+      setFirstName("");
+      setFirstName("");
+      setPhoneNumber("");
+      setMatchPwd("");
+      setEmail("");
+      setPwd("");
+      <Navigate to="/" />;
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setErrMsg("Unauthorized");
+      } else {
+        setErrMsg("Login Failed");
+      }
+      errRef.current.focus();
+    }
+  };
   useEffect(() => {
     setValidEmail(emailRegex.test(email));
     setValidFirstName(firstNameRegex.test(firstName));
@@ -100,10 +139,8 @@ export default function Register() {
 
   useEffect(() => {
     const result = pwdRegex.test(pwd);
-    console.log(result);
     setValidPwd(result);
     const match = pwd === matchPwd && matchPwd.length > 0;
-    console.log(match);
     setValidMatch(match);
   }, [pwd, matchPwd]);
 
@@ -181,6 +218,7 @@ export default function Register() {
                   instruction={"Passwords are different"}
                 />
                 <div
+                  onClick={submitForm}
                   className={
                     checkValid()
                       ? "d-block btn btn-primary btn-block mt-3"

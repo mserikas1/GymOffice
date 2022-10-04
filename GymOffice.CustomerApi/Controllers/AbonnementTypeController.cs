@@ -2,6 +2,7 @@
 using GymOffice.Common.Contracts.DataProviderContracts;
 using GymOffice.Common.DTOs;
 using GymOffice.CustomerApi.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -10,9 +11,9 @@ using Newtonsoft.Json;
 
 namespace GymOffice.CustomerApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/[controller]/[action]")]
     [ApiController]
-    [EnableCors]
     public class AbonnementTypeController : ControllerBase
     {
         private readonly IAbonnementTypeDataProvider _dataProvider;
@@ -20,7 +21,7 @@ namespace GymOffice.CustomerApi.Controllers
         {
             _dataProvider = dataProvider;
         }
-        [HttpGet("[action]")]
+        [HttpGet]
         public IActionResult GetActiveAbonnementTypes()
         {
             ICollection<AbonnementType>? activeAbonTypes = _dataProvider.GetActiveAbonnementTypes();

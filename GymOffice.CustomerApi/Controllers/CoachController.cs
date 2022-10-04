@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymOffice.CustomerApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [EnableCors]
     [ApiController]
     public class CoachController : ControllerBase
@@ -17,7 +17,8 @@ namespace GymOffice.CustomerApi.Controllers
         {
             _coachDataProvider = coachDataProvider;
         }
-        [HttpGet("[action]")]
+        [HttpGet]
         public IActionResult GetActiveCoaches() => Ok(_coachDataProvider.GetActiveCoaches());
+
     }
 }

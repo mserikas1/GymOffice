@@ -3,9 +3,9 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Popover from "react-bootstrap/Popover";
+import useAuth from "../hooks/useAuth";
 export default function NavBar() {
+  const { auth } = useAuth();
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="warning" sticky="top">
@@ -24,10 +24,16 @@ export default function NavBar() {
               </Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link as={Link} to="/Login" href="">
-                <Button variant="secondary" size="lg">
-                  Log In
-                </Button>
+              <Nav.Link className="my-auto" as={Link} to="/Login" href="">
+                {auth != undefined && auth.hasOwnProperty("email") ? (
+                  <p className="my-auto fs-3 fw-semibold text-dark">
+                    {"Hello " + auth.email}
+                  </p>
+                ) : (
+                  <Button variant="secondary" size="lg">
+                    Log in
+                  </Button>
+                )}
               </Nav.Link>
               <Nav.Link as={Link} to="/Register" href="">
                 <Button variant="primary" size="lg">
