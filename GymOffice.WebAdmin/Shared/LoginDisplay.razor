@@ -1,13 +1,9 @@
 ﻿<AuthorizeView>
     <Authorized>
         <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="d-flex flex-row justify-content-end">
-           @* <MudLink Color="Color.Inherit" Href="Identity/Account/Logout?ReturnUrl=%2F">
+           <MudLink Color="Color.Inherit" Href="Identity/Account/Logout?ReturnUrl=%2F">
                 Logout <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Logout" />
-            </MudLink> *@
-            <form class="form-inline" method="post" action="/Identity/Account/Logout?returnUrl=%2F">
-                    <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
-                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8KrWJ2UEog1Ggg9v-wTDVb86tO1UzprVXOydPDoinwVT9HAx15H9uOuU1woC016JyvYc8Js7xZstAItOuOnh3lxLFEfF0LVaOQ7Hib-0np9s4vOow__ik64p4-T_qtI7Q-D-i7_4UpxZV4AeYCUm6difqBmI79vS9GbeO1bLYVNSsCGK_fomkeCpu-wmLZBZWA">
-            </form>
+            </MudLink>
         </MudContainer>
     </Authorized>
     <NotAuthorized>
