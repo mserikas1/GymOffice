@@ -41,8 +41,8 @@ namespace GymOffice.WebAdmin.Data
             IdentityUser user = CreateUser();
             user.Id = coachVM.Id.ToString(); // connect the entities
             user.PhoneNumber = coachVM.PhoneNumber;
-            await AddUserWithRoleAsync(user, coachVM.FirstName + coachVM.LastName, 
-                coachVM.Email, coachVM.Password, "Coach");
+            // UserName = Email: be careful to change it because the format should correspond to options.User.AllowedUserNameCharacters
+            await AddUserWithRoleAsync(user, coachVM.Email, coachVM.Email, coachVM.Password, "Coach");
         }
 
         public async Task UpdateCoachAsync(Coach coach)
@@ -50,11 +50,11 @@ namespace GymOffice.WebAdmin.Data
             IdentityUser? user = await GetUserByIdAsync(coach.Id);
             if (user == null)
                 throw new NotFoundException(nameof(coach), coach.Id); // this can also be because we did not register all coaches in identity DB
-            user.UserName = coach.FirstName + coach.LastName;
             user.PhoneNumber = coach.PhoneNumber;
             user.Email = coach.Email;
+            user.UserName = coach.Email; // be careful to change it because the format should correspond to options.User.AllowedUserNameCharacters
             await _userStore.UpdateAsync(user, CancellationToken.None);
-            _logger.LogInformation($"Account information for {user.UserName} ({user.Email}) was changed.");
+            _logger.LogInformation($"Account information for {user.Email} was changed.");
         }
 
         public async Task AddReceptionistAsync(ReceptionistVM receptionistVM)
@@ -62,8 +62,8 @@ namespace GymOffice.WebAdmin.Data
             IdentityUser user = CreateUser();
             user.Id = receptionistVM.Id.ToString(); // connect the entities
             user.PhoneNumber = receptionistVM.PhoneNumber;
-            await AddUserWithRoleAsync(user, receptionistVM.FirstName + receptionistVM.LastName, 
-                receptionistVM.Email, receptionistVM.Password, "Receptionist");
+            // UserName = Email: be careful to change it because the format should correspond to options.User.AllowedUserNameCharacters
+            await AddUserWithRoleAsync(user, receptionistVM.Email, receptionistVM.Email, receptionistVM.Password, "Receptionist");
         }
 
         public async Task UpdateReceptionistAsync(Receptionist receptionist)
@@ -71,11 +71,11 @@ namespace GymOffice.WebAdmin.Data
             IdentityUser? user = await GetUserByIdAsync(receptionist.Id);
             if (user == null)
                 throw new NotFoundException(nameof(receptionist), receptionist.Id); // this can also be because we did not register all receptionists in identity DB
-            user.UserName = receptionist.FirstName + receptionist.LastName;
             user.PhoneNumber = receptionist.PhoneNumber;
             user.Email = receptionist.Email;
+            user.UserName = receptionist.Email; // be careful to change it because the format should correspond to options.User.AllowedUserNameCharacters
             await _userStore.UpdateAsync(user, CancellationToken.None);
-            _logger.LogInformation($"Account information for {user.UserName} ({user.Email}) was changed.");
+            _logger.LogInformation($"Account information for {user.Email} was changed.");
         }
 
         private IdentityUser CreateUser()
