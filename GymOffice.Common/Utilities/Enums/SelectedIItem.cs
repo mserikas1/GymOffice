@@ -1,5 +1,5 @@
 ﻿namespace GymOffice.Common.Utilities.Enums;
-public enum SelectedIItem
+public enum SelectedItem
 {
     None,
     Selected,

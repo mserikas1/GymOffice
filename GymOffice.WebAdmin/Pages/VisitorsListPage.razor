@@ -1,0 +1,93 @@
+﻿@page "/visitors"
+@attribute [Authorize(Roles = "Receptionist, Admin")]
+
+<AuthorizeView Roles="Admin">
+    @{
+        IsAdminRole = true;
+    }
+</AuthorizeView>
+<AuthorizeView Roles="Receptionist">
+    @{
+        IsAdminRole = false;
+    }
+</AuthorizeView>
+
+@if (Visitors == null && ErrorMessage == null)
+{
+    <MudText Typo="Typo.h6" Class="pa-5">Loading data...</MudText>
+    <DisplaySpinner />
+}
+else if (ErrorMessage != null)
+{
+    <ErrorDisplay ErrorMessage="@ErrorMessage" ResetError="HandleResetError" />
+}
+else
+{
+    <MudText Typo="Typo.h4" Class="m-3">Visitors</MudText>
+
+    @if (IsAdminRole)
+    {
+        <VisitorSearchComponent SearchOptions="SearchOptions"
+                          HandleSearch_Click="HandleSearch"
+                          HandleResetSearch_Click="HandleResetSearch" />
+    }
+    else
+    {
+        <MudTextField T="string" ValueChanged="@(str=>OnVisitorSearch(str))" Placeholder="Search a visitor" Adornment="Adornment.Start"
+              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mb-4"></MudTextField>
+    }
+
+    <MudTable Items="@Visitors" Dense="true" Hover="true">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Visitor, object>(x => x.FirstName!)">First Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Visitor, object>(x => x.LastName!)">Last Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Visitor, object>(x => x.Email!)">Email</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Visitor, object>(x => x.PhoneNumber!)">Phone Number</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Visitor, object>(x => x.VisitorCard?.BarCode!)">Card Number</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Visitor, object>(x => x.IsInGym)">In Gym</MudTableSortLabel></MudTh>
+            @if (IsAdminRole)
+            {
+                <MudTh><MudTableSortLabel SortBy="new Func<Visitor, object>(x => x.IsActive)">Active</MudTableSortLabel></MudTh>
+            }
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+            <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+            <MudTd DataLabel="Email">@context.Email</MudTd>
+            <MudTd DataLabel="Phone Number">@context.PhoneNumber</MudTd>
+            <MudTd DataLabel="Card Number">@context.VisitorCard.BarCode</MudTd>
+            @if (IsAdminRole)
+            {
+                <MudTd DataLabel="In Gym">@(context.IsInGym == true ? "Yes" : "No")</MudTd>
+            }
+            else
+            {
+                <MudTd>
+                    <MudButton Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsInGymChanged(context))"
+                       StartIcon="@(context.IsInGym ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                       Color="@(context.IsInGym ? Color.Success : Color.Error)">
+                        <MudText>@(context.IsInGym ? "YES" : "NO  ")</MudText>
+                        </MudButton>
+                </MudTd>                
+            }
+            @if (IsAdminRole)
+            {
+                <MudTd DataLabel="Active">@(context.IsActive == true ? "Yes" : "No")</MudTd>
+            }            
+            <MudTh>
+                <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
+                           Size="Size.Small" Class="me-3" OnClick="(() => GoToPreview_Click(context))" />
+                @if (IsAdminRole)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary"
+                           Size="Size.Medium" OnClick="(() => EditVisitor_Click(context))" />
+                }
+            </MudTh>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager HorizontalAlignment="HorizontalAlignment.End" />
+        </PagerContent>
+    </MudTable>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-6" OnClick="CreateVisitor_Click">Create New</MudButton>
+}

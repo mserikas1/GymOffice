@@ -1,3 +1,5 @@
+using GymOffice.Business.Commands.EmployeeCommands;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -82,6 +84,7 @@ builder.Services.AddTransient<IAddCoachCommand, AddCoachCommand>();
 builder.Services.AddTransient<IAddAdministratorCommand, AddAdministratorCommand>();
 builder.Services.AddTransient<IAddReceptionistCommand, AddReceptionistCommand>();
 builder.Services.AddTransient<IEditCoachCommand, EditCoachCommand>();
+builder.Services.AddTransient<IEditVisitorCommand, EditVisitorCommand>();
 builder.Services.AddTransient<IEditReceptionistCommand, EditReceptionistCommand>();
 builder.Services.AddTransient<IUpdateVisitorCommand, UpdateVisitorCommand>();
 builder.Services.AddTransient<IUpdateCoachCommand, UpdateCoachCommand>();

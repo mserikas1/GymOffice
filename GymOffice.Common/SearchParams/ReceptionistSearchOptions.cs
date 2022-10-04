@@ -5,8 +5,8 @@ public class ReceptionistSearchOptions
     public string? LastName { get; set; }
     public string? Phone { get; set; }
     public string? Email { get; set; }
-    public SelectedIItem IsActive { get; set; } = SelectedIItem.None;
-    public SelectedIItem IsAtWork { get; set; } = SelectedIItem.None;
+    public SelectedItem IsActive { get; set; } = SelectedItem.None;
+    public SelectedItem IsAtWork { get; set; } = SelectedItem.None;
 
     public bool IsNullOrEmpty()
     {
@@ -14,7 +14,7 @@ public class ReceptionistSearchOptions
                 string.IsNullOrEmpty(LastName) &&
                 string.IsNullOrEmpty(Phone) &&
                 string.IsNullOrEmpty(Email) &&
-                IsActive == SelectedIItem.None &&
-                IsAtWork == SelectedIItem.None);
+                IsActive == SelectedItem.None &&
+                IsAtWork == SelectedItem.None);
     }
 }

@@ -154,4 +154,22 @@ public static class DtoConversions
         visitorCard.Visitor = visitor;
         return visitor;
     }
+
+    public static VisitorVM ConvertToViewModel(this Visitor visitor)
+    {
+        return new VisitorVM
+        {
+            Id = visitor.Id,
+            FirstName = visitor.FirstName!,
+            LastName = visitor.LastName!,
+            Email = visitor.Email ?? "",
+            PhoneNumber = visitor.PhoneNumber ?? "",
+            IsActive = visitor.IsActive,
+            IsInGym = visitor.IsInGym,
+            PhotoUrl = visitor.PhotoUrl,
+            RegistrationDate = visitor.RegistrationDate,
+            VisitorCard = visitor.VisitorCard,
+            VisitorCardId = visitor.VisitorCardId
+        };
+    }
 }

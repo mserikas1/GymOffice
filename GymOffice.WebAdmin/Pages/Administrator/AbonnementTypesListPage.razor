@@ -1,4 +1,11 @@
-﻿@page "/admin/abonnement_types"
+﻿@page "/abonnement_types"
+@attribute [Authorize(Roles = "Admin")]
+<AuthorizeView Roles="Admin">
+    @{
+        CurrentUserIsAdmin = true;
+    }
+</AuthorizeView>
+
 
 @if (AbonnementTypes == null && ErrorMessage == null)
 {

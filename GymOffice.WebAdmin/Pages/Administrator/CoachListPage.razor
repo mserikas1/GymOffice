@@ -1,4 +1,17 @@
-﻿@page "/admin/coaches"
+﻿@page "/coaches"
+@attribute [Authorize(Roles = "Admin, Receptionist")]
+
+<AuthorizeView Roles="Admin">
+    @{
+        CurrentUserIsAdmin = true;
+    }
+</AuthorizeView>
+<AuthorizeView Roles="Receptionist">
+    @{
+        CurrentUserIsAdmin = false;
+    }
+</AuthorizeView>
+
 
 @if (Coaches == null && ErrorMessage == null)
 {
@@ -17,7 +30,7 @@ else
                       HandleSearch_Click="HandleSearch"
                       HandleResetSearch_Click="HandleResetSearch" />
 
-    <MudTable Items="@Coaches" Dense="true" Hover="true">        
+    <MudTable Items="@Coaches" Dense="true" Hover="true">
         <HeaderContent>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Coach, object>(x => x.FirstName)">First Name</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Coach, object>(x => x.LastName)">Last Name</MudTableSortLabel></MudTh>
@@ -35,19 +48,25 @@ else
             <MudTd DataLabel="Email">@context.Email</MudTd>
             <MudTd DataLabel="Phone Number">@context.PhoneNumber</MudTd>
             <MudTd DataLabel="Groups">@(context.GroupTrainings.Any() ? "Yes" : "No")</MudTd>
-            <MudTd DataLabel="Personal">@(context.PersonalTrainings.Any() ? "Yes" : "No")</MudTd>
-            <MudTd DataLabel="Active">@(context.IsActive == true ? "Yes" : "No")</MudTd>
-            <MudTd DataLabel="At Work">@(context.IsAtWork == true ? "Yes" : "No")</MudTd>
-            <MudTh>
-                <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
+                <MudTd DataLabel="Personal">@(context.PersonalTrainings.Any() ? "Yes" : "No")</MudTd>
+                <MudTd DataLabel="Active">@(context.IsActive == true ? "Yes" : "No")</MudTd>
+                <MudTd DataLabel="At Work">@(context.IsAtWork == true ? "Yes" : "No")</MudTd>
+                <MudTd>
+                    <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
                            Size="Size.Medium" Class="me-3" OnClick="(() => GoToPreview_Click(context))" />
-                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary"
+                @if (CurrentUserIsAdmin)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary"
                            Size="Size.Medium" OnClick="(() => EditCoach_Click(context))" />
-            </MudTh>
+                }
+            </MudTd>
         </RowTemplate>
         <PagerContent>
             <MudTablePager HorizontalAlignment="HorizontalAlignment.End" />
         </PagerContent>
     </MudTable>
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-6" OnClick="CreateCoach_Click">Create New</MudButton>
+    @if (CurrentUserIsAdmin)
+    {
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-6" OnClick="CreateCoach_Click">Create New</MudButton>
+    }
 }

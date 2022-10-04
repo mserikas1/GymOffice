@@ -49,7 +49,18 @@ public class VisitorRepository : IVisitorRepository
 
     public async Task UpdateVisitorAsync(Visitor visitor)
     {
-        _dbContext.Visitors.Update(visitor);
+        Visitor? entity = await GetVisitorByIdAsync(visitor.Id);
+        if (object.ReferenceEquals(visitor, entity))
+        {
+            _dbContext.Visitors.Update(visitor);
+        }
+        else
+        {
+            entity!.PhoneNumber = visitor.PhoneNumber;
+            entity.IsActive = visitor.IsActive;
+            entity.VisitorCard = visitor.VisitorCard;
+            _dbContext.Visitors.Update(entity);
+        }
         await _dbContext.SaveChangesAsync();
     }
 
@@ -62,5 +73,34 @@ public class VisitorRepository : IVisitorRepository
     public async Task<VisitorCard?> GetVisitorCardByIdAsync(Guid id)
     {
         return await _dbContext.VisitorCards.FirstOrDefaultAsync(v => v.Id == id);
+    }
+
+    public async Task<ICollection<Visitor>?> SearchCoachesAsync(VisitorSearchOptions options)
+    {
+        var visitors = _dbContext.Visitors
+            .Include(v => v.VisitorCard)
+            .ThenInclude(vc => vc.CreatedBy)
+            .AsEnumerable();
+
+        if (!string.IsNullOrEmpty(options.FirstName))
+            visitors = visitors.Where(r => r.FirstName!.Contains(options.FirstName, StringComparison.InvariantCultureIgnoreCase));
+        if (!string.IsNullOrEmpty(options.LastName))
+            visitors = visitors.Where(r => r.LastName!.Contains(options.LastName, StringComparison.InvariantCultureIgnoreCase));
+        if (!string.IsNullOrEmpty(options.Phone))
+            visitors = visitors.Where(r => r.PhoneNumber!.Contains(options.Phone, StringComparison.InvariantCultureIgnoreCase));
+        if (options.IsActive == SelectedItem.Selected)
+            visitors = visitors.Where(r => r.IsActive == true);
+        if (options.IsActive == SelectedItem.Unselected)
+            visitors = visitors.Where(r => r.IsActive == false);
+        if (options.IsInGym == SelectedItem.Selected)
+            visitors = visitors.Where(r => r.IsInGym == true);
+        if (options.IsInGym == SelectedItem.Unselected)
+            visitors = visitors.Where(r => r.IsInGym == false);
+        if (options.HasGroupTraining == SelectedItem.Selected)
+            visitors = visitors.Where(r => r.GroupTrainings.Any());
+        if (options.HasGroupTraining == SelectedItem.Unselected)
+            visitors = visitors.Where(r => r.GroupTrainings == null || r.GroupTrainings.Any() == false);
+
+        return await Task.FromResult(visitors.ToList());
     }
 }

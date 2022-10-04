@@ -21,9 +21,6 @@ public class VisitorVM
     
     [EmailAddress]
     public string Email { get; set; } = String.Empty;
-
-    public DateTime CreatedAt { get; set; }
-    public DateTime ModifiedAt { get; set; }
     public bool IsActive { get; set; }
     public bool IsInGym { get; set; }
     public string? PhotoUrl { get; set; }

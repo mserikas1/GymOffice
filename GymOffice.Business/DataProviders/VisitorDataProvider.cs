@@ -1,3 +1,5 @@
+using GymOffice.Common.Contracts.RepositoryContracts;
+
 namespace GymOffice.Business.DataProviders;
 
 public class VisitorDataProvider : IVisitorDataProvider
@@ -37,5 +39,18 @@ public class VisitorDataProvider : IVisitorDataProvider
     public async Task<Visitor?> GetVisitorByIdAsync(Guid id)
     {
         return await _visitorRepository.GetVisitorByIdAsync(id);
+    }
+
+    public async Task<ICollection<Visitor>?> SearchVisitorsAsync(VisitorSearchOptions options)
+    {
+        if (options == null)
+        {
+            return null;
+        }
+        if (options.IsNullOrEmpty())
+        {
+            return await _visitorRepository.GetAllVisitorsAsync();
+        }
+        return await _visitorRepository.SearchCoachesAsync(options);
     }
 }
