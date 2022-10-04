@@ -18,7 +18,6 @@ public partial class CoachListPage : ComponentBase
     public IDialogService DialogService { get; set; } = null!;
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
-    public bool CurrentUserIsAdmin { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
