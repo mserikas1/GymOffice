@@ -1,2 +1,0 @@
-C:\Users\Rostyslaw\Desktop\GymOffice\Customer-Cabinet-React\obj\Debug\customer-cabinet-react.esproj.SuggestedBindingRedirects.cache
-C:\Users\Rostyslaw\Desktop\GymOffice\Customer-Cabinet-React\obj\Debug\customer-cabinet-react.esproj.CoreCompileInputs.cache
