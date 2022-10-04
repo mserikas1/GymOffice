@@ -8,6 +8,11 @@ public class AbonnementTypeDataProvider : IAbonnementTypeDataProvider
         _abonnementTypeRepository = abonnementTypeRepository;
     }
 
+    public async Task<ICollection<AbonnementType>?> GetActiveTypesAsync()
+    {
+        return await _abonnementTypeRepository.GetActiveTypesAsync();
+    }
+
     public ICollection<AbonnementType>? GetActiveAbonnementTypes()
     {
         return _abonnementTypeRepository.GetActiveAbonnementTypes();

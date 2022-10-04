@@ -5,6 +5,7 @@ public partial class AbonnementTypesListPage : ComponentBase
     public AbonnementTypeVM? AbonnementTypeVM { get; set; } = new();
     public string? ErrorMessage { get; set; }
     public List<AbonnementType>? AbonnementTypes { get; set; }
+    public bool CurrentUserIsAdmin { get; set; } = false;
 
     [Inject]
     public IAbonnementTypeDataProvider AbonnementTypeDataProvider { get; set; } = null!;    

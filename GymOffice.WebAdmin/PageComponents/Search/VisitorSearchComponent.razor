@@ -7,27 +7,23 @@
                 <MudTextField Label="Last Name" Variant="Variant.Outlined" Margin="Margin.Dense"
                               @bind-Value="SearchOptions.LastName" For="@(() => SearchOptions.LastName)" />
                 <MudTextField Label="Phone" Variant="Variant.Outlined" Margin="Margin.Dense"
-                              @bind-Value="SearchOptions.Phone" For="@(() => SearchOptions.Phone)" />
-                <MudTextField Label="Email" Variant="Variant.Outlined" Margin="Margin.Dense"
-                              @bind-Value="SearchOptions.Email" For="@(() => SearchOptions.Email)" />
+                              @bind-Value="SearchOptions.Phone" For="@(() => SearchOptions.Phone)" />                
             </div>
             <div class="d-flex flex-row gap-4">
                 <MudItem xs="12" Class="d-inline-flex gap-4">
-                    <AuthorizeView Roles="Admin">
-                        <MudSelect T="SelectedItem" Label="Active" Margin="Margin.Dense" Dense="true"
-                                   Variant="Variant.Outlined" Class="mt-3"
-                                   @bind-Value="SearchOptions.IsActive" For="@(() => SearchOptions.IsActive)">
-                            <MudSelectItem Value="@(SelectedItem.None)">All</MudSelectItem>
-                            <MudSelectItem Value="@(SelectedItem.Selected)">Yes</MudSelectItem>
-                            <MudSelectItem Value="@(SelectedItem.Unselected)">No</MudSelectItem>
-                        </MudSelect>
-                    </AuthorizeView>
+                    <MudSelect T="SelectedItem" Label="Active" Margin="Margin.Dense" Dense="true"
+                               Variant="Variant.Outlined" Class="mt-3"
+                               @bind-Value="SearchOptions.IsActive" For="@(() => SearchOptions.IsActive)">
+                        <MudSelectItem Value="@(SelectedItem.None)">All</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.Selected)">Yes</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.Unselected)">No</MudSelectItem>
+                    </MudSelect>
                     <MudSelect T="SelectedItem" Label="At Work" Margin="Margin.Dense" Dense="true"
                                Variant="Variant.Outlined" Class="mt-3"
-                               @bind-Value="SearchOptions.IsAtWork" For="@(() => SearchOptions.IsAtWork)">
+                               @bind-Value="SearchOptions.IsInGym" For="@(() => SearchOptions.IsInGym)">
                         <MudSelectItem Value="@(SelectedItem.None)">All</MudSelectItem>
-                        <MudSelectItem Value="@(SelectedItem.Selected)">At work</MudSelectItem>
-                        <MudSelectItem Value="@(SelectedItem.Unselected)">Not at work</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.Selected)">In Gym</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.Unselected)">Not in Gym</MudSelectItem>
                     </MudSelect>
                     <MudSelect T="SelectedItem" Label="Group Trainings" Margin="Margin.Dense" Dense="true"
                                Variant="Variant.Outlined" Class="mt-3" Disabled
@@ -58,9 +54,9 @@
 
 @code {
     [Parameter]
-    public CoachSearchOptions SearchOptions { get; set; } = null!;
+    public VisitorSearchOptions SearchOptions { get; set; } = null!;
     [Parameter]
-    public EventCallback<CoachSearchOptions> HandleSearch_Click { get; set; }
+    public EventCallback<VisitorSearchOptions> HandleSearch_Click { get; set; }
     [Parameter]
     public EventCallback HandleResetSearch_Click { get; set; }
 }

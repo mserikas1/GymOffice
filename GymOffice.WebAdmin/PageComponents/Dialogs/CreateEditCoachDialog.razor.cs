@@ -110,7 +110,7 @@ public partial class CreateEditCoachDialog : ComponentBase
             }
             else
             {
-                await AddCoachCommand.ExecuteAsync(coach);
+                await AddCoachCommand.ExecuteAsync(coach);                
             }
         }
         catch (Exception ex)

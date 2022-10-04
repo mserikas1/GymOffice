@@ -7,4 +7,5 @@ public interface IVisitorDataProvider
     Task<ICollection<Visitor>?> GetAllVisitorsAsync();
     Task<ICollection<Visitor>?> GetActiveVisitorsAsync();
     Task<Visitor?> GetVisitorByIdAsync(Guid id);
+    Task<ICollection<Visitor>?> SearchVisitorsAsync(VisitorSearchOptions options);
 }

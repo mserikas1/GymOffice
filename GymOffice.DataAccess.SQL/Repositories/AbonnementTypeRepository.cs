@@ -14,6 +14,15 @@ public class AbonnementTypeRepository : IAbonnementTypeRepository
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task<ICollection<AbonnementType>?> GetActiveTypesAsync()
+    {
+        return await _dbContext.AbonnementTypes
+            .Where(t => t.IsActive)
+            .Include(t => t.CreatedBy)
+            .Include(t => t.ModifiedBy)
+            .ToListAsync();
+    }
+
     public async Task<ICollection<AbonnementType>?> GetAllTypesAsync()
     {
         return await _dbContext.AbonnementTypes

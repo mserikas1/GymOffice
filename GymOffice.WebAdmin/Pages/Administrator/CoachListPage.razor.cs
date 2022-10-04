@@ -8,6 +8,7 @@ public partial class CoachListPage : ComponentBase
     public string? ErrorMessage { get; set; }
     public List<Coach>? Coaches { get; set; }
     public CoachSearchOptions SearchOptions { get; set; } = new();
+    public bool CurrentUserIsAdmin { get; set; } = false;
 
     [Inject]
     public ICoachDataProvider CoachDataProvider { get; set; } = null!;

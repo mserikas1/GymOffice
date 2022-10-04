@@ -48,16 +48,16 @@ public partial class AdminHomePage : ComponentBase
 
     private void RedirectToCoachesPage()
     {
-        NavigationManager.NavigateTo("/admin/coaches");
+        NavigationManager.NavigateTo("/coaches");
     }
 
     private void RedirectToReceptionistsPage()
     {
-        NavigationManager.NavigateTo("/admin/receptionists");
+        NavigationManager.NavigateTo("/receptionists");
     }
 
     private void RedirectToVisitorsPage()
     {
-        NavigationManager.NavigateTo("/admin/visitors");
+        NavigationManager.NavigateTo("/visitors");
     }
 }

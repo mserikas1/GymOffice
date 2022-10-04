@@ -1,0 +1,130 @@
+﻿@attribute [Authorize(Roles = "Receptionist, Admin")]
+
+<AuthorizeView Roles="Admin">
+    @{
+        IsAdminRole = true;
+    }
+</AuthorizeView>
+<AuthorizeView Roles="Receptionist">
+    @{
+        IsAdminRole = false;
+    }
+</AuthorizeView>
+
+<MudDialog DefaultFocus="DefaultFocus.Element">
+    <DialogContent>
+        @if (Visitor == null)
+        {
+            <ErrorDisplay ErrorMessage="No data encountered!" ResetError="HandleResetError" />
+        }
+        else
+        {
+            <MudGrid>
+                <MudItem xs="12" sm="@(Visitor!.PhotoUrl == null ? 12 : 7)">
+                    @if (IsAdminRole)
+                    {
+                        <MudCard Class="pa-3 mud-height-full">
+                            <MudText Typo="Typo.h4" Class="pa-4">@Visitor!.FirstName @Visitor!.LastName</MudText>
+                            <MudCardContent>
+                                <MudGrid>
+                                    <MudItem xs="8">
+                                        <MudText Typo="Typo.subtitle1" Class="">Email:</MudText>
+                                        <MudText Typo="Typo.h6" Class="mb-3">@Visitor!.Email</MudText>
+                                        <MudText Typo="Typo.subtitle1" Class="">Phone:</MudText>
+                                        <MudText Typo="Typo.h6" Class="mb-3">@Visitor!.PhoneNumber</MudText>
+                                    </MudItem>
+                                    <MudItem xs="4">
+                                        <MudText Typo="Typo.subtitle1" Class="">Active:</MudText>
+                                        <MudText Typo="Typo.h6" Class="mb-3">@(Visitor!.IsActive == true ? "Yes" : "No")</MudText>
+                                        <MudText Typo="Typo.subtitle1" Class="">In Gym:</MudText>
+                                        <MudText Typo="Typo.h6" Class="mb-3">@(Visitor!.IsInGym == true ? "Yes" : "No")</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                                <MudDivider Class="my-5" Light />
+                                <div class="d-flex flex-column">
+                                    <MudText><b>Visitor Card Number:</b> @Visitor!.VisitorCard!.BarCode</MudText>
+                                    <MudText><b>Created by:</b> @Visitor!.VisitorCard!.CreatedBy.Email</MudText>
+                                    <MudText><b>Registered:</b> @Visitor!.VisitorCard!.RegistrationDate.ToShortDateString()</MudText>
+                                    <MudDivider Class="my-2" />
+                                    <MudText>
+                                        <b>Abonnements:</b> @(Visitor!.VisitorCard!.Abonnements == null ||
+                                            Visitor!.VisitorCard!.Abonnements.Count == 0 ? "None" : "View")
+                                    </MudText>
+                                    <MudText>
+                                        <b>Group trainings:</b> @(Visitor!.GroupTrainings == null ||
+                                            Visitor!.GroupTrainings.Count == 0 ? "None" : "View")
+                                    </MudText>
+                                    <MudText>
+                                        <b>Individual trainings:</b> @(Visitor!.PersonalTrainings == null ||
+                                            Visitor!.PersonalTrainings.Count == 0 ? "None" : "View")
+                                    </MudText>
+                                </div>
+                            </MudCardContent>
+                        </MudCard>
+                    }
+                    else
+                    {
+                        <MudCard Elevation="0" Class="pa-0">
+                            <MudCardContent>
+                                <MudTextField Class="mb-2" Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true"
+                                      Value="@(Visitor!.FirstName + " " + Visitor!.LastName)" />
+                                <MudTextField Class="mb-2" Label="Phone Number" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="Visitor!.PhoneNumber" />
+                                <MudTextField Class="mb-2" Label="Email" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="Visitor!.Email" />
+                                <MudDivider DividerType="DividerType.Middle" />
+                                <MudContainer Class="d-flex flex-row justify-center">
+                                    <MudItem sm="4" Class="mr-2">
+                                        <MudButton Variant="Variant.Text" Size="Size.Medium"
+                                           StartIcon="@(Visitor!.IsActive ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                                           Color="@(Visitor!.IsActive ? Color.Success : Color.Error)">
+                                            @(Visitor!.IsActive ? "Active" : "Not active")
+                                        </MudButton>
+                                    </MudItem>
+                                    <MudItem sm="4">
+                                        <MudButton Variant="Variant.Text" Size="Size.Medium"
+                                           StartIcon="@(Visitor!.IsInGym ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                                           Color="@(Visitor!.IsInGym ? Color.Success : Color.Error)">
+                                            @(Visitor!.IsInGym ? "In gym" : "Not in gym")
+                                        </MudButton>
+                                    </MudItem>
+                                </MudContainer>
+                                <MudDivider Class="my-2" />
+                                <div class="d-flex flex-column">
+                                    <MudText><b>Visitor Card Number:</b> @Visitor!.VisitorCard!.BarCode</MudText>
+                                    <MudText><b>Created by:</b> @Visitor!.VisitorCard!.CreatedBy.Email</MudText>
+                                    <MudText><b>Registered:</b> @Visitor!.VisitorCard!.RegistrationDate.ToShortDateString()</MudText>
+                                    <MudDivider Class="my-2" />
+                                    <MudText>
+                                        <b>Abonnements:</b> @(Visitor!.VisitorCard!.Abonnements == null ||
+                                Visitor!.VisitorCard!.Abonnements.Count == 0 ? "None" : "View")
+                                    </MudText>
+                                    <MudText>
+                                        <b>Group trainings:</b> @(Visitor!.GroupTrainings == null ||
+                                Visitor!.GroupTrainings.Count == 0 ? "None" : "View")
+                                    </MudText>
+                                    <MudText>
+                                        <b>Individual trainings:</b> @(Visitor!.PersonalTrainings == null ||
+                                Visitor!.PersonalTrainings.Count == 0 ? "None" : "View")
+                                    </MudText>
+                                </div>
+                            </MudCardContent>
+                        </MudCard>
+                    }
+
+                </MudItem>
+                @if (Visitor!.PhotoUrl != null)
+                {
+                    <MudItem xs="12" sm="5">
+                        <MudPaper Elevation="0" Class="pa-0 mud-height-full">
+                            <MudImage Fluid="true" Src="@Visitor!.PhotoUrl" Alt="Photo" Elevation="0" Class="rounded-lg" />
+                        </MudPaper>
+                    </MudItem>
+                }
+            </MudGrid>
+            @if (IsAdminRole)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-3 ms-3" OnClick="EditvisitorModel_Click">Edit Info</MudButton>
+            }
+            <MudButton Variant="Variant.Filled" Color="Color.Default" Class="my-3 ms-3" OnClick="HandleClose_Click">Cancel</MudButton>
+        }
+    </DialogContent>
+</MudDialog>
