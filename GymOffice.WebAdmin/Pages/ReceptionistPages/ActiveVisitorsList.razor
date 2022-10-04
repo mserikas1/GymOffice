@@ -141,7 +141,7 @@
                 CloseOnEscapeKey = true
             };
         var parameters = new DialogParameters();
-        parameters.Add("visitorModel", viewedVisitor);
+        parameters.Add("VisitorModel", viewedVisitor);
         var dialog = DialogService.Show<VisitorViewDialog>("Visitor detaills", parameters, options);
         await dialog.Result;
     }

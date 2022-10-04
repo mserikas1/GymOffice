@@ -2,3 +2,5 @@ C:\Users\Rostyslaw\Desktop\GymOffice\Customer-Cabinet-React\obj\Debug\customer-c
 C:\Users\Rostyslaw\Desktop\GymOffice\Customer-Cabinet-React\obj\Debug\customer-cabinet-react.esproj.CoreCompileInputs.cache
 C:\Users\boba7\source\repos\mserikas1\GymOffice\Customer-Cabinet-React\obj\Debug\customer-cabinet-react.esproj.SuggestedBindingRedirects.cache
 C:\Users\boba7\source\repos\mserikas1\GymOffice\Customer-Cabinet-React\obj\Debug\customer-cabinet-react.esproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\GymOffice\Customer-Cabinet-React\obj\Debug\customer-cabinet-react.esproj.SuggestedBindingRedirects.cache
+C:\Users\Admin\source\repos\GymOffice\Customer-Cabinet-React\obj\Debug\customer-cabinet-react.esproj.CoreCompileInputs.cache

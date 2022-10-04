@@ -64,7 +64,7 @@ public partial class VisitorsListPage : ComponentBase
     {
         DialogOptions options = GetDialogOptions();
         var parameters = new DialogParameters();
-        parameters.Add("visitorModel", null);
+        parameters.Add("VisitorModel", null);
         parameters.Add("IsEdit", false);
         var dialog = DialogService.Show<CreateVisitorDialog>("New visitor registration", parameters, options);
         var result = await dialog.Result;
@@ -91,7 +91,7 @@ public partial class VisitorsListPage : ComponentBase
     //{
     //    var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
     //    var parameters = new DialogParameters();
-    //    parameters.Add("visitorModel", null);
+    //    parameters.Add("VisitorModel", null);
     //    var dialog = DialogService.Show<CreateVisitorDialog>("New visitor registration", parameters, options);
     //    await dialog.Result;
     //}
