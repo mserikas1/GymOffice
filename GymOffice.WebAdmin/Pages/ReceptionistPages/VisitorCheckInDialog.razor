@@ -40,7 +40,7 @@
                                     Icon="@(context.IsActive ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"></MudIcon>
                             </MudTd>*@
                             <MudTd Class="flex-shrink-0" DataLabel="In Gym">
-                               <MudButton Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsInGymChanged(context))"
+                               <MudButton Size="Size.Small" Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsInGymChanged(context))"
                                     StartIcon="@(context.IsInGym ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" 
                                     Color="@(context.IsInGym ? Color.Success : Color.Error)">
                                     <MudText>@(context.IsInGym ? "YES" : "NO ")</MudText>
@@ -51,7 +51,7 @@
                             <MudText>No matching records found</MudText>
                         </NoRecordsContent>
                         <PagerContent>
-                            <MudTablePager PageSizeOptions="new int[]{6, 10, 20}" InfoFormat="@infoFormat" HorizontalAlignment="HorizontalAlignment.Center" />
+                            <MudTablePager PageSizeOptions="new int[]{8, 15, 20, 50}" InfoFormat="@infoFormat" HorizontalAlignment="HorizontalAlignment.Center" />
                         </PagerContent>
                     </MudTable>
                 </MudCardContent>

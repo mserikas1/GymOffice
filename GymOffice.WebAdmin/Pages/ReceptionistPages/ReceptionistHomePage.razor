@@ -34,7 +34,7 @@ else
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" Striped="true" RowsPerPage="6"
+                    <MudTable Ref="@visitorsTable" Items="@Visitors" Hover="true" Dense="true" Striped="true" RowsPerPage="8"
                             OnRowClick="VisitorRowClickEvent" T="Visitor">
                         <HeaderContent>
                             <MudTh>First Name</MudTh>
@@ -56,7 +56,7 @@ else
                             <MudText>No matching records found</MudText>
                         </NoRecordsContent>
                         <PagerContent>
-                            <MudTablePager PageSizeOptions="new int[]{6, 10, 20}" InfoFormat="@infoFormat" HorizontalAlignment="HorizontalAlignment.Center" />
+                            <MudTablePager PageSizeOptions="new int[]{8, 15, 30, 50}" InfoFormat="@infoFormat" HorizontalAlignment="HorizontalAlignment.Center" />
                         </PagerContent>
                     </MudTable>
                 </MudCardContent>
@@ -79,7 +79,7 @@ else
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
-                        <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" Striped="true" RowsPerPage="6"
+                        <MudTable Ref="@coachesTable" Items="@Coaches" Hover="true" Dense="true" Striped="true" RowsPerPage="8"
                             OnRowClick="CoachRowClickEvent" T="Coach">
                         <HeaderContent>
                                 <MudTh>First Name</MudTh>
@@ -101,7 +101,7 @@ else
                             <MudText>No matching records found</MudText>
                         </NoRecordsContent>
                         <PagerContent>
-                            <MudTablePager PageSizeOptions="new int[]{6, 10, 20}" InfoFormat="@infoFormat" HorizontalAlignment="HorizontalAlignment.Center" />
+                            <MudTablePager PageSizeOptions="new int[]{8, 15, 30, 50}" InfoFormat="@infoFormat" HorizontalAlignment="HorizontalAlignment.Center" />
                         </PagerContent>
                     </MudTable>
                 </MudCardContent>

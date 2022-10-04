@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using GymOffice.WebAdmin.Data;
+using GymOffice.DataAccess.SQL;
 
 #nullable disable
 
-namespace GymOffice.WebAdmin.Data.Migrations
+namespace GymOffice.DataAccess.SQL.Migrations
 {
-    [DbContext(typeof(WebAdminIdentityDbContext))]
-    partial class WebAdminIdentityDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(UserIdentityDbContext))]
+    partial class UserIdentityDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

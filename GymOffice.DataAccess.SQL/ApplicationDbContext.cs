@@ -14,10 +14,10 @@
         public DbSet<VisitorCard> VisitorCards { get; set; } = null!;
         public DbSet<Receptionist> Receptionists { get; set; } = null!;
         public DbSet<Admin> Admins { get; set; } = null!;
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Abonnement>(AbonnementConfigure);

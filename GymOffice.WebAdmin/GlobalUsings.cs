@@ -15,6 +15,7 @@ global using GymOffice.DataAccess.SQL;
 global using GymOffice.DataAccess.SQL.Repositories;
 global using GymOffice.WebAdmin.Areas.Identity;
 global using GymOffice.WebAdmin.Data;
+global using GymOffice.WebAdmin.Data.Contracts;
 global using GymOffice.WebAdmin.Extensions;
 global using GymOffice.WebAdmin.PageComponents.Dialogs;
 global using GymOffice.WebAdmin.ViewModels;

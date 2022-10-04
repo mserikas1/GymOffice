@@ -17,6 +17,10 @@ using Microsoft.Extensions.Logging;
 
 namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
 {
+    /// <summary>
+    ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+    ///     directly from your code. This API may change or be removed in future releases.
+    /// </summary>
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
@@ -31,58 +35,24 @@ namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
             _roleManager = roleManager;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string ErrorMessage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [EmailAddress]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
@@ -99,22 +69,18 @@ namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             ReturnUrl = returnUrl;
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            // this is called only once where we have RoleManager (for example, in RegisterModel)
+            // this should be called only once to create Roles where we have RoleManager (for example, in RegisterModel)
             // _roleManager.CreateAsync(new IdentityRole("Admin"); // { Name = "Admin", NormalizedName = "ADMIN" });
-            // _roleManager.CreateAsync(new IdentityRole("Customer"); // { Name = "Customer", NormalizedName = "CUSTOMER" });
+            // _roleManager.CreateAsync(new IdentityRole("Visitor"); // { Name = "Visitor", NormalizedName = "VISITOR" });
             // _roleManager.CreateAsync(new IdentityRole("Receptionist"); // { Name = "Receptionist", NormalizedName = "RECEPTIONIST" });
             // _roleManager.CreateAsync(new IdentityRole("Coach"); // { Name = "Coach", NormalizedName = "COACH" });
-            
-            returnUrl ??= Url.Content("~/");
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            returnUrl ??= Url.Content("~/");
 
             if (ModelState.IsValid)
             {
@@ -128,10 +94,6 @@ namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
                     string role = (roles != null && roles.Count > 0) ? roles[0] : "Undefined";
                     _logger.LogWarning($"User {Input.Email} (role: {role}) logged in.");
                     return LocalRedirect("/"+role.ToLower());
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {

@@ -44,7 +44,10 @@ public class VisitorRepository : IVisitorRepository
 
     public async Task<Visitor?> GetVisitorByIdAsync(Guid id)
     {
-        return await _dbContext.Visitors.Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).FirstOrDefaultAsync(v => v.Id == id);
+        return await _dbContext.Visitors
+            .Include(v => v.VisitorCard)
+            .ThenInclude(vc => vc.CreatedBy)
+            .SingleOrDefaultAsync(v => v.Id == id);
     }
 
     public async Task UpdateVisitorAsync(Visitor visitor)
@@ -72,7 +75,7 @@ public class VisitorRepository : IVisitorRepository
 
     public async Task<VisitorCard?> GetVisitorCardByIdAsync(Guid id)
     {
-        return await _dbContext.VisitorCards.FirstOrDefaultAsync(v => v.Id == id);
+        return await _dbContext.VisitorCards.SingleOrDefaultAsync(v => v.Id == id);
     }
 
     public async Task<ICollection<Visitor>?> SearchCoachesAsync(VisitorSearchOptions options)

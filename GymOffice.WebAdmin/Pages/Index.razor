@@ -5,16 +5,16 @@
 
 <AuthorizeView Roles="Admin">
     @{
-        NavigationManager.NavigateTo("/admin", true);
+        NavigationManager.NavigateTo("/admin");
     }
 </AuthorizeView>
 <AuthorizeView Roles="Receptionist">
     @{
-        NavigationManager.NavigateTo("/receptionist", true);
+        NavigationManager.NavigateTo("/receptionist");
     }
 </AuthorizeView>
 <AuthorizeView Roles="Coach">
     @{
-        NavigationManager.NavigateTo("/coach", true);
+        NavigationManager.NavigateTo("/coach");
     }
 </AuthorizeView>

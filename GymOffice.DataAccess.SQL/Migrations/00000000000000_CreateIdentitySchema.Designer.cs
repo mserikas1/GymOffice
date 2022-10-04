@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using GymOffice.WebAdmin.Data;
+using GymOffice.DataAccess.SQL;
 
 namespace GymOffice.WebAdmin.Data.Migrations
 {
-    [DbContext(typeof(WebAdminIdentityDbContext))]
+    [DbContext(typeof(UserIdentityDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {

@@ -55,7 +55,7 @@ else
             else
             {
                 <MudTd Class="flex-shrink-0" DataLabel="At Work">
-                    <MudButton Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsAtWorkChanged(context))"
+                    <MudButton Size="Size.Small" Variant="Variant.Text" Disabled="@(!context.IsActive)" OnClick="@(()=>IsAtWorkChanged(context))"
                         StartIcon="@(context.IsAtWork ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" 
                         Color="@(context.IsAtWork ? Color.Success : Color.Error)">
                         <MudText>@(context.IsAtWork ? "YES" : "NO  ")</MudText>

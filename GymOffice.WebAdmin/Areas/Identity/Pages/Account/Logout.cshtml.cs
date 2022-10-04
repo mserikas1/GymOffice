@@ -27,7 +27,7 @@ namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             string userName = User.Identity.Name!;
-            var user = await _signInManager.UserManager.FindByEmailAsync(userName);
+            var user = await _signInManager.UserManager.FindByNameAsync(userName);
             IList<string> roles = await _signInManager.UserManager.GetRolesAsync(user);
             string role = (roles != null && roles.Count > 0) ? roles[0] : "Undefined";
             
