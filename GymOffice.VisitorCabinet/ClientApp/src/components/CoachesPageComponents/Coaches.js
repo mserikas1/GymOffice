@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
 export default function Coaches() {
   const [coaches, setCoaches] = useState([]);
-    const url = "https://localhost:7233/Coach/GetActiveCoaches";
+  const url = 'coach/getactivecoaches';
 
   React.useEffect(() => {
     axios.get(url).then((response) => {

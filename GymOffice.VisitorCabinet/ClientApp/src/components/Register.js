@@ -90,7 +90,7 @@ export default function Register() {
     validsField.forEach((value) => (totalValid = value));
     return totalValid;
   };
-  const url = "https://localhost:7233/Identity/Register";
+    const url = "identity/register";
   const submitForm = async (e) => {
     e.preventDefault();
     const visitor = {

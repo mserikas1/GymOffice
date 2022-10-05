@@ -41,7 +41,7 @@ export default function Login() {
   const [pwdFocus, setPwdFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
-  const url = "https://localhost:7233/Identity/Login";
+  const url = "identity/login";
   const submitForm = async (e) => {
     e.preventDefault();
     const visitor = {
