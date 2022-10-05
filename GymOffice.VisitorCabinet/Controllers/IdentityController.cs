@@ -136,19 +136,19 @@ namespace GymOffice.VisitorCabinet.Controllers
             await _userStore.SetUserNameAsync(newUser, visitor.FirstName + visitor.LastName, CancellationToken.None);
             await _emailStore.SetEmailAsync(newUser, visitor.Email, CancellationToken.None);
             var result = await _userManager.CreateAsync(newUser, visitor.Password);
-            //if (result.Succeeded)
-            //{
-            //    await _addVisitorCommand.ExecuteAsync(new Visitor()
-            //    {
-            //        Email = visitor.Email,
-            //        IsActive = true,
-            //        IsInGym = false,
-            //        RegistrationDate = DateTime.Now,
-            //        FirstName = visitor.FirstName,
-            //        LastName = visitor.LastName,
-            //        PhoneNumber = visitor.PhoneNumber
-            //    });
-            //}
+            if (result.Succeeded)
+            {
+                await _addVisitorCommand.ExecuteAsync(new Visitor()
+                {
+                    Email = visitor.Email,
+                    IsActive = true,
+                    IsInGym = false,
+                    RegistrationDate = DateTime.Now,
+                    FirstName = visitor.FirstName,
+                    LastName = visitor.LastName,
+                    PhoneNumber = visitor.PhoneNumber
+                });
+            }
             return Ok(result);
         }
 

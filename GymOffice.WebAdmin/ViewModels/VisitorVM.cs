@@ -25,6 +25,6 @@ public class VisitorVM
     public bool IsInGym { get; set; }
     public string? PhotoUrl { get; set; }
     public DateTime RegistrationDate { get; set; }
-    public Guid VisitorCardId { get; set; }
-    public VisitorCard VisitorCard { get; set; } = null!; // Barcode, CreatedBy and RegistrationDate fields of the Card are shown but not changed
+    public Guid? VisitorCardId { get; set; }
+    public VisitorCard? VisitorCard { get; set; } // Barcode, CreatedBy and RegistrationDate fields of the Card are shown but not changed
 }
