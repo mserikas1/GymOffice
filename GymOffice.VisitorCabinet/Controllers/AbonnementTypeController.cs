@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 
 namespace GymOffice.VisitorCabinet.Controllers
 {
-    [Authorize]
     [Route("[controller]/[action]")]
     [ApiController]
     public class AbonnementTypeController : ControllerBase

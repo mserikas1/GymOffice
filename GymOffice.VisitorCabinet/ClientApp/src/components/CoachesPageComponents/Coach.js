@@ -7,7 +7,7 @@ export default function Coach(props) {
         <div className="front card h-100">
           <img
             className="card-image-top"
-            src={"img/" + props.coach.photoUrl}
+            src={props.coach.photoUrl}
             alt=""
             style={{ height: "85%" }}
           />

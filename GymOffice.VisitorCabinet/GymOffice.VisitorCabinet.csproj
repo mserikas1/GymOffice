@@ -29,6 +29,122 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\public\Data\Photos\ArnoldShwarzenegger.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\BohdanProtsyshyn.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\Cat.png" />
+    <None Remove="ClientApp\public\Data\Photos\Donkey.png" />
+    <None Remove="ClientApp\public\Data\Photos\ElinaSvitolina.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\FelixBaumgartner.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\Feona.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\MartaKostyuk.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\NickKirgios.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\NovakDjokovich.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\OlexanderDolgopolov.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\OlexanderUsyk.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\pink roses.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\RafaelNadal.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\RogerFederer.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\SandraBullock.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\SerenaWilliams.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\Shrek.png" />
+    <None Remove="ClientApp\public\Data\Photos\SylvesterStallone.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\VitalyKlichko.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\white roses.jpg" />
+    <None Remove="ClientApp\public\Data\Photos\YaroslavaMaguchikh.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ClientApp\public\Data\Photos\ArnoldShwarzenegger.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\BohdanProtsyshyn.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\Cat.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\Donkey.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\ElinaSvitolina.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\FelixBaumgartner.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\Feona.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\MartaKostyuk.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\NickKirgios.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\NovakDjokovich.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\OlexanderDolgopolov.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\OlexanderUsyk.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\pink roses.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\RafaelNadal.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\RogerFederer.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\SandraBullock.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\SerenaWilliams.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\Shrek.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\SylvesterStallone.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\VitalyKlichko.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\white roses.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\public\Data\Photos\YaroslavaMaguchikh.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GymOffice.Common\GymOffice.Common.csproj" />
     <ProjectReference Include="..\GymOffice.DataAccess.SQL\GymOffice.DataAccess.SQL.csproj" />
   </ItemGroup>
