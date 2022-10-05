@@ -58,10 +58,11 @@ jobs:
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
+          path: ~/GymOffice.VisitorCabinet/ClientApp/package.json
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm install      
 
       - name: Build
         run: npm run build
