@@ -1,4 +1,4 @@
-﻿namespace GymOffice.WebAdmin.Pages.Administrator;
+﻿namespace GymOffice.WebAdmin.Pages;
 
 [Authorize(Roles = "Admin, Receptionist")]
 public partial class CoachListPage : ComponentBase
@@ -87,7 +87,7 @@ public partial class CoachListPage : ComponentBase
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
         var parameters = new DialogParameters();
         parameters.Add("Coach", coach);
-        var dialog = DialogService.Show<CoachViewItemDialog>("ViewCoachDialog", parameters, options);        
+        var dialog = DialogService.Show<CoachViewItemDialog>("ViewCoachDialog", parameters, options);
     }
 
     private async void HandleSearch(CoachSearchOptions options)

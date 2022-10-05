@@ -28,7 +28,6 @@ public partial class VisitorsListPage : ComponentBase
             Visitors = await GetVisitorsAsync();
             StateHasChanged();
         }
-        //return base.OnAfterRenderAsync(firstRender);
     }
 
     private async Task<List<Visitor>?> GetVisitorsAsync()

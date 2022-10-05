@@ -1,0 +1,63 @@
+﻿@page "/abonnements"
+@attribute [Authorize(Roles = "Admin, Receptionist")]
+<AuthorizeView Roles="Admin">
+    @{
+        IsAdminRole = true;
+    }
+</AuthorizeView>
+<AuthorizeView Roles="Receptionist">
+    @{
+        IsAdminRole = false;
+    }
+</AuthorizeView>
+
+
+@if (Abonnements == null && ErrorMessage == null)
+{
+    <MudText Typo="Typo.h6" Class="pa-5">Loading data...</MudText>
+    <DisplaySpinner />
+}
+else if (ErrorMessage != null)
+{
+    <ErrorDisplay ErrorMessage="@ErrorMessage" ResetError="HandleResetError" />
+}
+else
+{
+    <MudText Typo="Typo.h4" Class="m-3">Abonnemens</MudText>
+
+    <AbonnementSearchComponent SearchOptions="SearchOptions"
+                           HandleSearch_Click="HandleSearch"
+                           HandleResetSearch_Click="HandleResetSearch" />
+
+    <MudTable Items="@Abonnements" Dense="true" Hover="true">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Abonnement, object>(x => x.IssueTime)">Issue Time</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Abonnement, object>(x => x.VisitorCard.Visitor.FirstName!)">First Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Abonnement, object>(x => x.VisitorCard.Visitor.LastName!)">Last Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Abonnement, object>(x => x.AbonnementType.Name)">Abonnement Type</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Abonnement, object>(x => x.AbonnementType.Duration)">Duration</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Abonnement, object>(x => x.IsActive)">Active</MudTableSortLabel></MudTh>
+            @if (IsAdminRole)
+            {
+                <MudTh><MudTableSortLabel SortBy="new Func<Abonnement, object>(x => x.SoldPrice)">Sold Price</MudTableSortLabel></MudTh>
+            }
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Issue Time">@context.IssueTime.ToShortDateString()</MudTd>
+            <MudTd DataLabel="First Name">@context.VisitorCard.Visitor.FirstName</MudTd>
+            <MudTd DataLabel="Last Name">@context.VisitorCard.Visitor.LastName</MudTd>
+            <MudTd DataLabel="Abonnement Type">@context.AbonnementType.Name</MudTd>
+            <MudTd DataLabel="Duration">
+                @((int)context.AbonnementType.Duration) @((int)context.AbonnementType.Duration == 1 ? "Month" : "Months")
+            </MudTd>
+            <MudTd DataLabel="Active">@(context.IsActive == true ? "Yes" : "No")</MudTd>
+            @if (IsAdminRole)
+            {
+                <MudTd DataLabel="Sold Price">@(context.SoldPrice.ToString("C"))</MudTd>
+            }            
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager HorizontalAlignment="HorizontalAlignment.End" />
+        </PagerContent>
+    </MudTable>
+}
