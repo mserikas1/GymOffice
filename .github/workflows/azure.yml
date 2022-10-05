@@ -47,6 +47,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
+          path: ~/GymOffice.VisitorCabinet/ClientApp
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
