@@ -69,7 +69,7 @@
                                            @bind-Value="AbonnementDuration">
                                             @foreach (AbonnementDuration item in DurationByName[AbonnementName])
                                             {
-                                                <MudSelectItem Value="@item">@item</MudSelectItem>
+                                                <MudSelectItem Value="@item">@((int)item) @((int)item == 1 ? "Month" : "Months")</MudSelectItem>
                                             }
                                         </MudSelect>
                                         <MudText Class="mt-5">@AbonnementPrice.ToString("C")</MudText>

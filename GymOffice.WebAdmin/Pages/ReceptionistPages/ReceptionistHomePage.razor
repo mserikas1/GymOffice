@@ -135,8 +135,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        // await AddAdminCoachesVisitorsToDB(); // call it ONCE to fill the empty DB with coaches and visitors and add one admin (Oleg M)
-
         await GetCoachesAtWorkAsync();
         await GetVisitorsInGymAsync();
         coachesTable = new();
@@ -176,131 +174,6 @@ else
         catch (Exception ex)
         {
             ErrorMessage = ex.Message;
-        }
-    }
-
-    /// <summary>Temporary method, call it ONCE to fill the empty DB with coaches and visitors and add one admin (Oleg M)</summary>
-    private async Task AddAdminCoachesVisitorsToDB()
-    {
-        Random r = new Random();
-        Admin? admin = null;
-
-        try
-        { 
-            admin = EmployeeRepository.GetAdministrators()?.FirstOrDefault();
-        }
-        catch (Exception ex)
-        {
-            ErrorMessage = ex.Message;
-        }
-
-        if (admin == null)
-        {
-            admin = new Admin()
-                {
-                    Id = new Guid(),
-                    FirstName = "Oleg",
-                    LastName = "Melnykov",
-                    Email = "olegm72@gmail.com",
-                    IsActive = true,
-                    PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(100000, 999999).ToString(),
-                    PhoneNumber = "+38067" + r.Next(1000000, 9999999).ToString(),
-                    PhotoUrl = "OlegMelnykov.jpg"
-                };
-            try
-            {
-                await AddAdministratorCommand.ExecuteAsync(admin);
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = ex.Message;
-            }
-        }
-
-        Coaches = new List<Coach>() {
-            new Coach() { FirstName = "Nick", LastName = "Kirgios", Email = "Nick@australia.open.com", IsActive = true,
-                Education = "Lyneham Tennis Centre, Canberra", // max description is 460-480 chars (up to column 500 here in the code)
-                Description = "Australian professional tennis player. Career-high ATP singles ranking of world No. 13 was achieved on 24 October 2016. Has won seven ATP Tour singles titles, including the 2019 and 2022 Washington Open, and reached eleven finals, most notably a major final at the 2022 Wimbledon Championships, and a Masters 1000 final at the 2017 Cincinnati Masters." },
-            new Coach() { FirstName = "Rafael", LastName = "Nadal", Email = "Rafa@tennis.es", IsActive = true,
-                Education = "Royal Club of Tennis, Barcelona",
-                Description = "Spanish professional tennis player, has been ranked world No. 1 for 209 weeks. Has won an all-time record 22 Grand Slam men's singles titles, including a record 14 French Open titles. Has 92 ATP singles titles, including 36 Masters titles, with 63 of these on clay courts. Nadal is one of only two men to complete the Career Golden Slam in singles. His 81 consecutive wins on clay is the longest single-surface win streak in the Open Era." },
-            new Coach() { FirstName = "Roger", LastName = "Federer", Email = "Roger@Federer.com", IsActive = false,
-                Education = "National centre for Swiss Tennis, Biel",
-                Description = "Swiss professional tennis player. Was ranked world No. 1 for 310 weeks, including a record 237 consecutive weeks, and finished as the year-end No. 1 five times. Won 103 ATP singles titles, the second most of all time, including 20 Grand Slam singles titles, a record eight men's singles Wimbledon titles, an Open Era record-tying five men's singles US Open titles, and a record six year-end championships." },
-            new Coach() { FirstName = "Olexander", LastName = "Dolgopolov", Email = "dolgo@ukraine.tennis.ua", IsActive = false,
-                Education = "Trained by his father who trained very successful players",
-                Description = "Ukrainian professional tennis player. Reached the quarterfinals of the 2011 Australian Open and achieved a career-high singles ranking of World No. 13 in January 2012." },
-            new Coach() { FirstName = "Elina", LastName = "Svitolina", Email = "svito@ukr.net", IsActive = true,
-                Education = "Tennis school by Yuriy Sapronov, Kharkiv",
-                Description = "Ukrainian professional tennis player. Reached career-high rankings of world No. 3 in singles and 108 in doubles. Won 16 WTA Tour singles titles including the 2018 WTA Finals. The first Ukrainian woman to reach the top 10 in rankings. Has reached two Grand Slam semifinals in 2019. In 2021, won the Olympic bronze medal in the women's singles tournament at the 2020 Summer Olympics and became the first Olympian to win a medal in tennis for Ukraine." },
-            new Coach() { FirstName = "Marta", LastName = "Kostyuk", Email = "marta@16years.btu.ua", IsActive = false,
-                Education = "Antey Tennis Club, Kyiv",
-                Description = "Ukrainian professional tennis player. Has career-high rankings of 49 in singles, achieved on 14 February 2022, and world No. 45 in doubles, reached on 6 June 2022. Has one title (Slovenia Open 2022) in doubles." },
-            new Coach() { FirstName = "Novak", LastName = "Djokovich", Email = "antivaxer@serbia.net", IsActive = true,
-                Education = "Niki Pilic Academy, Munich",
-                Description = "Serbian professional tennis player, ranked world No. 1 for a record total 373 weeks. Has won 21 Grand Slam men's singles titles. Overall, has won 88 ATP singles titles. Has completed a non-calendar year Grand Slam in singles, becoming the only man in tennis history to be the reigning champion of the four majors at once across three different surfaces. The first man in the Open Era to achieve a double Career Grand Slam in singles." },
-            new Coach() { FirstName = "Yaroslava", LastName = "Mahuchikh", Email = "jumping@heroes.com", IsActive = true,
-                Education = "Light athletics center, Dnipro",
-                Description = "Ukrainian high jumper. Was the 2020 Summer Olympics bronze medalist, 2019 and 2022 World Championships silver medalist, and 2022 World Indoor Championships gold medalist. At the 2022 Brussels Diamond League, jumped 2.05 m, which is her outdoor personal best and a Ukrainian record. In 2021, achieved her indoor personal best of 2.06 m, which is also a national record." },
-            new Coach() { FirstName = "Serena", LastName = "Williams", Email = "serena@loudvoice.us", IsActive = false,
-                Education = "Tennis academy of Rick Macci, West Palm Beach, Florida",
-                Description = "American professional tennis player. Was ranked world No. 1 in singles by the Women's Tennis Association (WTA) for 319 weeks, including a joint-record 186 consecutive weeks, and finished as the year-end No. 1 five times. Won 23 Grand Slam singles titles, the most by any player in the Open Era, and the second-most of all time. Also won 14 major women's doubles titles, all with her sister Venus." },
-            new Coach() { FirstName = "Olexander", LastName = "Usyk", Email = "usyk@boxing.ua", IsActive = true,
-                Education = "State University of Physical Culture, Lviv",
-                Description = "Ukrainian professional boxer. The world champion in two weight classes, having held the unified WBA (Super), IBF, WBO and IBO heavyweight titles since 2021, The Ring magazine heavyweight title since 2022, and the undisputed cruiserweight title from 2018 to 2019, being the first cruiserweight champion to hold all four major world titles. One of only three boxers to have unified all cruiserweight world titles and become a world heavyweight champion." },
-            new Coach() { FirstName = "Vitali", LastName = "Klitschko", Email = "KO@boxing.ua", IsActive = true,
-                Education = "Kyiv University, Physical Science Department, Ph.D.",
-                Description = "Ukrainian professional boxer who also serves as mayor of Kyiv since June 2014. Holds a Doctoral Degree (Ph.D.) from Kyiv University's Physical Science Department. won multiple world heavyweight championships. Held the World Boxing Organization (WBO) title from 1999 to 2000, the Ring magazine title from 2004 to 2005, and the World Boxing Council (WBC) title twice between 2004 and 2013. Defeated 15 opponents in world heavyweight title fights." }
-        };
-
-        foreach (Coach c in Coaches)
-        {
-            c.Id = new Guid(); c.CreatedAt = DateTime.Now; c.ModifiedAt = DateTime.Now;
-            c.CreatedBy = admin; c.ModifiedBy = admin; c.PhotoUrl = "Data/Photos/" + c.FirstName + c.LastName + ".jpg";
-            c.PassportNumber = (char)(r.Next(65, 82)) + (char)(r.Next(65, 82)) + r.Next(100000, 999999).ToString();
-            c.PhoneNumber = "+" + r.Next(100000, 499999).ToString() + r.Next(100000, 999999).ToString(); c.IsAtWork = c.IsActive;
-
-            try
-            {
-                await AddCoachCommand.ExecuteAsync(c);
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = ex.Message;
-            }
-        }
-
-        Visitors = new List<Visitor>() {
-            new Visitor() { FirstName = "Vasiliy", LastName = "Pupkin", Email = "vasiliy@pupkin.net" },
-            new Visitor() { FirstName = "Petro", LastName = "Pumpkin", Email = "petropumpkin@ukr.net" },
-            new Visitor() { FirstName = "Irina", LastName = "Nalivayko", Email = "irina_n@ukr.net" },
-            new Visitor() { FirstName = "Fedor", LastName = "Andreev", Email = "fedorandreev@kpi.ua" },
-            new Visitor() { FirstName = "Tatiana", LastName = "Loseva", Email = "loseva_tatiana@gmail.com" },
-            new Visitor() { FirstName = "Ivan", LastName = "Ivanov", Email = "ivanov@kabmin.gov.ua" },
-            new Visitor() { FirstName = "Bogdan", LastName = "Vernyi", Email = "bog@faith.com" },
-            new Visitor() { FirstName = "Sylvester", LastName = "Stallone", Email = "rambo@rocky.us" }
-        };
-
-        foreach (Visitor v in Visitors)
-        {
-            v.Id = new Guid(); v.RegistrationDate = DateTime.Now; v.IsActive = r.Next(0, 10) < 3 ? false : true;
-            v.PhotoUrl = null; // "Data/Photos/" + v.FirstName + v.LastName + ".jpg";
-            if (v.Email == "rambo@rocky.us") v.PhotoUrl = "Data/Photos/SylvesterStallone.jpg";
-            v.PhoneNumber = $"+3806{r.Next(100000000, 999999999)}"; v.IsInGym = !v.IsActive ? false : (r.Next(0, 10) < 5 ? false : true);
-            VisitorCard vc = new(); 
-            vc.Id = new Guid(); vc.RegistrationDate = v.RegistrationDate; vc.CreatedAt = DateTime.Now;
-            vc.CreatedBy = admin!; vc.IsActive = v.IsActive; vc.BarCode = $"482{r.NextInt64(1000000000, 9999999999)}";
-            vc.Visitor = v;
-            v.VisitorCard = vc;
-            try
-            {
-                await AddVisitorCardCommand.ExecuteAsync(v.VisitorCard);
-                // await AddVisitorCommand.ExecuteAsync(v); // Visitors are added automatically as external keys (commands are not called)
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = ex.Message;
-            }
         }
     }
 
@@ -360,7 +233,7 @@ else
 
     private async void RegisterNewVisitorClick()
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true, NoHeader = true };
         var parameters = new DialogParameters();
         parameters.Add("VisitorModel", null);
         var dialog = DialogService.Show<CreateVisitorDialog>("New visitor registration", parameters, options);

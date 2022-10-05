@@ -1,0 +1,66 @@
+﻿@attribute [Authorize(Roles = "Admin, Receptionist")]
+<AuthorizeView Roles="Admin">
+    @{
+        IsAdminRole = true;
+    }
+</AuthorizeView>
+<AuthorizeView Roles="Receptionist">
+    @{
+        IsAdminRole = false;
+    }
+</AuthorizeView>
+
+<MudPaper Class="mb-5 pa-5 flex-grow-1">
+    <MudGrid Class="justify-s">
+        <MudItem xs="12" sm="9">
+            <div class="d-flex flex-row gap-4">
+                <MudDatePicker Label="Start Issue Date" DisableToolbar="true" Variant="Variant.Outlined" Margin="Margin.Dense"
+                               @bind-Date="SearchOptions.StartDay" />
+                <MudDatePicker Label="End Issue Date" DisableToolbar="true" Variant="Variant.Outlined" Margin="Margin.Dense"
+                               @bind-Date="SearchOptions.EndDay" />
+                @if (IsAdminRole)
+                {
+                    <MudNumericField Label="Price" Min="0.00M" Format="N2" Variant="Variant.Outlined" Margin="Margin.Dense"
+                                 @bind-Value="SearchOptions.StartPrice" />
+                    <MudNumericField Label="Price" Min="0.00M" Format="N2" Variant="Variant.Outlined" Margin="Margin.Dense"
+                                 @bind-Value="SearchOptions.EndPrice" />
+                }
+
+            </div>
+            <div class="d-flex flex-row gap-4">
+                <MudItem xs="12" Class="d-inline-flex gap-4">
+                    <MudSelect T="SelectedItem" Label="Active" Margin="Margin.Dense" Dense="true"
+                               Variant="Variant.Outlined" Class="mt-3"
+                               @bind-Value="SearchOptions.IsActive" For="@(() => SearchOptions.IsActive)">
+                        <MudSelectItem Value="@(SelectedItem.None)">All</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.Selected)">Yes</MudSelectItem>
+                        <MudSelectItem Value="@(SelectedItem.Unselected)">No</MudSelectItem>
+                    </MudSelect>
+                    <MudSelect T="string" Label="Abonement Type" Margin="Margin.Dense" Dense="true"
+                               Variant="Variant.Outlined" Class="mt-3" Placeholder="All"
+                               @bind-Value="SearchOptions.Type" For="@(() => SearchOptions.Type)">
+                        @foreach (var item in AbonnementTypeNames!)
+                        {
+                            <MudSelectItem Value="@item">@item</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudSelect T="string" Label="Duration" Margin="Margin.Dense" Dense="true"
+                               Variant="Variant.Outlined" Class="mt-3" Placeholder="All"
+                               @bind-Value="SearchOptions.Duration" For="@(() => SearchOptions.Duration)">
+                        @foreach (var item in Durations!)
+                        {
+                            <MudSelectItem Value="@item">@ChangeDurationString(item)</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </div>
+        </MudItem>
+        <MudItem sm="1"></MudItem>
+        <MudItem xs="12" sm="2">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth Class="mb-4"
+                       OnClick="(() => HandleSearch_Click.InvokeAsync(SearchOptions))">Search</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Default" FullWidth
+                       OnClick="(() => HandleResetSearch_Click.InvokeAsync())">Reset</MudButton>
+        </MudItem>
+    </MudGrid>
+</MudPaper>
