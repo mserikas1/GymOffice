@@ -54,7 +54,18 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
+        
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+        
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
