@@ -10,5 +10,8 @@ GymOffice.WebAdmin/bin/
 GymOffice.UnitTests/bin/
 GymOffice.UnitTests/obj/
 /customer-cabinet-react/node_modules/
+/customer-cabinet-react/obj/
 /GymOffice.CustomerApi/bin/
 /GymOffice.CustomerApi/obj/
+/GymOffice.VisitorCabinet/bin/
+/GymOffice.VisitorCabinet/obj/
