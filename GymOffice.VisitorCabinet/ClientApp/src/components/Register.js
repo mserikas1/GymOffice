@@ -90,7 +90,7 @@ export default function Register() {
     validsField.forEach((value) => (totalValid = value));
     return totalValid;
   };
-    const url = "identity/register";
+  const url = "identity/register";
   const submitForm = async (e) => {
     e.preventDefault();
     const visitor = {
@@ -232,7 +232,7 @@ export default function Register() {
                 </div>
               </form>
             </div>
-            <div className="mx-3 my-2 py-2 bordert">
+            {/* <div className="mx-3 my-2 py-2 bordert">
               <div className="text-center py-3">
                 <a
                   href="https://wwww.facebook.com"
@@ -265,7 +265,7 @@ export default function Register() {
                   />
                 </a>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

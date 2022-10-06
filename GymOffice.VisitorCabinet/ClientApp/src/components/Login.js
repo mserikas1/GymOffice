@@ -189,40 +189,6 @@ export default function Login() {
                 </div>
               </form>
             </div>
-            <div className="mx-3 my-2 py-2 bordert">
-              <div className="text-center py-3">
-                <a
-                  href="https://wwww.facebook.com"
-                  target="_blank"
-                  className="px-2"
-                >
-                  <img
-                    className="logo"
-                    src="https://img.icons8.com/fluency/144/000000/facebook-new.png"
-                  />
-                </a>
-                <a
-                  href="https://www.google.com"
-                  target="_blank"
-                  className="px-2"
-                >
-                  <img
-                    className="logo"
-                    src="https://img.icons8.com/color/144/1A1A1A/google-logo.png"
-                  />
-                </a>
-                <a
-                  href="https://twitter.com/home"
-                  target="_blank"
-                  className="px-2"
-                >
-                  <img
-                    className="logo"
-                    src="https://img.icons8.com/color/144/000000/twitter-circled--v4.png"
-                  />
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </div>
