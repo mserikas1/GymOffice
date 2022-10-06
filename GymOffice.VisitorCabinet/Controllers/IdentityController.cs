@@ -141,7 +141,7 @@ namespace GymOffice.VisitorCabinet.Controllers
                 await _addVisitorCommand.ExecuteAsync(new Visitor()
                 {
                     Email = visitor.Email,
-                    IsActive = true,
+                    IsActive = false,
                     IsInGym = false,
                     RegistrationDate = DateTime.Now,
                     FirstName = visitor.FirstName,

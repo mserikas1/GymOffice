@@ -2,14 +2,14 @@ import "../../css/Coach.css";
 import { Icon } from "@iconify/react";
 export default function Coach(props) {
   return (
-    <div className="col-xl-5">
+    <div className="col-xl-3 mx-5">
       <div className="coachCard" style={{ height: "450px" }}>
         <div className="front card h-100">
           <img
             className="card-image-top"
             src={props.coach.photoUrl}
             alt=""
-            style={{ height: "85%" }}
+            style={{ height: "80%" }}
           />
           <div className="card-body">
             <h3 className="card-title text-uppercase ps-3 align-middle">
