@@ -23,7 +23,7 @@ export default function Abonnement(props) {
             ))}
           </div>
         </div>
-        <div className="card-body position-relative card-img-overlay d-flex flex-column justify-content-between">
+        <div className="card-body position-relative card-img-overlay">
           <div className="">
             <h1 className="text-center card-title">{props.name}</h1>
             <h4 className="text-primary text-center">
@@ -34,14 +34,17 @@ export default function Abonnement(props) {
               <h1 className="price text-center">{props.minPrice + "$"}</h1>
             </div>
           </div>
-          <div className="description card-text fs-3 fw-semibold">
+          <div
+            className="description card-text fs-3 fw-semibold"
+            style={{ marginTop: "50px" }}
+          >
             <p>{props.description}</p>
           </div>
-          <div className="button d-grid">
+          {/* <div className="button d-grid">
             <a className="btn fs-4 btn-outline-danger btn-block">
               <BsCartPlus /> Buy
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

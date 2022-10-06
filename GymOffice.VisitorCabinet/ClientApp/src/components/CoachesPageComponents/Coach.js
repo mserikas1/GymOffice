@@ -23,10 +23,6 @@ export default function Coach(props) {
             <Icon icon="mdi:school-outline" /> Degree of {props.coach.education}
           </div>
           <div className="coachInfoItem">
-            <Icon icon="fluent:ribbon-star-24-regular" /> Work experience: 5
-            years
-          </div>
-          <div className="coachInfoItem">
             <Icon icon="fluent:person-note-24-regular" />{" "}
             {props.coach.description}
           </div>
