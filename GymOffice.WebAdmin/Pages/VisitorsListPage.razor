@@ -56,7 +56,7 @@ else
             <MudTd DataLabel="Last Name">@context.LastName</MudTd>
             <MudTd DataLabel="Email">@context.Email</MudTd>
             <MudTd DataLabel="Phone Number">@context.PhoneNumber</MudTd>
-            <MudTd DataLabel="Card Number">@context.VisitorCard.BarCode</MudTd>
+            <MudTd DataLabel="Card Number">@context.VisitorCard?.BarCode</MudTd>
             @if (IsAdminRole)
             {
                 <MudTd DataLabel="In Gym">@(context.IsInGym == true ? "Yes" : "No")</MudTd>
