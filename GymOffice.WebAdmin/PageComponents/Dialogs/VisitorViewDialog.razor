@@ -42,12 +42,12 @@
                                 </MudGrid>
                                 <MudDivider Class="my-5" Light />
                                 <div class="d-flex flex-column">
-                                    <MudText><b>Visitor Card Number:</b> @Visitor!.VisitorCard!.BarCode</MudText>
-                                    <MudText><b>Created by:</b> @Visitor!.VisitorCard!.CreatedBy.Email</MudText>
-                                    <MudText><b>Registered:</b> @Visitor!.VisitorCard!.RegistrationDate.ToShortDateString()</MudText>
+                                    <MudText><b>Visitor Card Number:</b> @Visitor!.VisitorCard?.BarCode</MudText>
+                                    <MudText><b>Created by:</b> @Visitor!.VisitorCard?.CreatedBy.Email</MudText>
+                                    <MudText><b>Registered:</b> @Visitor!.VisitorCard?.RegistrationDate.ToShortDateString()</MudText>
                                     <MudDivider Class="my-2" />
                                     <MudText>
-                                        <b>Abonnements:</b> @(Visitor!.VisitorCard!.Abonnements == null ||
+                                        <b>Abonnements:</b> @(Visitor!.VisitorCard?.Abonnements == null ||
                                             Visitor!.VisitorCard!.Abonnements.Count == 0 ? "None" : "View")
                                     </MudText>
                                     <MudText>
@@ -89,12 +89,12 @@
                                 </MudContainer>
                                 <MudDivider Class="my-2" />
                                 <div class="d-flex flex-column">
-                                    <MudText><b>Visitor Card Number:</b> @Visitor!.VisitorCard!.BarCode</MudText>
-                                    <MudText><b>Created by:</b> @Visitor!.VisitorCard!.CreatedBy.Email</MudText>
-                                    <MudText><b>Registered:</b> @Visitor!.VisitorCard!.RegistrationDate.ToShortDateString()</MudText>
+                                    <MudText><b>Visitor Card Number:</b> @Visitor!.VisitorCard?.BarCode</MudText>
+                                    <MudText><b>Created by:</b> @Visitor!.VisitorCard?.CreatedBy.Email</MudText>
+                                    <MudText><b>Registered:</b> @Visitor!.VisitorCard?.RegistrationDate.ToShortDateString()</MudText>
                                     <MudDivider Class="my-2" />
                                     <MudText>
-                                        <b>Abonnements:</b> @(Visitor!.VisitorCard!.Abonnements == null ||
+                                        <b>Abonnements:</b> @(Visitor!.VisitorCard?.Abonnements == null ||
                                 Visitor!.VisitorCard!.Abonnements.Count == 0 ? "None" : "View")
                                     </MudText>
                                     <MudText>
