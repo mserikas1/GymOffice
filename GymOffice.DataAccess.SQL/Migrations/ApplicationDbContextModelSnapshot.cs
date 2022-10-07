@@ -466,13 +466,14 @@ namespace GymOffice.DataAccess.SQL.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("VisitorCardId")
+                    b.Property<Guid?>("VisitorCardId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("VisitorCardId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[VisitorCardId] IS NOT NULL");
 
                     b.ToTable("Visitors");
                 });
@@ -757,9 +758,7 @@ namespace GymOffice.DataAccess.SQL.Migrations
                 {
                     b.HasOne("GymOffice.Common.DTOs.VisitorCard", "VisitorCard")
                         .WithOne("Visitor")
-                        .HasForeignKey("GymOffice.Common.DTOs.Visitor", "VisitorCardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GymOffice.Common.DTOs.Visitor", "VisitorCardId");
 
                     b.Navigation("VisitorCard");
                 });

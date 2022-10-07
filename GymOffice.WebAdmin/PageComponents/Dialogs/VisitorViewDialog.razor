@@ -48,7 +48,7 @@
                                     <MudDivider Class="my-2" />
                                     <MudText>
                                         <b>Abonnements:</b> @(Visitor!.VisitorCard?.Abonnements == null ||
-                                            Visitor!.VisitorCard!.Abonnements.Count == 0 ? "None" : "View")
+                                            Visitor!.VisitorCard?.Abonnements.Count == 0 ? "None" : "View")
                                     </MudText>
                                     <MudText>
                                         <b>Group trainings:</b> @(Visitor!.GroupTrainings == null ||
@@ -95,7 +95,7 @@
                                     <MudDivider Class="my-2" />
                                     <MudText>
                                         <b>Abonnements:</b> @(Visitor!.VisitorCard?.Abonnements == null ||
-                                Visitor!.VisitorCard!.Abonnements.Count == 0 ? "None" : "View")
+                                Visitor!.VisitorCard?.Abonnements.Count == 0 ? "None" : "View")
                                     </MudText>
                                     <MudText>
                                         <b>Group trainings:</b> @(Visitor!.GroupTrainings == null ||

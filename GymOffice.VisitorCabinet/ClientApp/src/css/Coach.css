@@ -1,0 +1,44 @@
+
+.coachCard
+{
+  box-shadow: 1px 1px 50px rgb(214, 214, 214);
+    margin-top: 50px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 2s ease-in-out;
+}
+.coachCard > div 
+{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+}
+.coachCard:hover 
+{
+    transform:rotateY(180deg);
+}
+.coachCard .front 
+{
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+    backface-visibility: hidden;
+}
+.coachCard .back
+{
+    z-index:1;
+    transform:rotateY(180deg);
+    backface-visibility: hidden;
+}
+.coachInfo
+{
+    display: flex;
+    background-color: #ffffff;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 17.5px;
+}
+.coachInfoItem{
+    padding-left: 10px;
+}
