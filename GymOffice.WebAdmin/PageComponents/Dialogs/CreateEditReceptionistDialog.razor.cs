@@ -106,14 +106,15 @@ public partial class CreateEditReceptionistDialog : ComponentBase
                 await AddReceptionistCommand.ExecuteAsync(receptionist);
                 await IdentityRepository.AddReceptionistAsync(ReceptionistModel);
             }
+
+            StateHasChanged();
+            DialogInstance.Close();
         }
         catch (Exception ex)
         {
             errorMessage = ex.Message;
-        }
-
-        StateHasChanged();
-        DialogInstance.Close();
+            StateHasChanged();
+        }                
     }
 
     private bool CheckForAnyChanges()
