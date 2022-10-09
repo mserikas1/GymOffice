@@ -12,7 +12,7 @@ export default function Coaches() {
     });
   }, []);
   return (
-    <div className="row  mb-3">
+    <div className="row mb-3">
       {Array.isArray(coaches) ? (
         coaches.map((coach) => <Coach coach={coach} />)
       ) : (
