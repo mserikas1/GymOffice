@@ -5,7 +5,7 @@
     <AuthorizeView Roles="Receptionist">
         <MudNavLink Href="/receptionist" Match="NavLinkMatch.All">Home</MudNavLink>
     </AuthorizeView>
-    <MudDivider DividerType="DividerType.Middle" Class="my-2" />
+    <MudDivider DividerType="DividerType.Middle" Class="" />
     <AuthorizeView Roles="Admin">
         <MudNavLink Href="/receptionists" Match="NavLinkMatch.Prefix">Receptionists</MudNavLink>
     </AuthorizeView>
@@ -19,4 +19,11 @@
     <AuthorizeView Roles="Admin, Receptionist">
         <MudNavLink Href="/abonnements" Match="NavLinkMatch.Prefix">Abonnements</MudNavLink>
     </AuthorizeView>
+    <AuthorizeView Roles="Admin">
+        <MudDivider DividerType="DividerType.Middle" Class="" />
+        <MudNavGroup Title="Customize Visitor Site" Expanded="true">
+            <MudNavLink Href="/gym_rules" Match="NavLinkMatch.Prefix">Gym Rules</MudNavLink>
+        </MudNavGroup>
+    </AuthorizeView>
+
 </MudNavMenu>

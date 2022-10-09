@@ -26,8 +26,11 @@ export default function NavBar() {
               <Nav.Link as={Link} className="fs-5" to="/Abonnements" href="#">
                 Abonnements
               </Nav.Link>
-              <Nav.Link as={Link} className="fs-5" to="/Coaches" href="">
+              <Nav.Link as={Link} className="fs-5" to="/Coaches" href="#">
                 Coaches
+              </Nav.Link>
+              <Nav.Link as={Link} className="fs-5" to="/Rules" href="#">
+                Rules
               </Nav.Link>
             </Nav>
             {auth != undefined && auth.hasOwnProperty("email") ? (

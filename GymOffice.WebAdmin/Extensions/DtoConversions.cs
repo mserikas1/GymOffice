@@ -172,4 +172,34 @@ public static class DtoConversions
             VisitorCardId = visitor.VisitorCardId
         };
     }
+
+    public static GymRule ConvertToDto(this GymRuleVM ruleVM)
+    {
+        return new GymRule
+        {
+            Id = ruleVM.Id,
+            CreatedAt = ruleVM.CreatedAt,
+            CreatedBy = ruleVM.CreatedBy,
+            Description = ruleVM.Description,
+            IsActive = ruleVM.IsActive,
+            ModifiedAt = ruleVM.ModifiedAt,
+            ModifiedBy = ruleVM.ModifiedBy,
+            Section = ruleVM.Section
+        };
+    }
+
+    public static GymRuleVM ConvertToViewModel(this GymRule rule)
+    {
+        return new GymRuleVM
+        {
+            Id = rule.Id,
+            CreatedBy = rule.CreatedBy,
+            CreatedAt = rule.CreatedAt,
+            Description = rule.Description,
+            IsActive = rule.IsActive,
+            ModifiedAt = rule.ModifiedAt,
+            ModifiedBy = rule.ModifiedBy,
+            Section = rule.Section
+        };
+    }
 }

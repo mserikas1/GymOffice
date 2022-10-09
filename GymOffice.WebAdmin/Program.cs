@@ -79,6 +79,7 @@ builder.Services.AddScoped<ICoachRepository, CoachRepository>();
 builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
 builder.Services.AddScoped<IAbonnementTypeRepository, AbonnementTypeRepository>();
 builder.Services.AddScoped<IAbonnementRepository, AbonnementRepository>();
+builder.Services.AddScoped<IGymRuleRepository, GymRuleRepository>();
 
 // DI for DataProviders
 builder.Services.AddTransient<ICoachDataProvider, CoachDataProvider>();
@@ -86,6 +87,7 @@ builder.Services.AddTransient<IEmployeeDataProvider, EmployeeDataProvider>();
 builder.Services.AddTransient<IVisitorDataProvider, VisitorDataProvider>();
 builder.Services.AddTransient<IAbonnementTypeDataProvider, AbonnementTypeDataProvider>();
 builder.Services.AddTransient<IAbonnementDataProvider, AbonnementDataProvider>();
+builder.Services.AddTransient<IGymRulesDataProvider, GymRulesDataProvider>();
 
 // DI for Commands
 builder.Services.AddTransient<IAddCoachCommand, AddCoachCommand>();
@@ -100,6 +102,10 @@ builder.Services.AddTransient<IAddVisitorCardCommand, AddVisitorCardCommand>();
 builder.Services.AddTransient<IAddVisitorCommand, AddVisitorCommand>();
 builder.Services.AddTransient<IAddAbonnementTypeCommand, AddAbonnementTypeCommand>();
 builder.Services.AddTransient<IEditAbonnementTypeCommand, EditAbonnementTypeCommand>();
+builder.Services.AddTransient<IAddGymRuleCommand, AddGymRuleCommand>();
+builder.Services.AddTransient<IAddRulesSectionCommand, AddRulesSectionCommand>();
+builder.Services.AddTransient<IEditGymRuleCommand, EditGymRuleCommand>();
+builder.Services.AddTransient<IEditRulesSectionCommand, EditRulesSectionCommand>();
 
 var app = builder.Build();
 

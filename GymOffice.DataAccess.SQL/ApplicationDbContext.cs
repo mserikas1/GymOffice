@@ -14,6 +14,9 @@
         public DbSet<VisitorCard> VisitorCards { get; set; } = null!;
         public DbSet<Receptionist> Receptionists { get; set; } = null!;
         public DbSet<Admin> Admins { get; set; } = null!;
+        public DbSet<RuleSection> RuleSections { get; set; } = null!;
+        public DbSet<GymRule> Rules { get; set; } = null!;
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
@@ -32,8 +35,24 @@
             builder.Entity<Coach>(CoachConfigure);
             builder.Entity<TrainingVisit>(TrainingVisitConfigure);
             builder.Entity<VisitorCard>(VisitorCardConfigure);
+            builder.Entity<RuleSection>(RuleSectionConfigure);
+            builder.Entity<GymRule>(GymRuleConfigure);
 
         }
+
+        public void GymRuleConfigure(EntityTypeBuilder<GymRule> builder)
+        {
+            builder.HasOne(r => r.Section).WithMany(s => s.GymRules).OnDelete(DeleteBehavior.NoAction).HasForeignKey("SectionId");
+            builder.HasOne(r => r.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(r => r.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+        }
+
+        public void RuleSectionConfigure(EntityTypeBuilder<RuleSection> builder)
+        {
+            builder.HasOne(s => s.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(s => s.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+        }
+
         public void AbonnementConfigure(EntityTypeBuilder<Abonnement> builder)
         {
             builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
