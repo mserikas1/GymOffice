@@ -4,6 +4,7 @@ using GymOffice.DataAccess.SQL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymOffice.DataAccess.SQL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221008151451_addAdvantage")]
+    partial class addAdvantage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,23 +78,6 @@ namespace GymOffice.DataAccess.SQL.Migrations
                     b.ToTable("Abonnements");
                 });
 
-            modelBuilder.Entity("GymOffice.Common.DTOs.CarouselPhoto", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                b.Property<string>("PhotoUrl")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.HasKey("Id");
-
-                b.ToTable("CarouselPhotos", (string)null);
-            });
-
             modelBuilder.Entity("GymOffice.Common.DTOs.AbonnementType", b =>
                 {
                     b.Property<Guid>("Id")
@@ -151,18 +136,12 @@ namespace GymOffice.DataAccess.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("ModifiedById")
                         .HasColumnType("uniqueidentifier");

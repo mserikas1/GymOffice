@@ -1,6 +1,6 @@
 namespace GymOffice.WebAdmin.Extensions;
 public static class DtoConversions
-{    
+{
     public static Receptionist ConvertToDto(this ReceptionistVM receptionistVM)
     {
         return new Receptionist
@@ -171,5 +171,35 @@ public static class DtoConversions
             VisitorCard = visitor.VisitorCard,
             VisitorCardId = visitor.VisitorCardId
         };
+    }
+    public static Advantage ConvertToDto(this AdvantageVM advantageVM)
+    {
+        Advantage advantage = new()
+        {
+            Id = advantageVM.Id,
+            Title = advantageVM.Title,
+            Description = advantageVM.Description,
+            PhotoUrl = advantageVM.PhotoUrl,
+            CreatedAt = advantageVM.CreatedAt,
+            CreatedBy = advantageVM.CreatedBy,
+            ModifiedAt = advantageVM.ModifiedAt,
+            ModifiedBy = advantageVM.ModifiedBy
+        };
+        return advantage;
+    }
+    public static AdvantageVM ConvertToViewModel(this Advantage advantage)
+    {
+        AdvantageVM advantageVM = new()
+        {
+            Id = advantage.Id,
+            Title = advantage.Title,
+            Description = advantage.Description,
+            PhotoUrl = advantage.PhotoUrl,
+            CreatedBy = advantage.CreatedBy,
+            ModifiedAt = advantage.ModifiedAt,
+            CreatedAt = advantage.CreatedAt,
+            ModifiedBy = advantage.ModifiedBy
+        };
+        return advantageVM;
     }
 }

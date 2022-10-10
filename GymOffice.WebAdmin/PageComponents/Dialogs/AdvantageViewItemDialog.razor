@@ -1,0 +1,46 @@
+﻿<MudDialog DefaultFocus="DefaultFocus.Element">
+    <DialogContent>
+        @if (Advantage == null && ErrorMessage == null)
+        {
+            <DisplaySpinner />
+        }
+        else
+        {
+            <MudGrid>
+                <MudItem xs="12" sm="7">
+                    <MudCard Class="pa-3 mud-height-full">
+                        <MudText Typo="Typo.h3" Class="pa-4">@Advantage!.Title</MudText>
+                        <MudCardContent>
+                            <MudText Typo="Typo.subtitle1" Class="">Description:</MudText>
+                            <MudText Typo="Typo.h5" Class="mb-3">@Advantage!.Description</MudText>
+                            <MudDivider Class="my-5" Light />
+                            <div class="d-flex flex-column">
+                                <MudText><b>Created by:</b> @Advantage!.CreatedBy.Email</MudText>
+                                <MudText><b>Created at:</b> @Advantage!.CreatedAt.ToShortDateString()</MudText>
+                                @if (Advantage!.CreatedAt.Day != Advantage!.ModifiedAt.Day)
+                                {
+                                    <MudText><b>Modified by:</b> @Advantage!.ModifiedBy.Email</MudText>
+                                    <MudText><b>Last Update:</b> @Advantage!.ModifiedAt.ToShortDateString()</MudText>
+                                }
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                @if (Advantage!.PhotoUrl != null)
+                {
+                    <MudItem xs="12" sm="5">
+                        <MudCard Class="pa-3 mud-height-full">
+                            <MudCardContent>
+                                <MudImage Fluid="true" Src="@Advantage!.PhotoUrl" Alt="Photo..." Elevation="25" Class="rounded-lg" />
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                }
+            </MudGrid>
+            <AuthorizeView Roles="Admin">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-3 ms-3" OnClick="EditAdvantage_Click">Edit Info</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Default" Class="mt-3 ms-3" OnClick="HandleClose_Click">Cancel</MudButton>
+            </AuthorizeView>
+        }
+    </DialogContent>
+</MudDialog>

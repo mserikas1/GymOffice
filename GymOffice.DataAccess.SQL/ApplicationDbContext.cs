@@ -17,7 +17,7 @@ namespace GymOffice.DataAccess.SQL
         public DbSet<Receptionist> Receptionists { get; set; } = null!;
         public DbSet<Admin> Admins { get; set; } = null!;
         public DbSet<CarouselPhoto> CarouselPhotos { get; set; } = null!;
-
+        public DbSet<Advantage> Advantages { get; set; } = null!;
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             
@@ -37,6 +37,7 @@ namespace GymOffice.DataAccess.SQL
             builder.Entity<Coach>(CoachConfigure);
             builder.Entity<TrainingVisit>(TrainingVisitConfigure);
             builder.Entity<VisitorCard>(VisitorCardConfigure);
+            builder.Entity<Advantage>(AdvantageConfigure);
             builder.Entity<CarouselPhoto>(CarouselPhotoConfigure);
         }
         public void AbonnementConfigure(EntityTypeBuilder<Abonnement> builder)
@@ -45,6 +46,12 @@ namespace GymOffice.DataAccess.SQL
             builder.HasOne(a => a.AbonnementType).WithMany(a=>a.Abonnements).OnDelete(DeleteBehavior.NoAction).HasForeignKey("TypeId");
             builder.HasMany(a => a.TrainingVisits).WithOne(a => a.Abonnement).OnDelete(DeleteBehavior.NoAction);
             builder.Property(a => a.SoldPrice).HasColumnType("decimal").HasPrecision(10, 2);
+        }
+        public void AdvantageConfigure(EntityTypeBuilder<Advantage> builder)
+        {
+            builder.HasAlternateKey(a => a.Title);
+            builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
         public void VisitorCardConfigure(EntityTypeBuilder<VisitorCard> builder)
         {
