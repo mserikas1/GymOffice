@@ -31,8 +31,8 @@ namespace GymOffice.VisitorCabinet.Controllers
             {
                 for (int i = 0; i < photoUrls.Count; i++)
                 {
-                    photoUrls[i] = "https://localhost:7089/" + photoUrls[i];
-                    //photoUrls[i] = _configuration["PhotoUrl"]+photoUrls[i];
+                    //photoUrls[i] = "https://localhost:7089/" + photoUrls[i];
+                    photoUrls[i] = _configuration["PhotoUrl"]+photoUrls[i];
                 }
                 return Ok(photoUrls);
             }
