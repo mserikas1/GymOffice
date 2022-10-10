@@ -4,7 +4,7 @@ public class RulesSectionVM
     public Guid Id { get; set; }
 
     [Required]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = "Name length must be between 2 and 50 characters")]
+    [StringLength(250, MinimumLength = 2, ErrorMessage = "Name length up to 250 characters")]
     public string Name { get; set; } = null!;
     public bool IsActive { get; set; }
     public DateTime CreatedAt { get; set; }

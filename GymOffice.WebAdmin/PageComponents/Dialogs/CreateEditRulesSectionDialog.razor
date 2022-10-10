@@ -1,0 +1,51 @@
+﻿<MudDialog DefaultFocus="DefaultFocus.Element">
+    <DialogContent>
+        <EditForm Model="@SectionModel" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudCard Class="pa-3">
+                        <MudCardContent>
+                            <MudText Typo="Typo.subtitle2" Class="ms-3">Name:</MudText>
+                            <MudFocusTrap Disabled="IsEdit">
+                                <MudTextField HelperText="@(IsEdit == true ? "" : "Length up to 250 characters")"
+                                              Variant="Variant.Outlined" Lines="3"
+                                              @bind-Value="SectionModel!.Name" For="@(() => SectionModel!.Name)" />
+                            </MudFocusTrap>
+                            @if (IsEdit)
+                            {
+                                <MudText Typo="Typo.subtitle2" Class="ms-3 mt-5">Active:</MudText>
+
+                                <MudSelect T="bool" Margin="Margin.Dense" Dense="true"
+                                       Variant="Variant.Outlined" Class=""
+                                       @bind-Value="SectionModel!.IsActive" For="@(() => SectionModel!.IsActive)">
+                                    <MudSelectItem Value="@(true)">Yes</MudSelectItem>
+                                    <MudSelectItem Value="@(false)">No</MudSelectItem>
+                                </MudSelect>
+                                <MudDivider Class="my-5" />
+                                <div class="d-flex flex-column">
+                                    <MudText><b>Created by:</b> @SectionModel!.CreatedBy.Email</MudText>
+                                    <MudText><b>Created at:</b> @SectionModel!.CreatedAt.ToShortDateString()</MudText>
+                                    @if (SectionModel!.CreatedAt.Day != SectionModel.ModifiedAt.Day ||
+                                   SectionModel.CreatedBy != SectionModel.ModifiedBy)
+                                    {
+                                        <MudText><b>Modified by:</b> @SectionModel.ModifiedBy.Email</MudText>
+                                        <MudText><b>Last Update:</b> @SectionModel.ModifiedAt.ToShortDateString()</MudText>
+                                    }
+                                </div>
+                            }
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+            <MudCardActions Class="d-flex justify-end">
+                <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleCancel">Cancel</MudButton>
+                @if (IsEdit == false)
+                {
+                    <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
+                }
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@(IsEdit == true ? "Update" : "Register")</MudButton>
+                </MudCardActions>
+            </EditForm>
+        </DialogContent>
+    </MudDialog>

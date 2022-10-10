@@ -178,9 +178,9 @@ public static class DtoConversions
         return new GymRule
         {
             Id = ruleVM.Id,
+            Description = ruleVM.Description,
             CreatedAt = ruleVM.CreatedAt,
             CreatedBy = ruleVM.CreatedBy,
-            Description = ruleVM.Description,
             IsActive = ruleVM.IsActive,
             ModifiedAt = ruleVM.ModifiedAt,
             ModifiedBy = ruleVM.ModifiedBy,
@@ -193,13 +193,43 @@ public static class DtoConversions
         return new GymRuleVM
         {
             Id = rule.Id,
+            Description = rule.Description,
             CreatedBy = rule.CreatedBy,
             CreatedAt = rule.CreatedAt,
-            Description = rule.Description,
             IsActive = rule.IsActive,
             ModifiedAt = rule.ModifiedAt,
             ModifiedBy = rule.ModifiedBy,
             Section = rule.Section
+        };
+    }
+
+    public static RuleSection ConvertToDto(this RulesSectionVM sectionVM)
+    {
+        return new RuleSection
+        {
+            Id = sectionVM.Id,
+            Name = sectionVM.Name,
+            CreatedAt = sectionVM.CreatedAt,
+            CreatedBy = sectionVM.CreatedBy,
+            IsActive = sectionVM.IsActive,
+            ModifiedAt = sectionVM.ModifiedAt,
+            ModifiedBy = sectionVM.ModifiedBy,
+            GymRules = sectionVM.GymRules
+        };
+    }
+
+    public static RulesSectionVM ConvertToViewModel(this RuleSection rule)
+    {
+        return new RulesSectionVM
+        {
+            Id = rule.Id,
+            Name = rule.Name,
+            CreatedBy = rule.CreatedBy,
+            CreatedAt = rule.CreatedAt,
+            IsActive = rule.IsActive,
+            ModifiedAt = rule.ModifiedAt,
+            ModifiedBy = rule.ModifiedBy,
+            GymRules = rule.GymRules
         };
     }
 }

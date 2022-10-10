@@ -1,1 +1,55 @@
 ﻿@page "/gym_rules"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (RulesSection == null && Rules == null && ErrorMessage == null)
+{
+    <MudText Typo="Typo.h6" Class="pa-5">Loading data...</MudText>
+    <DisplaySpinner />
+}
+else if (ErrorMessage != null)
+{
+    <ErrorDisplay ErrorMessage="@ErrorMessage" ResetError="HandleResetError" />
+}
+else
+{
+    <MudText Typo="Typo.h4" Class="m-3">Gym Rules</MudText>
+    <div class="my-5">
+        <MudText Typo="Typo.subtitle1"><b>Choose rules section:</b></MudText>
+        <div class="d-flex mb-3">
+            <MudSelect T="string" Margin="Margin.Dense" Dense="true"
+               Variant="Variant.Outlined" Class="mt-3" SelectedValuesChanged="HandleSectionChange"
+                   @bind-Value="SectionName" For="@(() => SectionName)">
+                @foreach (var item in Sections!)
+
+                {
+                        <MudSelectItem Value="@item.Name">@item.Name</MudSelectItem>
+                }
+            </MudSelect>
+            <div class="pt-3">
+                <MudButton Variant="Variant.Filled" Color="Color.Default" Class="ms-5" OnClick="(() => EditRulesSection_Click(RulesSection))">Edit</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ms-2" OnClick="CreateRulesSection_Click">Add</MudButton>
+            </div>            
+        </div>        
+    </div>
+    
+
+    <MudTable Items="@Rules" Dense="true" Hover="true">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<GymRule, object>(x => x.Description)">Description</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GymRule, object>(x => x.IsActive)">Active</MudTableSortLabel></MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Description">@context.Description</MudTd>
+            <MudTd DataLabel="Active">@(context.IsActive == true ? "Yes" : "No")</MudTd>
+                <MudTh>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary"
+                           Size="Size.Medium" OnClick="(() => EditRule_Click(context))" />
+                </MudTh>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager HorizontalAlignment="HorizontalAlignment.End" />
+            </PagerContent>
+        </MudTable>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-6" OnClick="CreateRule_Click">Create New</MudButton>
+}

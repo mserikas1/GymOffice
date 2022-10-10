@@ -71,7 +71,11 @@ public class GymRuleRepository : IGymRuleRepository
         if (entity == null)
             return;
 
-        _dbContext.Rules.Update(rule);
+        entity.IsActive = rule.IsActive;
+        entity.Description = rule.Description;
+        entity.ModifiedBy = rule.ModifiedBy;
+        entity.ModifiedAt = rule.ModifiedAt;
+
         await _dbContext.SaveChangesAsync();
     }
 
@@ -81,7 +85,11 @@ public class GymRuleRepository : IGymRuleRepository
         if (entity == null)
             return;
 
-        _dbContext.RuleSections.Update(section);
+        entity.Name = section.Name;
+        entity.IsActive = section.IsActive;
+        entity.ModifiedAt = section.ModifiedAt;
+        entity.ModifiedBy = section.ModifiedBy;
+
         await _dbContext.SaveChangesAsync();
     }
 }
