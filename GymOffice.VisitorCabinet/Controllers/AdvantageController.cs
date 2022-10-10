@@ -5,6 +5,7 @@ using GymOffice.Common.DTOs;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static System.Net.WebRequestMethods;
 
 namespace GymOffice.VisitorCabinet.Controllers
 {
@@ -28,7 +29,7 @@ namespace GymOffice.VisitorCabinet.Controllers
             {
                 foreach (var advantage in advantages)
                 {
-                    advantage.PhotoUrl = _configuration["PhotoUrl"] + advantage.PhotoUrl;
+                    advantage.PhotoUrl = "https://localhost:7089/" + advantage.PhotoUrl;
                 }
                 return Ok(advantages);
             }

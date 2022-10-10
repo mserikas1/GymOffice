@@ -1,4 +1,10 @@
 export default function Advantage(props) {
+  let imgClass = "img-fluid";
+  if (props.index % 2) {
+    imgClass += " rounded-bottom";
+  } else {
+    imgClass += " rounded-top";
+  }
   const body = (
     <div className="col-sm-9">
       <div className="card-body">
@@ -8,8 +14,8 @@ export default function Advantage(props) {
     </div>
   );
   const img = (
-    <div className="col-sm-3">
-      <img src={"img/" + props.photoUrl} class="img-fluid" alt="..." />
+    <div className={"col-sm-3"}>
+      <img src={props.photoUrl} className={imgClass} alt="..." />
     </div>
   );
   return (
