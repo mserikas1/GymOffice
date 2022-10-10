@@ -1,4 +1,5 @@
-﻿using GymOffice.Common.SearchParams;
+﻿using GymOffice.Common.DTOs;
+using GymOffice.Common.SearchParams;
 using GymOffice.Common.Utilities.Enums;
 
 namespace GymOffice.DataAccess.SQL.Repositories;
@@ -46,7 +47,11 @@ public class AdvantageRepository : IAdvantageRepository
             .SingleOrDefaultAsync(r => r.Id == advantage.Id);
         if (entity != null)
         {
-            _dbContext.Advantages.Update(advantage);
+            entity.Description = advantage.Description;
+            entity.Title = advantage.Title;
+            entity.PhotoUrl = advantage.PhotoUrl;
+            entity.ModifiedBy = advantage.ModifiedBy;
+            entity.ModifiedAt = advantage.ModifiedAt;
             await _dbContext.SaveChangesAsync();
         }
     }
