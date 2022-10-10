@@ -1,4 +1,6 @@
-﻿namespace GymOffice.DataAccess.SQL
+﻿using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
+namespace GymOffice.DataAccess.SQL
 {
     public class ApplicationDbContext:DbContext
     {
@@ -14,8 +16,11 @@
         public DbSet<VisitorCard> VisitorCards { get; set; } = null!;
         public DbSet<Receptionist> Receptionists { get; set; } = null!;
         public DbSet<Admin> Admins { get; set; } = null!;
+        public DbSet<CarouselPhoto> CarouselPhotos { get; set; } = null!;
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+            
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -32,7 +37,7 @@
             builder.Entity<Coach>(CoachConfigure);
             builder.Entity<TrainingVisit>(TrainingVisitConfigure);
             builder.Entity<VisitorCard>(VisitorCardConfigure);
-
+            builder.Entity<CarouselPhoto>(CarouselPhotoConfigure);
         }
         public void AbonnementConfigure(EntityTypeBuilder<Abonnement> builder)
         {
@@ -79,6 +84,10 @@
         public void AdminConfigure(EntityTypeBuilder<Admin> builder)
         {
             builder.ToTable("Admin");
+        }
+        public void CarouselPhotoConfigure(EntityTypeBuilder<CarouselPhoto> builder)
+        {
+            builder.ToTable("CarouselPhotos");
         }
         public void AbonnementTypeConfigure(EntityTypeBuilder<AbonnementType> builder)
         {

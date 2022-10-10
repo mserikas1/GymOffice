@@ -19,9 +19,13 @@ public partial class CoachListPage : ComponentBase
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await GetCoacherListAsync();
+        if (firstRender)
+        {
+            await GetCoacherListAsync();
+            StateHasChanged();
+        }
     }
 
     protected async Task GetCoacherListAsync()

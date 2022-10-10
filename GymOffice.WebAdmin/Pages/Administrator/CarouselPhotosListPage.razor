@@ -1,0 +1,58 @@
+﻿@page "/carousel-photos"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (CarouselPhotoRows == null && ErrorMessage == null)
+{
+    <MudText Typo="Typo.h6" Class="pa-5">Loading images...</MudText>
+    <DisplaySpinner />
+}
+else if (ErrorMessage != null)
+{
+    <ErrorDisplay ErrorMessage="@ErrorMessage" ResetError="HandleResetError" />
+}
+else
+{
+    <MudText Typo="Typo.h4" Class="m-3">Carousel Photos</MudText>
+    @if (CarouselPhotoRows.Count == 0)
+    {
+        <MudText Typo="Typo.h6" Align="Align.Center" Class="pa-5">There are no carousel photos yet in the database</MudText>
+    }
+    else
+    {
+    <MudContainer MaxWidth="MaxWidth.Small">
+      <MudTable Items="@CarouselPhotoRows" RowsPerPage="10" OnRowClick="EditCarouselPhoto_RowClick" T="CarouselPhotoRowVM">
+        <HeaderContent>
+            <MudTh>@*Number*@</MudTh>
+            <MudTh>@*Photo*@</MudTh>
+            <MudTh>@*Edit and Delete buttons*@</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd>
+                <div class="d-flex align-center">
+                    <MudAvatar Color="Color.Primary" Class="">@context.Number.ToString()</MudAvatar>
+                </div>
+            </MudTd>
+            <MudTd>
+                <div class="d-flex justify-center">
+                    <MudImage Width="360" Fluid="true" Src="@context.PhotoUrl" Alt="@context.PhotoUrl" Elevation="0" Class="d-flex rounded-lg" />
+                </div>
+            </MudTd>
+            <MudTd>
+                <div class="d-flex flex-row justify-center">
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary"
+                                   Size="Size.Medium" Class="me-3" OnClick="()=>EditCarouselPhoto_Click(context)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error"
+                                   Size="Size.Medium" OnClick="()=>DeleteCarouselPhoto_Click(context)" />
+                </div>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+                <MudTablePager HorizontalAlignment="HorizontalAlignment.End" />
+        </PagerContent>
+      </MudTable>
+    </MudContainer>
+    }
+    <div class="d-flex justify-content-center">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-6" OnClick="CreateCarouselPhoto_Click">Create New</MudButton>
+    </div>
+}
