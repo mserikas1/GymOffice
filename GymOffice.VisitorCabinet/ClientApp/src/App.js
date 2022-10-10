@@ -2,7 +2,7 @@ import Layout from "./components/Layout";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Abonnements from "./components/AbonnementsPageComponents/Abonnements";
 import Coaches from "./components/CoachesPageComponents/Coaches";
-import Rules from "./components/RulesPageComponents/Rules";
+import GymRules from "./components/RulesPageComponents/GymRules";
 import Home from "./components/Home";
 import GroupTrainings from "./components/GroupTrainings";
 import Login from "./components/Login";
@@ -16,7 +16,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/Abonnements" element={<Abonnements />} />
                     <Route path="/Coaches" element={<Coaches />} />
-                    <Route path="/Rules" element={<Rules />} />
+                    <Route path="/Rules" element={<GymRules />} />
                     <Route path="/GroupTrainings" element={<GroupTrainings />} />
                     <Route path="/Register" element={<Register />} />
                     <Route path="/Login" element={<Login />} />

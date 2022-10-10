@@ -57,10 +57,12 @@ builder.Services.AddTransient<IAddVisitorCommand, AddVisitorCommand>();
 builder.Services.AddScoped<ICoachRepository, CoachRepository>();
 builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
 builder.Services.AddScoped<IAbonnementTypeRepository, AbonnementTypeRepository>();
+builder.Services.AddScoped<IGymRuleRepository, GymRuleRepository>();
 
 // DI for DataProviders
 builder.Services.AddScoped<ICoachDataProvider, CoachDataProvider>();
 builder.Services.AddScoped<IAbonnementTypeDataProvider, AbonnementTypeDataProvider>();
+builder.Services.AddScoped<IGymRulesDataProvider, GymRulesDataProvider>();
 
 var app = builder.Build();
 
