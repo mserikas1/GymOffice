@@ -29,7 +29,8 @@ namespace GymOffice.VisitorCabinet.Controllers
             {
                 foreach (var advantage in advantages)
                 {
-                    advantage.PhotoUrl = "https://localhost:7089/" + advantage.PhotoUrl;
+                    //advantage.PhotoUrl = "https://localhost:7089/" + advantage.PhotoUrl;
+                    advantage.PhotoUrl = _configuration["PhotoUrl"] + advantage.PhotoUrl;
                 }
                 return Ok(advantages);
             }
