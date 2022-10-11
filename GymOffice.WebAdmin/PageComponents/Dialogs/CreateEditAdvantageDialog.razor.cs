@@ -14,6 +14,7 @@ public partial class CreateEditAdvantageDialog : ComponentBase
     private string? errorMessage;
     private string? titleOriginal;
     private string? descriptionOriginal;
+    private string? photoUrlOriginal;
 
 
     [Parameter]
@@ -44,6 +45,7 @@ public partial class CreateEditAdvantageDialog : ComponentBase
             {
                 titleOriginal = AdvantageModel!.Title;
                 descriptionOriginal = AdvantageModel!.Description;
+                photoUrlOriginal = AdvantageModel!.PhotoUrl;
             }
             else
             {
@@ -108,7 +110,7 @@ public partial class CreateEditAdvantageDialog : ComponentBase
     private bool CheckForAnyChanges()
     {
         return (titleOriginal != AdvantageModel!.Title ||
-            descriptionOriginal != AdvantageModel!.Description);
+            descriptionOriginal != AdvantageModel!.Description || photoUrlOriginal != AdvantageModel.PhotoUrl);
     }
 
     private async Task UploadPhoto(InputFileChangeEventArgs e)

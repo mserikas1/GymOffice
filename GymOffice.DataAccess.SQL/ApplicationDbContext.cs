@@ -49,7 +49,7 @@ namespace GymOffice.DataAccess.SQL
         }
         public void AdvantageConfigure(EntityTypeBuilder<Advantage> builder)
         {
-            builder.HasAlternateKey(a => a.Title);
+            builder.HasIndex(a => a.Title).IsUnique();
             builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(a => a.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
@@ -67,9 +67,9 @@ namespace GymOffice.DataAccess.SQL
         }
         public void EmployeeConfigure(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasAlternateKey(a => a.PhoneNumber);
-            builder.HasAlternateKey(a => a.Email);
-            builder.HasAlternateKey(a => a.PassportNumber);
+            builder.HasIndex(a => a.PhoneNumber).IsUnique();
+            builder.HasIndex(a => a.Email).IsUnique();
+            builder.HasIndex(a => a.PassportNumber).IsUnique();
         }
         public void CoachConfigure(EntityTypeBuilder<Coach> builder)
         {
@@ -77,9 +77,9 @@ namespace GymOffice.DataAccess.SQL
             builder.HasMany(a => a.JobScheduleItems).WithOne(i => i.Coach);
             builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(a => a.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
-            builder.HasAlternateKey(a => a.PhoneNumber);
-            builder.HasAlternateKey(a => a.Email);
-            builder.HasAlternateKey(a => a.PassportNumber);
+            builder.HasIndex(a => a.PhoneNumber).IsUnique();
+            builder.HasIndex(a => a.Email).IsUnique();
+            builder.HasIndex(a => a.PassportNumber).IsUnique();
         }
         public void ReceptionistConfigure(EntityTypeBuilder<Receptionist> builder)
         {
