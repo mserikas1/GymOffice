@@ -11,5 +11,5 @@ public interface IVisitorRepository
     Task UpdateVisitorAsync(Visitor visitor);
     Task<VisitorCard?> GetVisitorCardByIdAsync(Guid id);
     Task AddVisitorCardAsync(VisitorCard visitorCard);
-    Task<ICollection<Visitor>?> SearchCoachesAsync(VisitorSearchOptions options);
+    Task<ICollection<Visitor>?> SearchVisitorsAsync(VisitorSearchOptions options);
 }

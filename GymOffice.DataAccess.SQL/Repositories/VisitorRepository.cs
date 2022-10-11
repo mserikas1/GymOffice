@@ -78,7 +78,7 @@ public class VisitorRepository : IVisitorRepository
         return await _dbContext.VisitorCards.SingleOrDefaultAsync(v => v.Id == id);
     }
 
-    public async Task<ICollection<Visitor>?> SearchCoachesAsync(VisitorSearchOptions options)
+    public async Task<ICollection<Visitor>?> SearchVisitorsAsync(VisitorSearchOptions options)
     {
         var visitors = _dbContext.Visitors
             .Include(v => v.VisitorCard)

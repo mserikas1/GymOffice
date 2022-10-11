@@ -12,8 +12,10 @@ const context = [
   "/coach",
   "/abonnementtype",
   "/identity",
-    "/advantage",
-    "/carouselphoto"
+
+  "/advantage",
+  "/carouselphoto",
+  "/rules"
 ];
 
 module.exports = function (app) {
