@@ -1,26 +1,34 @@
-import Coach from "../CoachesPageComponents/Coach";
+import React, { useState, useEffect } from "react";
+import Section from "./Section";
 import axios from "axios";
-import React, { useState, useEffect, useCallback } from "react";
+import styles from './GymRules.module.css';
 
-function Coaches() {
-    const [coaches, setCoaches] = useState([]);
-    const url = "coach/getactivecoaches";
+function GymRules() {
+    const [sections, setSections] = useState([]);
+    const url = "rules/sections";
 
     useEffect(() => {
         axios.get(url).then((response) => {
             const received = response.data;
-            setCoaches(received);
+            setSections(received);
         });
     }, []);
+
     return (
-        <div className="row  mb-3">
-            {Array.isArray(coaches) ? (
-                coaches.map((coach) => <Coach coach={coach} />)
-            ) : (
-                <h1></h1>
-            )}
-        </div>
-    );
+        <div className={styles.rules}>
+            <h1 className={styles.header}>Gym Rules</h1>
+            <ol>
+                {Array.isArray(sections) ?
+                    (sections.map((section) =>
+                        <div className="m-5">
+                            <li><h5>{section.name}</h5></li>
+                            <Section section={section} />
+                        </div>)
+                    ) : (<h3>no rules</h3>)
+                }
+            </ol>
+        </div >
+    )
 }
 
-export default Coaches;
+export default GymRules;
