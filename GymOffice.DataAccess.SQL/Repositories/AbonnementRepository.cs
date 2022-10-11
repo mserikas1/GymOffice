@@ -22,6 +22,15 @@
                 .ToListAsync();
         }
 
+        public ICollection<Abonnement>? GetAll()
+        {
+            return _dbContext.Abonnements
+                .Include(a => a.AbonnementType)
+                .Include(a => a.VisitorCard)
+                .ThenInclude(vc => vc.Visitor)
+                .ToList();
+        }
+
         public async Task<ICollection<Abonnement>?> GetAllAsync()
         {
             return await _dbContext.Abonnements
