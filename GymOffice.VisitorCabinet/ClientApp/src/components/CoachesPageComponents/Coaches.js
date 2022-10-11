@@ -1,6 +1,6 @@
 import Coach from "./Coach";
 import axios from "axios";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 export default function Coaches() {
   const [coaches, setCoaches] = useState([]);
   const url = "coach/getactivecoaches";
@@ -12,7 +12,7 @@ export default function Coaches() {
     });
   }, []);
   return (
-    <div className="row  mb-3">
+    <div className="row mb-3">
       {Array.isArray(coaches) ? (
         coaches.map((coach) => <Coach coach={coach} />)
       ) : (

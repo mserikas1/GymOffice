@@ -1,0 +1,43 @@
+﻿@page "/advantages"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (Advantages == null && ErrorMessage == null)
+{
+    <MudText Typo="Typo.h6" Class="pa-5">Loading data...</MudText>
+    <DisplaySpinner />
+}
+else if (ErrorMessage != null)
+{
+    <ErrorDisplay ErrorMessage="@ErrorMessage" ResetError="HandleResetError" />
+}
+else
+{
+    <MudText Typo="Typo.h4" Class="m-3">Advantages</MudText>
+
+    <AdvantageSearchComponent SearchOptions="SearchOptions"
+                          HandleSearch_Click="HandleSearch"
+                          HandleResetSearch_Click="HandleResetSearch" />
+
+    <MudTable Items="@Advantages" Dense="true" Hover="true">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Advantage, object>(x => x.Title)">Title</MudTableSortLabel></MudTh>
+            <MudTh>Description</MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd Style="width:15%" DataLabel="Title">@context.Title</MudTd>
+
+            <MudTd Style="width:60%" DataLabel="Description">@context.Description</MudTd>
+            <MudTh Style="text-align:right">
+                <MudIconButton Icon="@Icons.Material.Filled.Preview" Variant="Variant.Filled" Color="Color.Default"
+                           Size="Size.Medium" Class="me-3" OnClick="(() => GoToPreview_Click(context))" />
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary"
+                           Size="Size.Medium" OnClick="(() => EditAdvantage_Click(context))" />
+            </MudTh>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager HorizontalAlignment="HorizontalAlignment.End" />
+        </PagerContent>
+    </MudTable>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ma-6" OnClick="CreateAdvantage_Click">Create New</MudButton>
+}

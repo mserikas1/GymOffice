@@ -128,6 +128,65 @@ namespace GymOffice.DataAccess.SQL.Migrations
                     b.ToTable("AbonnementTypes");
                 });
 
+            modelBuilder.Entity("GymOffice.Common.DTOs.Advantage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ModifiedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PhotoUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ModifiedById");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
+
+                    b.ToTable("Advantages");
+                });
+
+            modelBuilder.Entity("GymOffice.Common.DTOs.CarouselPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("PhotoUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CarouselPhotos", (string)null);
+                });
+
             modelBuilder.Entity("GymOffice.Common.DTOs.Coach", b =>
                 {
                     b.Property<Guid>("Id")
@@ -184,15 +243,18 @@ namespace GymOffice.DataAccess.SQL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Email");
-
-                    b.HasAlternateKey("PassportNumber");
-
-                    b.HasAlternateKey("PhoneNumber");
-
                     b.HasIndex("CreatedById");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("ModifiedById");
+
+                    b.HasIndex("PassportNumber")
+                        .IsUnique();
+
+                    b.HasIndex("PhoneNumber")
+                        .IsUnique();
 
                     b.ToTable("Coaches");
                 });
@@ -231,11 +293,14 @@ namespace GymOffice.DataAccess.SQL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Email");
+                    b.HasIndex("Email")
+                        .IsUnique();
 
-                    b.HasAlternateKey("PassportNumber");
+                    b.HasIndex("PassportNumber")
+                        .IsUnique();
 
-                    b.HasAlternateKey("PhoneNumber");
+                    b.HasIndex("PhoneNumber")
+                        .IsUnique();
 
                     b.ToTable("Employees");
                 });
@@ -583,6 +648,25 @@ namespace GymOffice.DataAccess.SQL.Migrations
                 });
 
             modelBuilder.Entity("GymOffice.Common.DTOs.AbonnementType", b =>
+                {
+                    b.HasOne("GymOffice.Common.DTOs.Admin", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("GymOffice.Common.DTOs.Admin", "ModifiedBy")
+                        .WithMany()
+                        .HasForeignKey("ModifiedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("ModifiedBy");
+                });
+
+            modelBuilder.Entity("GymOffice.Common.DTOs.Advantage", b =>
                 {
                     b.HasOne("GymOffice.Common.DTOs.Admin", "CreatedBy")
                         .WithMany()

@@ -1,7 +1,3 @@
-using GymOffice.Business.Commands.EmployeeCommands;
-
-using GymOffice.WebAdmin.Data.Contracts;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,10 +5,12 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options
-    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly("GymOffice.DataAccess.SQL")
+     ));
 
 builder.Services.AddDbContext<UserIdentityDbContext>(options => options
-    .UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
+    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddDefaultTokenProviders()
@@ -76,16 +74,21 @@ builder.Services.AddMudServices();
 builder.Services.AddScoped<IIdentityRepository, IdentityRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<ICoachRepository, CoachRepository>();
+builder.Services.AddScoped<ICarouselPhotoRepository, CarouselPhotoRepository>();
 builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
 builder.Services.AddScoped<IAbonnementTypeRepository, AbonnementTypeRepository>();
 builder.Services.AddScoped<IAbonnementRepository, AbonnementRepository>();
+builder.Services.AddScoped<IAdvantageRepository, AdvantageRepository>();
+
 
 // DI for DataProviders
 builder.Services.AddTransient<ICoachDataProvider, CoachDataProvider>();
 builder.Services.AddTransient<IEmployeeDataProvider, EmployeeDataProvider>();
 builder.Services.AddTransient<IVisitorDataProvider, VisitorDataProvider>();
+builder.Services.AddTransient<ICarouselPhotoDataProvider, CarouselPhotoDataProvider>();
 builder.Services.AddTransient<IAbonnementTypeDataProvider, AbonnementTypeDataProvider>();
 builder.Services.AddTransient<IAbonnementDataProvider, AbonnementDataProvider>();
+builder.Services.AddTransient<IAdvantageDataProvider, AdvantageDataProvider>();
 
 // DI for Commands
 builder.Services.AddTransient<IAddCoachCommand, AddCoachCommand>();
@@ -100,6 +103,11 @@ builder.Services.AddTransient<IAddVisitorCardCommand, AddVisitorCardCommand>();
 builder.Services.AddTransient<IAddVisitorCommand, AddVisitorCommand>();
 builder.Services.AddTransient<IAddAbonnementTypeCommand, AddAbonnementTypeCommand>();
 builder.Services.AddTransient<IEditAbonnementTypeCommand, EditAbonnementTypeCommand>();
+builder.Services.AddTransient<IAddAdvantageCommand, AddAdvantageCommand>();
+builder.Services.AddTransient<IEditAdvantageCommand, EditAdvantageCommand>();
+builder.Services.AddTransient<IAddCarouselPhotoCommand, AddCarouselPhotoCommand>();
+builder.Services.AddTransient<IEditCarouselPhotoCommand, EditCarouselPhotoCommand>();
+builder.Services.AddTransient<IDeleteCarouselPhotoCommand, DeleteCarouselPhotoCommand>();
 
 var app = builder.Build();
 

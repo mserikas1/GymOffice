@@ -1,0 +1,43 @@
+﻿<MudDialog DefaultFocus="DefaultFocus.Element">
+    <DialogContent>
+        @if (errorMessage != null)
+        {
+            <ErrorDisplay ErrorMessage="@errorMessage" ResetError="HandleResetError" />
+        }
+        else
+        {
+            <InputFile id="photoFile" OnChange="UploadPhoto" accept=".jpg, .jpeg, .png" hidden />
+            <EditForm Model="@carouselPhoto" OnValidSubmit="HandleValidSubmit">
+                <MudGrid>
+                    <MudItem xs="12" sm="7">
+                        <MudPaper Elevation="0" Class="pa-5 mud-height-full">
+                            <MudText Typo="Typo.h6" Class="pa-5">
+                                @(IsEdit || carouselPhoto!.PhotoUrl != null ? $"Carousel Photo #{carouselPhoto!.Number}:" :
+                                    "Press the ­«Add Photo» button to upload the photo\n(up to 5 Mb .jpg, .jpeg or .png):")
+                            </MudText>
+                            @if (isLoading == true)
+                            {
+                                <MudText Class="m-4">Uploading...</MudText>
+                            }
+                            else if (photoUploadError != null)
+                            {
+                                <MudText Class="m-4">@photoUploadError</MudText>
+                            }
+                            else if (carouselPhoto!.PhotoUrl != null)
+                            {
+                                <MudImage Fluid="true" Src="@carouselPhoto!.PhotoUrl" Alt="Photo" Elevation="0" Class="rounded-lg" />
+                            }
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+                <MudCardActions Class="d-flex justify-end">
+                    <MudButton HtmlTag="label" Class="me-3" Color="Color.Success" StartIcon="@Icons.Filled.PersonAdd"
+                         Variant="Variant.Filled" for="photoFile">@(IsEdit || carouselPhoto!.PhotoUrl != null ? "Change" : "Add")&nbsp;Photo
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleCancel">Cancel</MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@(IsEdit == true ? "Update" : "Add")</MudButton>
+                </MudCardActions>
+            </EditForm>
+        }
+    </DialogContent>
+</MudDialog>

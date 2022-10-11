@@ -4,6 +4,7 @@ using GymOffice.Business.DataProviders;
 using GymOffice.Common.Contracts.CommandContracts.EmployeeCommands.Add;
 using GymOffice.Common.Contracts.DataProviderContracts;
 using GymOffice.Common.Contracts.RepositoryContracts;
+using GymOffice.Common.DTOs;
 using GymOffice.DataAccess.SQL;
 using GymOffice.DataAccess.SQL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -56,11 +57,15 @@ builder.Services.AddTransient<IAddVisitorCommand, AddVisitorCommand>();
 // DI for Repositories
 builder.Services.AddScoped<ICoachRepository, CoachRepository>();
 builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
+builder.Services.AddScoped<ICarouselPhotoRepository, CarouselPhotoRepository>();
 builder.Services.AddScoped<IAbonnementTypeRepository, AbonnementTypeRepository>();
+builder.Services.AddScoped<IAdvantageRepository, AdvantageRepository>();
 
 // DI for DataProviders
 builder.Services.AddScoped<ICoachDataProvider, CoachDataProvider>();
+builder.Services.AddScoped<ICarouselPhotoDataProvider, CarouselPhotoDataProvider>();
 builder.Services.AddScoped<IAbonnementTypeDataProvider, AbonnementTypeDataProvider>();
+builder.Services.AddScoped<IAdvantageDataProvider, AdvantageDataProvider>();
 
 var app = builder.Build();
 

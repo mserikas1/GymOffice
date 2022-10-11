@@ -1,4 +1,6 @@
-﻿namespace GymOffice.DataAccess.SQL
+﻿using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
+namespace GymOffice.DataAccess.SQL
 {
     public class ApplicationDbContext:DbContext
     {
@@ -14,8 +16,11 @@
         public DbSet<VisitorCard> VisitorCards { get; set; } = null!;
         public DbSet<Receptionist> Receptionists { get; set; } = null!;
         public DbSet<Admin> Admins { get; set; } = null!;
+        public DbSet<CarouselPhoto> CarouselPhotos { get; set; } = null!;
+        public DbSet<Advantage> Advantages { get; set; } = null!;
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+            
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -32,7 +37,8 @@
             builder.Entity<Coach>(CoachConfigure);
             builder.Entity<TrainingVisit>(TrainingVisitConfigure);
             builder.Entity<VisitorCard>(VisitorCardConfigure);
-
+            builder.Entity<Advantage>(AdvantageConfigure);
+            builder.Entity<CarouselPhoto>(CarouselPhotoConfigure);
         }
         public void AbonnementConfigure(EntityTypeBuilder<Abonnement> builder)
         {
@@ -40,6 +46,12 @@
             builder.HasOne(a => a.AbonnementType).WithMany(a=>a.Abonnements).OnDelete(DeleteBehavior.NoAction).HasForeignKey("TypeId");
             builder.HasMany(a => a.TrainingVisits).WithOne(a => a.Abonnement).OnDelete(DeleteBehavior.NoAction);
             builder.Property(a => a.SoldPrice).HasColumnType("decimal").HasPrecision(10, 2);
+        }
+        public void AdvantageConfigure(EntityTypeBuilder<Advantage> builder)
+        {
+            builder.HasIndex(a => a.Title).IsUnique();
+            builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(a => a.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
         public void VisitorCardConfigure(EntityTypeBuilder<VisitorCard> builder)
         {
@@ -55,9 +67,9 @@
         }
         public void EmployeeConfigure(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasAlternateKey(a => a.PhoneNumber);
-            builder.HasAlternateKey(a => a.Email);
-            builder.HasAlternateKey(a => a.PassportNumber);
+            builder.HasIndex(a => a.PhoneNumber).IsUnique();
+            builder.HasIndex(a => a.Email).IsUnique();
+            builder.HasIndex(a => a.PassportNumber).IsUnique();
         }
         public void CoachConfigure(EntityTypeBuilder<Coach> builder)
         {
@@ -65,9 +77,9 @@
             builder.HasMany(a => a.JobScheduleItems).WithOne(i => i.Coach);
             builder.HasOne(a => a.CreatedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(a => a.ModifiedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
-            builder.HasAlternateKey(a => a.PhoneNumber);
-            builder.HasAlternateKey(a => a.Email);
-            builder.HasAlternateKey(a => a.PassportNumber);
+            builder.HasIndex(a => a.PhoneNumber).IsUnique();
+            builder.HasIndex(a => a.Email).IsUnique();
+            builder.HasIndex(a => a.PassportNumber).IsUnique();
         }
         public void ReceptionistConfigure(EntityTypeBuilder<Receptionist> builder)
         {
@@ -79,6 +91,10 @@
         public void AdminConfigure(EntityTypeBuilder<Admin> builder)
         {
             builder.ToTable("Admin");
+        }
+        public void CarouselPhotoConfigure(EntityTypeBuilder<CarouselPhoto> builder)
+        {
+            builder.ToTable("CarouselPhotos");
         }
         public void AbonnementTypeConfigure(EntityTypeBuilder<AbonnementType> builder)
         {

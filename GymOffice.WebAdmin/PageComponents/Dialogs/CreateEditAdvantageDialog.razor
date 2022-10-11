@@ -1,0 +1,81 @@
+﻿<MudDialog DefaultFocus="DefaultFocus.Element">
+    <DialogContent>
+        @if (errorMessage != null)
+        {
+            <ErrorDisplay ErrorMessage="@errorMessage" ResetError="HandleResetError" />
+        }
+        else
+        {
+            <InputFile id="photoFile" OnChange="UploadPhoto" accept=".jpg, .jpeg, .png" hidden />
+            <EditForm Model="@AdvantageModel" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <MudGrid>
+                    <MudItem xs="12" sm="7">
+                        <MudCard Class="pa-3 mud-height-full">
+                            <MudText Typo="Typo.h6" Class="pa-5">@(IsEdit ? "Edit" : "Add New") Advantage</MudText>
+                            <MudCardContent>
+                                <MudTextField Label="Title" HelperText="Length from 2 to 20 characters"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense"
+                                          @bind-Value="AdvantageModel!.Title" For="@(() => AdvantageModel!.Title)" />
+                                <MudTextField Label="Description" HelperText="Length from 2 to 500 characters" Class="mt-3"
+                                          Variant="Variant.Outlined" Margin="Margin.Dense" Lines="5"
+                                          @bind-Value="AdvantageModel!.Description" For="@(() => AdvantageModel!.Description)" />
+                                <MudCardActions Class="mt-3">
+                                    <MudButton HtmlTag="label" Color="Color.Success" StartIcon="@Icons.Filled.PersonAdd"
+                                           Variant="Variant.Filled" for="photoFile">@(IsEdit == true ? "Change" : "Add")&nbsp;Photo</MudButton>
+                                    <MudText Class="ms-3">(Optional. Up to 5 Mb .jpg, .jpeg or .png)</MudText>
+                                </MudCardActions>
+                                @if (IsEdit)
+                                {
+                                    <MudDivider Class="my-2" Light />
+                                    <div class="d-flex flex-column">
+                                        <MudText><b>Created by:</b> @AdvantageModel.CreatedBy.Email</MudText>
+                                        <MudText><b>Created at:</b> @AdvantageModel.CreatedAt.ToShortDateString()</MudText>
+                                        @if (AdvantageModel.CreatedAt.Day != AdvantageModel.ModifiedAt.Day ||
+                                       AdvantageModel.CreatedBy != AdvantageModel.ModifiedBy)
+                                        {
+                                            <MudText><b>Modified by:</b> @AdvantageModel.ModifiedBy.Email</MudText>
+                                            <MudText><b>Last Update:</b> @AdvantageModel.ModifiedAt.ToShortDateString()</MudText>
+                                        }
+                                    </div>
+                                }
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem xs="12" sm="5">
+                        <MudPaper Class="pa-5 mud-height-full">
+                            @if (AdvantageModel?.PhotoUrl != string.Empty)
+                            {
+                                <MudText Typo="Typo.subtitle2" Class="pa-5">Photo:</MudText>
+                            }
+                            @if (isLoading == true)
+                            {
+                                <MudText Class="m-4">Uploading...</MudText>
+                            }
+                            else if (photoUploadError != null)
+                            {
+                                <MudText Class="m-4">@photoUploadError</MudText>
+                            }
+                            else if (AdvantageModel?.PhotoUrl == string.Empty)
+                            {
+                                <MudText Typo="Typo.subtitle2" Class="pa-5" Color="Color.Error">Photo is required</MudText>
+                            }
+                            else if (AdvantageModel!.PhotoUrl != null)
+                            {
+                                <MudImage Fluid="true" Src="@AdvantageModel!.PhotoUrl" Alt="Photo" Elevation="0" Class="rounded-lg" />
+                            }
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+                <MudCardActions Class="d-flex justify-end">
+                    <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleCancel">Cancel</MudButton>
+                    @if (IsEdit == false)
+                    {
+                        <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
+                    }
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@(IsEdit == true ? "Update" : "Register")</MudButton>
+                    </MudCardActions>
+                </EditForm>
+        }
+    </DialogContent>
+</MudDialog>
