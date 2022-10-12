@@ -17,11 +17,16 @@ namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
-
-        public LogoutModel(SignInManager<IdentityUser> signInManager, ILogger<LogoutModel> logger)
+        private readonly IEmployeeDataProvider _employeeDataProvider;
+        private readonly IEditReceptionistCommand _editReceptionistCommand;
+        
+        public LogoutModel(SignInManager<IdentityUser> signInManager, ILogger<LogoutModel> logger,
+                IEmployeeDataProvider employeeDataProvider, IEditReceptionistCommand editReceptionistCommand)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _employeeDataProvider = employeeDataProvider;
+            _editReceptionistCommand = editReceptionistCommand;
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
@@ -33,6 +38,16 @@ namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
             
             await _signInManager.SignOutAsync();
             _logger.LogWarning($"User {userName} (role: {role}) logged out.");
+
+            if (role == "Receptionist")
+            {
+                Receptionist receptionist = await _employeeDataProvider.GetReceptionistByIdAsync(Guid.Parse(user.Id));
+                if (receptionist != null)
+                {
+                    receptionist.IsAtWork = false;
+                    await _editReceptionistCommand.ExecuteAsync(receptionist);
+                }
+            }
 
             if (returnUrl != null)
             {

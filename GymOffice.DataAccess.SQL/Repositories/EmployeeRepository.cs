@@ -45,7 +45,10 @@ public class EmployeeRepository : IEmployeeRepository
 
     public async Task<Receptionist?> GetReceptionistByIdAsync(Guid id)
     {
-        return await _dbContext.Receptionists.SingleOrDefaultAsync(r => r.Id == id);
+        return await _dbContext.Receptionists
+            .Include(r => r.CreatedBy)
+            .Include(r => r.ModifiedBy)
+            .SingleOrDefaultAsync(r => r.Id == id);
     }
     public async Task<Employee?> GetEmployeeByIdAsync(Guid id)
     {

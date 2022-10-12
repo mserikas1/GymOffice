@@ -51,6 +51,6 @@ public class VisitorDataProvider : IVisitorDataProvider
         {
             return await _visitorRepository.GetAllVisitorsAsync();
         }
-        return await _visitorRepository.SearchCoachesAsync(options);
+        return await _visitorRepository.SearchVisitorsAsync(options);
     }
 }

@@ -19,6 +19,11 @@ namespace GymOffice.Business.DataProviders
             return await _abonnementRepository.GetActiveAsync();
         }
 
+        public ICollection<Abonnement>? GetAll()
+        {
+            return _abonnementRepository.GetAll();
+        }
+
         public async Task<ICollection<Abonnement>?> GetAllAsync()
         {
             return await _abonnementRepository.GetAllAsync();

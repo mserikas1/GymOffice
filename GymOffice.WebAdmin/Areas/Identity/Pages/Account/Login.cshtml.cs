@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using GymOffice.Common.DTOs;
+using GymOffice.WebAdmin.ViewModels;
 
 namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
 {
@@ -26,13 +28,18 @@ namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmployeeDataProvider _employeeDataProvider;
+        private readonly IEditReceptionistCommand _editReceptionistCommand;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, RoleManager<IdentityRole> roleManager)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, RoleManager<IdentityRole> roleManager,
+            IEmployeeDataProvider employeeDataProvider, IEditReceptionistCommand editReceptionistCommand)
         {
             _signInManager = signInManager;
             _logger = logger;
             _roleManager = roleManager;
+            _employeeDataProvider = employeeDataProvider;
+            _editReceptionistCommand = editReceptionistCommand;
         }
 
         [BindProperty]
@@ -89,10 +96,21 @@ namespace GymOffice.WebAdmin.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    IdentityUser user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
                     IList<string> roles = await _signInManager.UserManager.GetRolesAsync(user);
                     string role = (roles != null && roles.Count > 0) ? roles[0] : "Undefined";
                     _logger.LogWarning($"User {Input.Email} (role: {role}) logged in.");
+
+                    if (role == "Receptionist")
+                    {
+                        Receptionist receptionist = await _employeeDataProvider.GetReceptionistByIdAsync(Guid.Parse(user.Id));
+                        if (receptionist != null)
+                        {
+                            receptionist.IsAtWork = true;
+                            await _editReceptionistCommand.ExecuteAsync(receptionist);
+                        }
+                    }
+
                     return LocalRedirect("/"+role.ToLower());
                 }
                 if (result.IsLockedOut)

@@ -10,9 +10,14 @@ public partial class AbonnementsListPage : ComponentBase
     public IAbonnementDataProvider AbonnementDataProvider { get; set; } = null!;
 
 
-    protected override async Task OnInitializedAsync()
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    Abonnements = (List<Abonnement>?)await AbonnementDataProvider.GetAllAsync();
+    //}
+
+    protected override void OnInitialized()
     {
-        Abonnements = (List<Abonnement>?)await AbonnementDataProvider.GetAllAsync();
+        Abonnements = (List<Abonnement>?) AbonnementDataProvider.GetAll();
     }
 
     // Uncomment if we need to show for receptionist only active abonnements.

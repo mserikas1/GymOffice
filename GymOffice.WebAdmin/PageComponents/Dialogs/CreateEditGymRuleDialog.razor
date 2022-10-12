@@ -1,0 +1,50 @@
+﻿<MudDialog DefaultFocus="DefaultFocus.Element">
+    <DialogContent>
+        <EditForm Model="@RuleModel" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudCard Class="pa-3">
+                        <MudCardContent>
+                            <MudText Typo="Typo.subtitle2" Class="ms-3">Description:</MudText>
+                            <MudFocusTrap Disabled="IsEdit">
+                                <MudTextField Variant="Variant.Outlined" Lines="3"
+                                              @bind-Value="RuleModel!.Description" For="@(() => RuleModel!.Description)" />
+                            </MudFocusTrap>
+                            @if (IsEdit)
+                            {
+                                <MudText Typo="Typo.subtitle2" Class="ms-3 mt-5">Active:</MudText>
+
+                                <MudSelect T="bool" Margin="Margin.Dense" Dense="true"
+                                       Variant="Variant.Outlined" Class=""
+                                       @bind-Value="RuleModel!.IsActive" For="@(() => RuleModel!.IsActive)">
+                                    <MudSelectItem Value="@(true)">Yes</MudSelectItem>
+                                    <MudSelectItem Value="@(false)">No</MudSelectItem>
+                                </MudSelect>
+                                <MudDivider Class="my-5" />
+                                <div class="d-flex flex-column">
+                                    <MudText><b>Created by:</b> @RuleModel!.CreatedBy.Email</MudText>
+                                    <MudText><b>Created at:</b> @RuleModel!.CreatedAt.ToShortDateString()</MudText>
+                                    @if (RuleModel!.CreatedAt.Day != RuleModel.ModifiedAt.Day ||
+                                   RuleModel.CreatedBy != RuleModel.ModifiedBy)
+                                    {
+                                        <MudText><b>Modified by:</b> @RuleModel.ModifiedBy.Email</MudText>
+                                        <MudText><b>Last Update:</b> @RuleModel.ModifiedAt.ToShortDateString()</MudText>
+                                    }
+                                </div>
+                            }
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+            <MudCardActions Class="d-flex justify-end">
+                <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleCancel">Cancel</MudButton>
+                @if (IsEdit == false)
+                {
+                    <MudButton Variant="Variant.Filled" Color="Color.Default" Class="me-3" OnClick="HandleFormReset">Reset</MudButton>
+                }
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@(IsEdit == true ? "Update" : "Register")</MudButton>
+                </MudCardActions>
+            </EditForm>
+        </DialogContent>
+    </MudDialog>
