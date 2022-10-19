@@ -5,12 +5,12 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options
-    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+    .UseSqlServer(builder.Configuration.GetConnectionString("LocalConnection"),
         b => b.MigrationsAssembly("GymOffice.DataAccess.SQL")
      ));
 
 builder.Services.AddDbContext<UserIdentityDbContext>(options => options
-    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    .UseSqlServer(builder.Configuration.GetConnectionString("LocalConnection")));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddDefaultTokenProviders()

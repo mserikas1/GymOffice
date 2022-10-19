@@ -1,0 +1,2 @@
+dotnet ef migrations add AddCarouselPhotosTable --context ApplicationDbContext --project GymOffice.WebAdmin
+dotnet ef database update --context ApplicationDbContext --project GymOffice.WebAdmin
