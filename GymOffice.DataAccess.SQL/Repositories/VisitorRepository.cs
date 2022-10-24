@@ -11,7 +11,9 @@ public class VisitorRepository : IVisitorRepository
     public async Task<ICollection<Visitor>?> GetAllVisitorsAsync()
     {
         return await _dbContext.Visitors
-            .Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).ToListAsync();
+            .Include(v => v.VisitorCard)
+            .ThenInclude(vc => vc.CreatedBy)
+            .ToListAsync();
     }
 
     public async Task AddVisitorAsync(Visitor visitor)
@@ -23,23 +25,31 @@ public class VisitorRepository : IVisitorRepository
     public async Task<ICollection<Visitor>?> GetVisitorsInGymAsync()
     {
         return await _dbContext.Visitors.Where(v => v.IsInGym)
-            .Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).ToListAsync();
+            .Include(v => v.VisitorCard)
+            .ThenInclude(vc => vc.CreatedBy)
+            .ToListAsync();
     }
     public async Task<ICollection<Visitor>?> GetVisitorsNotInGymAsync()
     {
         return await _dbContext.Visitors.Where(v => !v.IsInGym)
-            .Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).ToListAsync();
+            .Include(v => v.VisitorCard)
+            .ThenInclude(vc => vc.CreatedBy)
+            .ToListAsync();
     }
     public async Task<ICollection<Visitor>?> GetActiveVisitorsNotInGymAsync()
     {
         return await _dbContext.Visitors.Where(v => v.IsActive && !v.IsInGym)
-            .Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).ToListAsync();
+            .Include(v => v.VisitorCard)
+            .ThenInclude(vc => vc.CreatedBy)
+            .ToListAsync();
     }
 
     public async Task<ICollection<Visitor>?> GetActiveVisitorsAsync()
     {
         return await _dbContext.Visitors.Where(v => v.IsActive)
-            .Include(v => v.VisitorCard).ThenInclude(vc => vc.CreatedBy).ToListAsync();
+            .Include(v => v.VisitorCard)
+            .ThenInclude(vc => vc.CreatedBy)
+            .ToListAsync();
     }
 
     public async Task<Visitor?> GetVisitorByIdAsync(Guid id)
@@ -48,6 +58,22 @@ public class VisitorRepository : IVisitorRepository
             .Include(v => v.VisitorCard)
             .ThenInclude(vc => vc.CreatedBy)
             .SingleOrDefaultAsync(v => v.Id == id);
+    }
+
+    public async Task<Visitor?> GetVisitorByEmailAsync(string email)
+    {
+        return await _dbContext.Visitors
+            .Include(v => v.VisitorCard)
+            .ThenInclude(vc => vc.CreatedBy)
+            .FirstOrDefaultAsync(v => v.Email == email);
+    }
+
+    public async Task<Visitor?> GetVisitorByPhoneAsync(string phoneNumber)
+    {
+        return await _dbContext.Visitors
+            .Include(v => v.VisitorCard)
+            .ThenInclude(vc => vc.CreatedBy)
+            .FirstOrDefaultAsync(v => v.PhoneNumber == phoneNumber);
     }
 
     public async Task UpdateVisitorAsync(Visitor visitor)
